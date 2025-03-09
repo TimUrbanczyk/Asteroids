@@ -1,0 +1,15 @@
+.Button{
+
+    -fx-background-color: Grey;
+    -fx-background-radius: 60px;
+    -fx-border-color: White;
+    -fx-border-radius: 60px;
+    -fx-pref-height: 60;
+    -fx-pref-width: 200;
+
+}
+
+.Button:hover{
+    -fx-border-color: Black;
+}
+
