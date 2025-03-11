@@ -2,29 +2,28 @@ package com.example.asteroids;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Asteroid {
 
     //static fields
-    private static double[][] spawnPoints = {{10,-10},{300,-10},{700,-10},{1410,10},{1410,400},{1410,700}}; //coords of possible spawnpoints (x,y)
+    private static String[] spawnPoints = {"NORTH","EAST","SOUTH","WEST"}; //coords of possible spawn points (x,y)
     private static ArrayList<Asteroid> asteroids = new ArrayList<>();
 
     //fields
     private int healthPoints;
-    private int speedX;
-    private int speedY;
+    private double speedX;
+    private double speedY;
     private double coordX;
     private double coordY;
     private double[] spawnPoint;
     private String imgPath;
     private ImageView asteroidImage;
+    private boolean wasOnScreen;
+    private int damagePoints;
 
-
-    public Asteroid(int healthPoints, int speedX, int speedY, String imgPath) {
+    public Asteroid(int healthPoints, double speedX, double speedY, String imgPath, int damagePoints) {
 
 
         spawnPoint = generateSpawnPoint();
@@ -33,8 +32,25 @@ public class Asteroid {
 
         this.imgPath = imgPath;
         this.healthPoints = healthPoints;
-        this.speedX = speedX;
-        this.speedY = speedY;
+        this.damagePoints = damagePoints;
+
+        Random rand = new Random();
+        int randomX = rand.nextInt(2);
+        int randomY = rand.nextInt(2);
+
+        if(randomX == 0) {
+            this.speedX = -speedX;
+        }else if(randomX == 1) {
+            this.speedX = speedX;
+        }
+
+        if(randomY == 0) {
+            this.speedY = -speedY;
+        }else if(randomY == 1) {
+            this.speedY = speedY;
+        }
+
+
 
         this.asteroidImage = new ImageView(new Image(this.imgPath));
 
@@ -45,16 +61,13 @@ public class Asteroid {
 
     }//end of constuctor
 
-
-
     public static void spawnAsteroid(){
 
         Random random = new Random(); //set up random
         double numberRandom = random.nextDouble();
 
-        System.out.println("[ASTEROID SPAWNED] TOTAL NUMBER OF ASTEROIDS: " + asteroids.size());
-
-
+        //comment the next line in for debugging purpose
+        //System.out.println("[ASTEROID SPAWNED] TOTAL NUMBER OF ASTEROIDS: " + asteroids.size());
 
 
         if(numberRandom < 0.9){
@@ -70,27 +83,60 @@ public class Asteroid {
 
     public static void moveAsteroid(){
         for(Asteroid asteroid : asteroids){
+
             asteroid.setcoordX(asteroid.getCoordX()+asteroid.getSpeedX());
             asteroid.setcoordY(asteroid.getCoordY()+asteroid.getSpeedY());
+
+            asteroid.getAsteroidImage().setX(asteroid.getCoordX());
+            asteroid.getAsteroidImage().setY(asteroid.getCoordY());
         }
     }//end of moveAsteroids
 
     public static double[] generateSpawnPoint(){
 
+        double[] Output = new double[2];
         Random random = new Random(); //set up random
         int numberRandom = random.nextInt(spawnPoints.length);
-        System.out.println(numberRandom);
 
-        return spawnPoints[numberRandom];
+
+        switch(spawnPoints[numberRandom]){
+            case "NORTH":
+                Output[0] = random.nextDouble(750);
+                Output[1] = -100;
+
+                break;
+            case "EAST":
+                Output[0] = 1600;
+                Output[1] = random.nextDouble(760);
+
+                break;
+            case "SOUTH":
+                Output[0] = random.nextDouble(750);
+                Output[1] = 900;
+                break;
+            case "WEST":
+                Output[0] = -150;
+                Output[1] = random.nextDouble(760);
+                break;
+            default:
+                break;
+        }
+
+        return Output;
 
     }//end of generateSpawnPoint
+
+
+    public void removeImage(){
+        this.asteroidImage.setImage(null);
+    }
 
     //getters
     public int getHealthPoints() {return this.healthPoints;}
 
-    public int getSpeedX() {return this.speedX;}
+    public double getSpeedX() {return this.speedX;}
 
-    public int getSpeedY() {return this.speedY;}
+    public double getSpeedY() {return this.speedY;}
 
     public double[] getSpawnPoint() {return this.spawnPoint;}
 
@@ -104,16 +150,20 @@ public class Asteroid {
 
     public ImageView getAsteroidImage() {return this.asteroidImage;}
 
+    public boolean getWasOnScreen() {return this.wasOnScreen;}
+
     //setters
     public void setHealthPoints(int healthPoints) {this.healthPoints = healthPoints;}
 
-    public void setSpeedX(int speedX) {this.speedX = speedX;}
+    public void setSpeedX(double speedX) {this.speedX = speedX;}
 
-    public void setSpeedY(int speedY) {this.speedY = speedY;}
+    public void setSpeedY(double speedY) {this.speedY = speedY;}
 
     public void setcoordX(double coordX) {this.coordX = coordX;}
 
     public void setcoordY(double coordY) {this.coordY = coordY;}
+
+    public void setWasOnScreen(boolean wasOnScreen) {this.wasOnScreen = wasOnScreen;}
 
 
 

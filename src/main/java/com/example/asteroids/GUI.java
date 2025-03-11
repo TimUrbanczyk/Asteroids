@@ -1,22 +1,36 @@
 package com.example.asteroids;
 
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class GUI implements Initializable {
+
+    //Fields
+    private Parent[] startScreenElements = new Parent[4];
+    private GraphicsContext gc;
+    private long elapsedTime = 0;
+    private final long spawnInterval = 50;
+    private Player player;
+    private Timeline gameloop;
+
+    //static fields
+    private static boolean gameRunning = false;
 
     // Flags to track key states
     private boolean movingUp = false;
@@ -25,12 +39,6 @@ public class GUI implements Initializable {
     private boolean movingRight = false;
     private boolean rotatingLeft = false;
     private boolean rotatingRight = false;
-
-
-    private long elapsedTime = 0;
-    private final long spawnInterval = 500;
-
-
 
     //FXML fields
     @FXML
@@ -41,31 +49,37 @@ public class GUI implements Initializable {
     private AnchorPane mainAnchorPane;
     @FXML
     private ImageView playerShip;
+    @FXML
+    private Button exitButton;
+    @FXML
+    private Canvas canvas;
+    @FXML
+    private ImageView pressToPlay1;
+    @FXML
+    private ImageView pressToPlay2;
+    @FXML
+    private Label pressToPlayLabel;
 
-    //Create Player
 
-    Player player = new Player(100,playerShip);
+    //---------------------------------------------------------------------------------------------------------------------------------
 
-
-    //Fields
-    private Parent[] startScreenElements = new Parent[2];
-
-
-
-
+    @FXML
+    private void onExitButton(){System.exit(0);}
     @FXML
     private void onButtonStartGame(){
 
         //vanish all the gui elements from the start screen
-        for(Parent element : startScreenElements){
+        for(javafx.scene.Node element : startScreenElements){
             element.setVisible(false);
         }
+        pressToPlay1.setVisible(false);
+        pressToPlay2.setVisible(false);
 
         //start the game
+        gameRunning = true;
         Main();
 
     }//end of onButtonStartGame
-
     @FXML
     private void handleKeyPressed(KeyEvent event) {
         // Set movement and rotation flags based on key presses
@@ -119,48 +133,92 @@ public class GUI implements Initializable {
         }
     }
 
-    private void drawAsteroids(){
-        for(Asteroid asteroid : Asteroid.getAsteroids()){
+    public static  boolean isGameRunning() {return gameRunning;}
+    public static void setGameRunning(boolean gR) {gameRunning = gR;}
 
+    // we want to show some kind of lost screen on the gui and reset all the objects(asteroids) created
+    private void lost(){
 
+        if(!gameRunning){
+            //stop the game
+            gameloop.stop();
+
+            //swap the spaceship with an explosion
+            player.getImageView().setImage(new Image("C:\\Users\\TimUr\\IdeaProjects\\study\\Asteroids\\src\\main\\resources\\imgs\\Explosion.png"));
         }
-    }
 
-
-
+    }//end of lost
     //main method/loop/u know
     private void Main(){
-        System.out.println(playerShip.getLayoutX());
-        System.out.println(playerShip.getLayoutY());
+
+        gc = canvas.getGraphicsContext2D();
+
         mainAnchorPane.setFocusTraversable(true);
         mainAnchorPane.requestFocus();
 
-        Timeline gameloop = new Timeline(new KeyFrame(Duration.millis(7), event -> {
+         gameloop = new Timeline(new KeyFrame(Duration.millis(7), event -> {
 
-            // Update playerShip position based on movement flags
-            drawAsteroids();
-            Asteroid.moveAsteroid();
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+            //uncomment this bock th see the ships hit box
+            // Draw a yellow rectangle
+            gc.setStroke(Color.YELLOW);
+            // Use playerShip's current position and size
+            double x = player.getCoordX(); // Use the ship's position directly
+            double y = player.getCoordY();
+            double width = player.getWidth();
+            double height = player.getHeight();
+
+            // Draw the rectangle
+            gc.strokeRect(x, y, width, height);
+
+            //check for collision and uncomment the stroke to see the asteroids hit boxes for debugging purpose
+            for(Asteroid asteroid : Asteroid.getAsteroids()){
+
+                if(player.checkCollision(asteroid.getAsteroidImage())){
+                    lost();
+                }
+
+               gc.strokeRect(asteroid.getAsteroidImage().getBoundsInParent().getMinX() , asteroid.getAsteroidImage().getBoundsInParent().getMinY()
+                              ,asteroid.getAsteroidImage().getBoundsInParent().getWidth() , asteroid.getAsteroidImage().getBoundsInParent().getHeight());
+
+            }
+
             elapsedTime+= 7;
 
-            if(elapsedTime >= spawnInterval ){Asteroid.spawnAsteroid();mainAnchorPane.getChildren().add(Asteroid.getAsteroids().getFirst().getAsteroidImage()); elapsedTime = 0;}
+            if(elapsedTime >= spawnInterval ){
+
+                Asteroid.spawnAsteroid();
+                mainAnchorPane.getChildren().add(Asteroid.getAsteroids().getFirst().getAsteroidImage());
 
 
+                if(elapsedTime >= spawnInterval * 2 ){
+                    mainAnchorPane.getChildren().remove(Asteroid.getAsteroids().getLast().getAsteroidImage());
+                    Asteroid.getAsteroids().removeLast();
+                }
 
+                elapsedTime = 0;
+            }
+
+            Asteroid.moveAsteroid();
 
             if (movingUp) {
+                player.setCoordY(player.getCoordY() - player.getSpeed());
+
                 playerShip.setY(playerShip.getY() - player.getSpeed());
             }
             if (movingDown) {
+                player.setCoordY(player.getCoordY() + player.getSpeed());
                 playerShip.setY(playerShip.getY() + player.getSpeed());
             }
             if (movingLeft) {
+                player.setCoordX(player.getCoordX() - player.getSpeed());
                 playerShip.setX(playerShip.getX() - player.getSpeed());
             }
             if (movingRight) {
+                player.setCoordX(player.getCoordX() + player.getSpeed());
                 playerShip.setX(playerShip.getX() + player.getSpeed());
             }
-
-
             if (rotatingLeft) {
                 playerShip.setRotate(playerShip.getRotate() - player.getRotationSpeed());
             }
@@ -175,20 +233,14 @@ public class GUI implements Initializable {
             if(playerShip.getX() + playerShip.getLayoutX() > 1450){playerShip.setX(1450-playerShip.getLayoutX());}
             if(playerShip.getY() + playerShip.getLayoutY() > 750){playerShip.setY(750-playerShip.getLayoutY());}
 
-
         }));
 
         gameloop.setCycleCount(Timeline.INDEFINITE);
         gameloop.setAutoReverse(true);
         gameloop.play();
 
-
     }//end of Main
-
-
-
-
-
+    //code to start the wonderful animation at the beginning of the game
     private void StartAnimationAsteroidsLabel() {
 
         Timeline timelineAsteroidsLabel = new Timeline();
@@ -209,23 +261,23 @@ public class GUI implements Initializable {
         timelineAsteroidsLabel.play();
 
     }//end of StartAnimationAsteroidsLabel
-
+    //init
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        //Create Player
+        player = new Player(100,playerShip);
 
         //insert the GUI elements in the corresponding arrays
         startScreenElements[0] = buttonStartGame;
         startScreenElements[1] = labelAsteroids;
+        startScreenElements[2] = exitButton;
+        startScreenElements[3] = pressToPlayLabel;
 
 
 
-
-
-        //play initial label animation
+        //play initial label animation the call also starts the spawning etc....
         StartAnimationAsteroidsLabel();
-
-
-
 
     }//end of initialize
 }//end of GUI
