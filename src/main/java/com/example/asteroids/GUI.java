@@ -64,8 +64,6 @@ public class GUI implements Initializable {
     @FXML
     private Label pressToPlayLabel;
 
-
-
     //---------------------------------------------------------------------------------------------------------------------------------
 
     @FXML
@@ -151,6 +149,7 @@ public class GUI implements Initializable {
 
         gc.setFill(Color.WHITE);
         gc.fillOval(bullet.getCoordX(), bullet.getCoordY(), bullet.getRadius() , bullet.getRadius());
+
     }//end of drawBullet
 
     // we want to show some kind of lost screen on the gui and reset all the objects(asteroids) created
@@ -196,17 +195,13 @@ public class GUI implements Initializable {
                     lost();
                 }
 
-
                gc.strokeRect(asteroid.getAsteroidImage().getBoundsInParent().getMinX() , asteroid.getAsteroidImage().getBoundsInParent().getMinY()
                               ,asteroid.getAsteroidImage().getBoundsInParent().getWidth() , asteroid.getAsteroidImage().getBoundsInParent().getHeight());
-
-
 
             }
 
             elapsedTime+= 7;
             elapsedTimeShotable += 7;
-
 
 
             if(elapsedTime >= spawnInterval ){
@@ -227,8 +222,14 @@ public class GUI implements Initializable {
                 bullet.moveBullet();
             }
 
+             for(Bullet bullet : player.getBullets()){
+                 gc.strokeRect(bullet.getBounds().getMinX(), bullet.getBounds().getMinY(),20,20);
+             }
+
             //draw the bullets using the javafx canvas
-             for (Bullet bullet : player.getBullets()) {drawBullet(bullet);}
+             for (Bullet bullet : player.getBullets()) {drawBullet(bullet); bullet.checkCollision();}
+
+
 
             Asteroid.moveAsteroid();
 
@@ -262,10 +263,7 @@ public class GUI implements Initializable {
                 playerShip.setRotate(playerShip.getRotate() + player.getRotationSpeed());
             }
 
-
-
             //boundary checking
-
             if(player.getCoordX() < 0){player.setCoordX(0);player.getImageView().setX(0);}
             if(player.getCoordY() < 0){player.setCoordY(0);player.getImageView().setY(0);}
             if(player.getCoordX()  > 1450){player.setCoordX(1450);player.getImageView().setX(1450);}
@@ -278,6 +276,7 @@ public class GUI implements Initializable {
         gameloop.play();
 
     }//end of Main
+
     //code to start the wonderful animation at the beginning of the game
     private void StartAnimationAsteroidsLabel() {
 

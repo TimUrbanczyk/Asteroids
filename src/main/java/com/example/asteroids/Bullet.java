@@ -1,5 +1,8 @@
 package com.example.asteroids;
 
+import javafx.geometry.BoundingBox;
+import javafx.geometry.Bounds;
+
 /*
 I create the bullets at the start of the game and after this they won´t be deleted to safe some performance.
 They just get invisible then...
@@ -17,19 +20,23 @@ public class Bullet implements iBullet {
     private boolean isActive = true;
     private double angleInRadians;
     private static Player player;
+    private Bounds bounds ;
     private static boolean shootableFlag = true;
     private static final long shootableInterval = 150;
 
 
-
     public Bullet(double coordX, double coordY, double angle){
-
-
 
         angleInRadians = Math.toRadians(player.getImageView().getRotate()) - (Math.PI / 2);
         this.coordX = coordX;
         this.coordY = coordY;
         this.angle = angle;
+        this.bounds = new BoundingBox(
+            this.coordX,
+            this.coordY,
+            40,
+            40
+        );
 
     }//end of constructor
 
@@ -43,23 +50,52 @@ public class Bullet implements iBullet {
         this.setCoordX(this.getCoordX() + velocityX);
         this.setCoordY(this.getCoordY() + velocityY);
 
+        this.bounds = new BoundingBox(
+                this.coordX,
+                this.coordY,
+                40,
+                40
+        );
+
     }
+    public boolean checkCollision() {
+        System.out.println(this.bounds);
+        for(Asteroid asteroid : Asteroid.getAsteroids()) {
+
+            Bounds asteroidBounds = new BoundingBox(
+                    asteroid.getAsteroidImage().getBoundsInParent().getMinX(),
+                    asteroid.getAsteroidImage().getBoundsInParent().getMinY(),
+                    asteroid.getAsteroidImage().getBoundsInParent().getWidth(),
+                    asteroid.getAsteroidImage().getBoundsInParent().getHeight()
+            );
+
+
+
+            if(this.bounds.intersects(asteroidBounds)){
+
+                System.out.println("ADSDAAAAAAAAAAAA");
+                asteroid.removeImage();
+                asteroid.despawnAsteroid();
+                player.getBullets().remove(asteroid);
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public static void attachPlayer(Player p){
         player = p;
     }//end of attachPlayer
 
     public static void spawnBullet(){
-        if(player.getBullets().size() > 10){player.getBullets().pop();}
+        if(player.getBullets().size() > 9){ for(int i = 0; i <5;i++){player.getBullets().removeFirst();}}
         player.getBullets().push(new Bullet(
                 player.getImageView().getBoundsInParent().getCenterX()-18,
                 player.getImageView().getBoundsInParent().getCenterY()
                 ,player.getImageView().getRotate()));
 
-        System.out.println(player.getBullets().size());
     }//end of spawnBullet
-
-
 
 
 
@@ -79,6 +115,8 @@ public class Bullet implements iBullet {
     public boolean isShootable(){return this.shootableFlag;}
 
     public static long getShootableInterval(){return shootableInterval;}
+
+    public Bounds getBounds(){return this.bounds;}
 
     //setters
     public void setCoordX(double coordX) {this.coordX = coordX;}
