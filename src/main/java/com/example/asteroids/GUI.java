@@ -18,6 +18,7 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
 public class GUI implements Initializable {
 
@@ -29,6 +30,7 @@ public class GUI implements Initializable {
     private final long spawnInterval = 50;
     private Player player;
     private Timeline gameloop;
+    private Healthbar playerHealthbar;
 
     //static fields
     private static boolean gameRunning = false;
@@ -143,24 +145,18 @@ public class GUI implements Initializable {
 
     public static void setGameRunning(boolean gR) {gameRunning = gR;}
 
-    //logic to draw a Bullet
-    private void drawBullet(Bullet bullet) {
-        gc = canvas.getGraphicsContext2D();
-
-        gc.setFill(Color.WHITE);
-        gc.fillOval(bullet.getCoordX(), bullet.getCoordY(), bullet.getRadius() , bullet.getRadius());
-
-    }//end of drawBullet
 
     // we want to show some kind of lost screen on the gui and reset all the objects(asteroids) created
     private void lost(){
 
         if(!gameRunning){
+
             //stop the game
             gameloop.stop();
 
             //swap the spaceship with an explosion
             player.getImageView().setImage(new Image("C:\\Users\\TimUr\\IdeaProjects\\study\\Asteroids\\src\\main\\resources\\imgs\\Explosion.png"));
+
         }
 
     }//end of lost
@@ -186,7 +182,7 @@ public class GUI implements Initializable {
             double height = player.getHeight();
 
             // Draw players hitBox
-            gc.strokeRect(x, y, width, height);
+           // gc.strokeRect(x, y, width, height);
 
             //check for collision and uncomment the stroke to see the asteroids hit boxes for debugging purpose
             for(Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())){
@@ -194,10 +190,10 @@ public class GUI implements Initializable {
                 if(player.checkCollision(asteroid.getAsteroidImage())){
                     lost();
                 }
-
+            /*
                gc.strokeRect(asteroid.getAsteroidImage().getBoundsInParent().getMinX() , asteroid.getAsteroidImage().getBoundsInParent().getMinY()
                               ,asteroid.getAsteroidImage().getBoundsInParent().getWidth() , asteroid.getAsteroidImage().getBoundsInParent().getHeight());
-
+            */
             }
 
             elapsedTime+= 7;
@@ -222,14 +218,18 @@ public class GUI implements Initializable {
                 bullet.moveBullet();
             }
 
+            /*
+            //draw bullets hitbox
              for(Bullet bullet : player.getBullets()){
                  gc.strokeRect(bullet.getBounds().getMinX(), bullet.getBounds().getMinY(),20,20);
              }
 
+             */
+
             //draw the bullets using the javafx canvas
-             for (Bullet bullet : player.getBullets()) {drawBullet(bullet); bullet.checkCollision();}
+             for (Bullet bullet : new ArrayList<>(player.getBullets())) {drawBullet(bullet); bullet.checkCollision();}
 
-
+            drawHealthBar();
 
             Asteroid.moveAsteroid();
 
@@ -243,18 +243,22 @@ public class GUI implements Initializable {
             if (movingUp) {
                 player.setCoordY(player.getCoordY() - player.getSpeed());
                 playerShip.setY(playerShip.getY() - player.getSpeed());
+                playerHealthbar.setCoordY(playerHealthbar.getCoordY() - player.getSpeed());
             }
             if (movingDown) {
                 player.setCoordY(player.getCoordY() + player.getSpeed());
                 playerShip.setY(playerShip.getY() + player.getSpeed());
+                playerHealthbar.setCoordY(playerHealthbar.getCoordY() + player.getSpeed());
             }
             if (movingLeft) {
                 player.setCoordX(player.getCoordX() - player.getSpeed());
                 playerShip.setX(playerShip.getX() - player.getSpeed());
+                playerHealthbar.setCoordX(playerHealthbar.getCoordX() - player.getSpeed());
             }
             if (movingRight) {
                 player.setCoordX(player.getCoordX() + player.getSpeed());
                 playerShip.setX(playerShip.getX() + player.getSpeed());
+                playerHealthbar.setCoordX(playerHealthbar.getCoordX() + player.getSpeed());
             }
             if (rotatingLeft) {
                 playerShip.setRotate(playerShip.getRotate() - player.getRotationSpeed());
@@ -277,6 +281,21 @@ public class GUI implements Initializable {
 
     }//end of Main
 
+    private void drawHealthBar(){
+        gc = canvas.getGraphicsContext2D();
+        gc.setFill(Color.GREEN);
+        gc.fillRect(player.getHealthBar().getCoordX()+20,player.getHealthBar().getCoordY()-20, player.getHealthPoints() ,10);
+    }//end of drawHealthBar
+
+    //logic to draw a Bullet
+    private void drawBullet(Bullet bullet) {
+        gc = canvas.getGraphicsContext2D();
+
+        gc.setFill(Color.WHITE);
+        gc.fillOval(bullet.getCoordX(), bullet.getCoordY(), bullet.getRadius() , bullet.getRadius());
+
+    }//end of drawBullet
+
     //code to start the wonderful animation at the beginning of the game
     private void StartAnimationAsteroidsLabel() {
 
@@ -298,12 +317,15 @@ public class GUI implements Initializable {
         timelineAsteroidsLabel.play();
 
     }//end of StartAnimationAsteroidsLabel
+
     //init
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         //Create Player
-        player = new Player(100,playerShip,new Healthbar(2, 2) );
+        player = new Player(100,playerShip);
+        this.playerHealthbar = new Healthbar(player.getCoordX(), player.getCoordY());
+        player.attachHealthBar(playerHealthbar);
 
         //insert the GUI elements in the corresponding arrays
         startScreenElements[0] = buttonStartGame;
@@ -313,10 +335,11 @@ public class GUI implements Initializable {
 
         //attach the playerObject to the bullets
         Bullet.attachPlayer(player);
-
+        playerHealthbar.attachPlayer(player);
 
         //play initial label animation the call also starts the spawning etc....
         StartAnimationAsteroidsLabel();
 
     }//end of initialize
+
 }//end of GUI

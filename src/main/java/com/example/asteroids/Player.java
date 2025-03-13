@@ -20,10 +20,10 @@ public class Player {
     private Healthbar healthBar ;
 
     /*
-    Im planning to have about 10-15 bullets active at the same time.
+    I am planning to have about 10-15 bullets active at the same time.
      */
 
-    public Player(int healthPoints, ImageView imageView,Healthbar healthBar) {
+    public Player(int healthPoints, ImageView imageView) {
 
         this.healthBar = healthBar;
         this.healthPoints = healthPoints;
@@ -92,6 +92,7 @@ public class Player {
         }
     }//end of checkForDeath
 
+
     //getters
     public int getHealthPoints() {return healthPoints;}
 
@@ -119,4 +120,6 @@ public class Player {
     public void setCoordX(double coordX) {this.coordX = coordX;}
 
     public void setCoordY(double coordY) {this.coordY = coordY;}
+
+    public void attachHealthBar(Healthbar healthBar) {this.healthBar = healthBar;}
 }//end of Player

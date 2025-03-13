@@ -57,9 +57,9 @@ public class Bullet implements iBullet {
                 40
         );
 
-    }
+    }//end of moveBullet
     public boolean checkCollision() {
-        System.out.println(this.bounds);
+
         for(Asteroid asteroid : Asteroid.getAsteroids()) {
 
             Bounds asteroidBounds = new BoundingBox(
@@ -73,7 +73,6 @@ public class Bullet implements iBullet {
 
             if(this.bounds.intersects(asteroidBounds)){
 
-                System.out.println("ADSDAAAAAAAAAAAA");
                 asteroid.removeImage();
                 asteroid.despawnAsteroid();
                 player.getBullets().remove(asteroid);
@@ -81,13 +80,9 @@ public class Bullet implements iBullet {
             }
         }
         return false;
-    }
-
-
-    public static void attachPlayer(Player p){
-        player = p;
+    }//end of checkCollision
+    public static void attachPlayer(Player p){player = p;
     }//end of attachPlayer
-
     public static void spawnBullet(){
         if(player.getBullets().size() > 9){ for(int i = 0; i <5;i++){player.getBullets().removeFirst();}}
         player.getBullets().push(new Bullet(
@@ -96,8 +91,6 @@ public class Bullet implements iBullet {
                 ,player.getImageView().getRotate()));
 
     }//end of spawnBullet
-
-
 
     //getters
     public double getCoordX() {return this.coordX;}
