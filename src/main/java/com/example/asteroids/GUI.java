@@ -14,9 +14,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class GUI implements Initializable {
@@ -25,6 +25,7 @@ public class GUI implements Initializable {
     private Parent[] startScreenElements = new Parent[4];
     private GraphicsContext gc;
     private long elapsedTime = 0;
+    private long elapsedTimeShotable = 0;
     private final long spawnInterval = 50;
     private Player player;
     private Timeline gameloop;
@@ -39,6 +40,7 @@ public class GUI implements Initializable {
     private boolean movingRight = false;
     private boolean rotatingLeft = false;
     private boolean rotatingRight = false;
+    private boolean shoot = false;
 
     //FXML fields
     @FXML
@@ -58,7 +60,10 @@ public class GUI implements Initializable {
     @FXML
     private ImageView pressToPlay2;
     @FXML
+    private ImageView pressToPlay3;
+    @FXML
     private Label pressToPlayLabel;
+
 
 
     //---------------------------------------------------------------------------------------------------------------------------------
@@ -74,6 +79,7 @@ public class GUI implements Initializable {
         }
         pressToPlay1.setVisible(false);
         pressToPlay2.setVisible(false);
+        pressToPlay3.setVisible(false);
 
         //start the game
         gameRunning = true;
@@ -102,6 +108,8 @@ public class GUI implements Initializable {
             case RIGHT:
                 rotatingRight = true;
                 break;
+            case SPACE:
+                shoot = true;
             default:
                 break;
         }
@@ -128,13 +136,22 @@ public class GUI implements Initializable {
             case RIGHT:
                 rotatingRight = false;
                 break;
+            case SPACE:
+                shoot = false;
             default:
                 break;
         }
     }
 
-    public static  boolean isGameRunning() {return gameRunning;}
     public static void setGameRunning(boolean gR) {gameRunning = gR;}
+
+    //logic to draw a Bullet
+    private void drawBullet(Bullet bullet) {
+        gc = canvas.getGraphicsContext2D();
+
+        gc.setFill(Color.WHITE);
+        gc.fillOval(bullet.getCoordX(), bullet.getCoordY(), bullet.getRadius() , bullet.getRadius());
+    }//end of drawBullet
 
     // we want to show some kind of lost screen on the gui and reset all the objects(asteroids) created
     private void lost(){
@@ -169,22 +186,28 @@ public class GUI implements Initializable {
             double width = player.getWidth();
             double height = player.getHeight();
 
-            // Draw the rectangle
+            // Draw players hitBox
             gc.strokeRect(x, y, width, height);
 
             //check for collision and uncomment the stroke to see the asteroids hit boxes for debugging purpose
-            for(Asteroid asteroid : Asteroid.getAsteroids()){
+            for(Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())){
 
                 if(player.checkCollision(asteroid.getAsteroidImage())){
                     lost();
                 }
 
+
                gc.strokeRect(asteroid.getAsteroidImage().getBoundsInParent().getMinX() , asteroid.getAsteroidImage().getBoundsInParent().getMinY()
                               ,asteroid.getAsteroidImage().getBoundsInParent().getWidth() , asteroid.getAsteroidImage().getBoundsInParent().getHeight());
+
+
 
             }
 
             elapsedTime+= 7;
+            elapsedTimeShotable += 7;
+
+
 
             if(elapsedTime >= spawnInterval ){
 
@@ -200,11 +223,24 @@ public class GUI implements Initializable {
                 elapsedTime = 0;
             }
 
+            for(Bullet bullet : player.getBullets()){
+                bullet.moveBullet();
+            }
+
+            //draw the bullets using the javafx canvas
+             for (Bullet bullet : player.getBullets()) {drawBullet(bullet);}
+
             Asteroid.moveAsteroid();
 
+            if(shoot){
+                if(elapsedTimeShotable >= Bullet.getShootableInterval()){
+                    Bullet.spawnBullet();
+                    elapsedTimeShotable = 0;
+
+                }
+            }
             if (movingUp) {
                 player.setCoordY(player.getCoordY() - player.getSpeed());
-
                 playerShip.setY(playerShip.getY() - player.getSpeed());
             }
             if (movingDown) {
@@ -226,12 +262,14 @@ public class GUI implements Initializable {
                 playerShip.setRotate(playerShip.getRotate() + player.getRotationSpeed());
             }
 
+
+
             //boundary checking
 
-            if(playerShip.getX() < -700){playerShip.setX(-700);}
-            if(playerShip.getY() < -334){playerShip.setY(-334);}
-            if(playerShip.getX() + playerShip.getLayoutX() > 1450){playerShip.setX(1450-playerShip.getLayoutX());}
-            if(playerShip.getY() + playerShip.getLayoutY() > 750){playerShip.setY(750-playerShip.getLayoutY());}
+            if(player.getCoordX() < 0){player.setCoordX(0);player.getImageView().setX(0);}
+            if(player.getCoordY() < 0){player.setCoordY(0);player.getImageView().setY(0);}
+            if(player.getCoordX()  > 1450){player.setCoordX(1450);player.getImageView().setX(1450);}
+            if(player.getCoordY()  > 750){player.setCoordY(750);player.getImageView().setY(750);}
 
         }));
 
@@ -266,7 +304,7 @@ public class GUI implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         //Create Player
-        player = new Player(100,playerShip);
+        player = new Player(100,playerShip,new Healthbar(2, 2) );
 
         //insert the GUI elements in the corresponding arrays
         startScreenElements[0] = buttonStartGame;
@@ -274,6 +312,8 @@ public class GUI implements Initializable {
         startScreenElements[2] = exitButton;
         startScreenElements[3] = pressToPlayLabel;
 
+        //attach the playerObject to the bullets
+        Bullet.attachPlayer(player);
 
 
         //play initial label animation the call also starts the spawning etc....

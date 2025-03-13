@@ -127,7 +127,9 @@ public class Asteroid {
     }//end of generateSpawnPoint
 
     public void despawnAsteroid(){
-        Asteroid.getAsteroids().remove(this);
+        removeImage();
+        getAsteroids().remove(this);
+
     }
 
     public void removeImage(){

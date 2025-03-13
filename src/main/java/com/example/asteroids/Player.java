@@ -3,6 +3,8 @@ package com.example.asteroids;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;
+import java.util.ArrayList;
+import java.util.Stack;
 
 public class Player {
 
@@ -14,25 +16,28 @@ public class Player {
     private final double height;
     private double speed = 6.5;
     private double rotationSpeed = 4.5;
-    private final long getInvincibleAfterTakingDamageInterval = 1500;
-    private long elapsedTime = 0;
+    private Stack<Bullet> bullets = new Stack<>(); //use a stack to make it easier to despawn the bullets after a certian time
+    private Healthbar healthBar ;
 
-    public Player( int healthPoints, ImageView imageView) {
+    /*
+    Im planning to have about 10-15 bullets active at the same time.
+     */
 
+    public Player(int healthPoints, ImageView imageView,Healthbar healthBar) {
+
+        this.healthBar = healthBar;
         this.healthPoints = healthPoints;
         this.imageView = imageView;
         this.coordX = imageView.getX();
-        System.out.println(imageView);
-        System.out.println(coordX);
         this.coordY = imageView.getY();
         this.width = imageView.getBoundsInParent().getWidth()-20;
         this.height = imageView.getBoundsInParent().getHeight()-10;
 
     }//end of constructor
 
-    public boolean checkCollision( ImageView target) {
+    public boolean checkCollision(ImageView target) {
 
-        for(Asteroid asteroid : Asteroid.getAsteroids()) {
+        for(Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())) {
 
             //set up the both bounds as good as possible somehow i wasted to much time here idk
             Bounds asteroidBounds = new BoundingBox(
@@ -68,18 +73,16 @@ public class Player {
     }//end of checkCollision
 
     public void handleCollision( Asteroid asteroid) {
+
             asteroid.despawnAsteroid();
 
     }//end of handleCollision
 
-
     private void calculateNewHealthPoints(Asteroid asteroid) {
-        if(elapsedTime > getInvincibleAfterTakingDamageInterval) {
             this.healthPoints = this.healthPoints - asteroid.getHealthPoints();
             System.out.println(this.healthPoints);
-            elapsedTime = 0;
             checkForDeath();
-        }elapsedTime+=1;
+
 
     }//end of calculateNewHealthPoints
 
@@ -90,7 +93,6 @@ public class Player {
     }//end of checkForDeath
 
     //getters
-
     public int getHealthPoints() {return healthPoints;}
 
     public ImageView getImageView() {return imageView;}
@@ -106,6 +108,10 @@ public class Player {
     public double getWidth() {return width;}
 
     public double getHeight() {return height;}
+
+    public Stack<Bullet> getBullets() {return bullets;}
+
+    public Healthbar getHealthBar() {return healthBar;}
 
 
     //setters
