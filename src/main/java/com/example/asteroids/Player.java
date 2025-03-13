@@ -68,7 +68,7 @@ public class Player {
     }//end of checkCollision
 
     public void handleCollision( Asteroid asteroid) {
-
+            asteroid.despawnAsteroid();
 
     }//end of handleCollision
 
