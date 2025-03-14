@@ -79,7 +79,7 @@ public class Player {
     }//end of handleCollision
 
     private void calculateNewHealthPoints(Asteroid asteroid) {
-            this.healthPoints = this.healthPoints - asteroid.getHealthPoints();
+            this.healthPoints = this.healthPoints - asteroid.getDamagePoints();
             System.out.println(this.healthPoints);
             checkForDeath();
 

@@ -12,7 +12,6 @@ public class Asteroid {
     private static ArrayList<Asteroid> asteroids = new ArrayList<>();
 
     //fields
-    private int healthPoints;
     private double speedX;
     private double speedY;
     private double coordX;
@@ -23,7 +22,7 @@ public class Asteroid {
     private boolean wasOnScreen;
     private int damagePoints;
 
-    public Asteroid(int healthPoints, double speedX, double speedY, String imgPath, int damagePoints) {
+    public Asteroid(double speedX, double speedY, String imgPath, int damagePoints) {
 
 
         spawnPoint = generateSpawnPoint();
@@ -31,7 +30,6 @@ public class Asteroid {
         coordY = spawnPoint[1];
 
         this.imgPath = imgPath;
-        this.healthPoints = healthPoints;
         this.damagePoints = damagePoints;
 
         Random rand = new Random();
@@ -72,10 +70,10 @@ public class Asteroid {
 
         if(numberRandom < 0.9){
             asteroids.addFirst(new SmallAsteroid());
-        }else if(numberRandom < 1 && numberRandom >= 0.9){
+        }else if(numberRandom < 0.95 && numberRandom >= 0.9){
             asteroids.addFirst(new BigAsteroid());
-        }else if(numberRandom >= 1){
-            asteroids.addFirst(new DVD());
+        }else if(numberRandom >= 0.95){
+            asteroids.addFirst(new HealingAsteroid());
         }
 
 
@@ -137,7 +135,7 @@ public class Asteroid {
     }
 
     //getters
-    public int getHealthPoints() {return this.healthPoints;}
+    public int getDamagePoints() {return this.damagePoints;}
 
     public double getSpeedX() {return this.speedX;}
 
@@ -158,7 +156,7 @@ public class Asteroid {
     public boolean getWasOnScreen() {return this.wasOnScreen;}
 
     //setters
-    public void setHealthPoints(int healthPoints) {this.healthPoints = healthPoints;}
+    public void setDamagePoints(int d) {this.damagePoints = d;}
 
     public void setSpeedX(double speedX) {this.speedX = speedX;}
 

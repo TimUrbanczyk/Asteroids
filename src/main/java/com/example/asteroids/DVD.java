@@ -14,7 +14,7 @@ public class DVD extends Asteroid{
 
     public DVD() {
 
-        super(healthPoints, speedX, speedY,imPath,damagePoints);
+        super(speedX, speedY,imPath,damagePoints);
     }//end of Constructor
 
 }//end of DVD

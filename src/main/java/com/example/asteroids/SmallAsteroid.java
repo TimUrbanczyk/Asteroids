@@ -5,7 +5,6 @@ import java.util.Random;
 public class SmallAsteroid extends Asteroid {
 
     //static fields
-    private static int healthPoints = 30;
     private static double speedX = 4;
     private static double speedY  = -4;
     private static int damagePoints = 30;
@@ -13,7 +12,7 @@ public class SmallAsteroid extends Asteroid {
 
     public SmallAsteroid() {
 
-        super(healthPoints,speedX,speedY,imPath,damagePoints);
+        super(speedX,speedY,imPath,damagePoints);
         super.getAsteroidImage().setScaleX(0.8);
         super.getAsteroidImage().setScaleY(0.8);
 
