@@ -170,12 +170,7 @@ public class Asteroid {
 
     public void setWasOnScreen(boolean wasOnScreen) {this.wasOnScreen = wasOnScreen;}
 
-
-
-
-
-
-
+    public static void setAsteroids(ArrayList<Asteroid> a) {asteroids = a;}
 
 }//end of Asteroid
 

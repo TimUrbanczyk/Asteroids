@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Stack;
 
@@ -27,7 +28,7 @@ public class GUI implements Initializable {
     private GraphicsContext gc;
     private long elapsedTime = 0;
     private long elapsedTimeShotable = 0;
-    private final long spawnInterval = 50;
+    private final long spawnInterval = 30;
     private Player player;
     private Timeline gameloop;
     private Healthbar playerHealthbar;
@@ -80,6 +81,7 @@ public class GUI implements Initializable {
         pressToPlay1.setVisible(false);
         pressToPlay2.setVisible(false);
         pressToPlay3.setVisible(false);
+
 
         //start the game
         gameRunning = true;
@@ -145,7 +147,6 @@ public class GUI implements Initializable {
 
     public static void setGameRunning(boolean gR) {gameRunning = gR;}
 
-
     // we want to show some kind of lost screen on the gui and reset all the objects(asteroids) created
     private void lost(){
 
@@ -157,9 +158,20 @@ public class GUI implements Initializable {
             //swap the spaceship with an explosion
             player.getImageView().setImage(new Image("C:\\Users\\TimUr\\IdeaProjects\\study\\Asteroids\\src\\main\\resources\\imgs\\Explosion.png"));
 
-        }
+
+            //unalive all the asteroids existing
+            for(Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())){
+
+                asteroid.removeImage();
+                asteroid.despawnAsteroid();
+
+            }//end of for
+
+
+        }//end of if
 
     }//end of lost
+
     //main method/loop/u know
     private void Main(){
 
@@ -230,6 +242,7 @@ public class GUI implements Initializable {
              for (Bullet bullet : new ArrayList<>(player.getBullets())) {drawBullet(bullet); bullet.checkCollision();}
 
             drawHealthBar();
+
 
             Asteroid.moveAsteroid();
 

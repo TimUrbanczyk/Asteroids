@@ -75,7 +75,7 @@ public class Bullet implements iBullet {
 
                 asteroid.removeImage();
                 asteroid.despawnAsteroid();
-                player.getBullets().remove(asteroid);
+                player.getBullets().remove(this);
                 return true;
             }
         }
