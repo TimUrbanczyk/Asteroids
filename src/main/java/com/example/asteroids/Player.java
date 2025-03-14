@@ -122,4 +122,6 @@ public class Player {
     public void setCoordY(double coordY) {this.coordY = coordY;}
 
     public void attachHealthBar(Healthbar healthBar) {this.healthBar = healthBar;}
+
+    public void setBullets(Stack<Bullet> bullets) {this.bullets = bullets;}
 }//end of Player

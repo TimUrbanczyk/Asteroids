@@ -167,6 +167,10 @@ public class GUI implements Initializable {
 
             }//end of for
 
+            //unalive all the bullets
+            player.setBullets(new Stack<>());
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
 
         }//end of if
 
