@@ -15,6 +15,7 @@ public class Player {
     private final double width;
     private final double height;
     private double speed = 6.5;
+    private int points = 0;
     private double rotationSpeed = 4.5;
     private Stack<Bullet> bullets = new Stack<>(); //use a stack to make it easier to despawn the bullets after a certian time
     private Healthbar healthBar ;
@@ -111,6 +112,8 @@ public class Player {
 
     public Healthbar getHealthBar() {return healthBar;}
 
+    public int getPoints() {return this.points;}
+
 
     //setters
 
@@ -123,4 +126,6 @@ public class Player {
     public void setBullets(Stack<Bullet> bullets) {this.bullets = bullets;}
 
     public void setHealthPoints(int h) {this.healthPoints = h;}
+
+    public void setPoints(int p) {this.points = p;}
 }//end of Player

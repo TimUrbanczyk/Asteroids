@@ -58,6 +58,7 @@ public class Bullet implements iBullet {
         );
 
     }//end of moveBullet
+
     public boolean checkCollision() {
 
         for(Asteroid asteroid : Asteroid.getAsteroids()) {
@@ -76,13 +77,16 @@ public class Bullet implements iBullet {
                 asteroid.removeImage();
                 asteroid.despawnAsteroid();
                 player.getBullets().remove(this);
+                player.setPoints(player.getPoints() + 1);
                 return true;
             }
         }
         return false;
     }//end of checkCollision
+
     public static void attachPlayer(Player p){player = p;
     }//end of attachPlayer
+
     public static void spawnBullet(){
         if(player.getBullets().size() > 9){ for(int i = 0; i <5;i++){player.getBullets().removeFirst();}}
         player.getBullets().push(new Bullet(

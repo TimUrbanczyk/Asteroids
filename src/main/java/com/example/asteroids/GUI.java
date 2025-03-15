@@ -70,6 +70,8 @@ public class GUI implements Initializable {
     private Label pressToPlayLabel;
     @FXML
     private Label defeatLabel;
+    @FXML
+    private Label pointsLabel;
 
     //---------------------------------------------------------------------------------------------------------------------------------
 
@@ -97,6 +99,7 @@ public class GUI implements Initializable {
         player.setHealthPoints(100);
 
 
+        pointsLabel.setVisible(true);
 
         //start the game
         gameRunning = true;
@@ -109,6 +112,8 @@ public class GUI implements Initializable {
         //stop the game
         buttonBackToMenu.setVisible(false);
         defeatLabel.setVisible(false);
+        player.setPoints(0);
+        pointsLabel.setVisible(false);
         gameRunning = false;
 
         //change player visuals back to default
@@ -116,6 +121,7 @@ public class GUI implements Initializable {
         player.setCoordY(334.0);
         player.getImageView().setX(700);
         player.getImageView().setY(334);
+        player.getImageView().setRotate(0);
         player.getImageView().setImage(new Image("C:\\Users\\TimUr\\IdeaProjects\\study\\Asteroids\\src\\main\\resources\\imgs\\SpaceshipPlayer.png"));
 
 
@@ -235,6 +241,8 @@ public class GUI implements Initializable {
          gameloop = new Timeline(new KeyFrame(Duration.millis(7), event -> {
 
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+            pointsLabel.setText("Points : "+player.getPoints());
 
             //uncomment this bock th see the ships hit box
             // Draw a yellow rectangle
