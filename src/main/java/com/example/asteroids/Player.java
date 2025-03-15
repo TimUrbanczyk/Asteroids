@@ -80,10 +80,7 @@ public class Player {
 
     private void calculateNewHealthPoints(Asteroid asteroid) {
             this.healthPoints = this.healthPoints - asteroid.getDamagePoints();
-            System.out.println(this.healthPoints);
             checkForDeath();
-
-
     }//end of calculateNewHealthPoints
 
     private void checkForDeath() {
@@ -124,4 +121,6 @@ public class Player {
     public void attachHealthBar(Healthbar healthBar) {this.healthBar = healthBar;}
 
     public void setBullets(Stack<Bullet> bullets) {this.bullets = bullets;}
+
+    public void setHealthPoints(int h) {this.healthPoints = h;}
 }//end of Player

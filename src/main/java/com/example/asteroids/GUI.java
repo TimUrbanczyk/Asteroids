@@ -57,6 +57,8 @@ public class GUI implements Initializable {
     @FXML
     private Button exitButton;
     @FXML
+    private Button buttonBackToMenu;
+    @FXML
     private Canvas canvas;
     @FXML
     private ImageView pressToPlay1;
@@ -66,6 +68,8 @@ public class GUI implements Initializable {
     private ImageView pressToPlay3;
     @FXML
     private Label pressToPlayLabel;
+    @FXML
+    private Label defeatLabel;
 
     //---------------------------------------------------------------------------------------------------------------------------------
 
@@ -83,11 +87,48 @@ public class GUI implements Initializable {
         pressToPlay3.setVisible(false);
 
 
+        //attach the playerObject to the bullets
+        this.playerHealthbar = new Healthbar(player.getCoordX(), player.getCoordY());
+        player.attachHealthBar(playerHealthbar);
+        Bullet.attachPlayer(player);
+        playerHealthbar.attachPlayer(player);
+
+        //reset player
+        player.setHealthPoints(100);
+
+
+
         //start the game
         gameRunning = true;
         Main();
 
     }//end of onButtonStartGame
+    @FXML
+    private void onButtonBackToMenu(){
+
+        //stop the game
+        buttonBackToMenu.setVisible(false);
+        defeatLabel.setVisible(false);
+        gameRunning = false;
+
+        //change player visuals back to default
+        player.setCoordX(700.0);
+        player.setCoordY(334.0);
+        player.getImageView().setX(700);
+        player.getImageView().setY(334);
+        player.getImageView().setImage(new Image("C:\\Users\\TimUr\\IdeaProjects\\study\\Asteroids\\src\\main\\resources\\imgs\\SpaceshipPlayer.png"));
+
+
+        //show the startscreen
+        for(javafx.scene.Node element : startScreenElements){
+            element.setVisible(true);
+        }
+        pressToPlay1.setVisible(true);
+        pressToPlay2.setVisible(true);
+        pressToPlay3.setVisible(true);
+
+
+    }//end of onButtonBackToMenu
     @FXML
     private void handleKeyPressed(KeyEvent event) {
         // Set movement and rotation flags based on key presses
@@ -155,8 +196,11 @@ public class GUI implements Initializable {
             //stop the game
             gameloop.stop();
 
+
             //swap the spaceship with an explosion
             player.getImageView().setImage(new Image("C:\\Users\\TimUr\\IdeaProjects\\study\\Asteroids\\src\\main\\resources\\imgs\\Explosion.png"));
+
+
 
 
             //unalive all the asteroids existing
@@ -170,6 +214,10 @@ public class GUI implements Initializable {
             //unalive all the bullets
             player.setBullets(new Stack<>());
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+            buttonBackToMenu.setVisible(true);
+            exitButton.setVisible(true);
+            defeatLabel.setVisible(true);
 
 
         }//end of if
@@ -341,8 +389,7 @@ public class GUI implements Initializable {
 
         //Create Player
         player = new Player(100,playerShip);
-        this.playerHealthbar = new Healthbar(player.getCoordX(), player.getCoordY());
-        player.attachHealthBar(playerHealthbar);
+
 
         //insert the GUI elements in the corresponding arrays
         startScreenElements[0] = buttonStartGame;
@@ -350,9 +397,6 @@ public class GUI implements Initializable {
         startScreenElements[2] = exitButton;
         startScreenElements[3] = pressToPlayLabel;
 
-        //attach the playerObject to the bullets
-        Bullet.attachPlayer(player);
-        playerHealthbar.attachPlayer(player);
 
         //play initial label animation the call also starts the spawning etc....
         StartAnimationAsteroidsLabel();
