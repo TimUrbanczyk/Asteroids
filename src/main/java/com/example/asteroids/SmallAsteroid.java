@@ -8,7 +8,7 @@ public class SmallAsteroid extends Asteroid {
     private static double speedX = 4;
     private static double speedY  = -4;
     private static int damagePoints = 30;
-    private static String imPath = "C:\\Users\\TimUr\\IdeaProjects\\study\\Asteroids\\src\\main\\resources\\imgs\\SmallAsteroid.png";
+    private static String imPath = "/imgs/SmallAsteroid.png";
 
     public SmallAsteroid() {
 

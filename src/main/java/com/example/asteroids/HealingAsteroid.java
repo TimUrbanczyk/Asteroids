@@ -12,7 +12,7 @@ public class HealingAsteroid extends Asteroid{
     private static double speedX =5 ;
     private static double speedY = 5;
     private static int damagePoints = -50; // negative damage == healing (5head)
-    private static String imgPath = "C:\\Users\\TimUr\\IdeaProjects\\study\\Asteroids\\src\\main\\resources\\imgs\\HealAsteroid.png";
+    private static String imgPath = "/imgs/HealAsteroid.png";
 
 
     public HealingAsteroid() {

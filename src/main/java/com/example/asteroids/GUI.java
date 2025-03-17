@@ -122,7 +122,8 @@ public class GUI implements Initializable {
         player.getImageView().setX(700);
         player.getImageView().setY(334);
         player.getImageView().setRotate(0);
-        player.getImageView().setImage(new Image("C:\\Users\\TimUr\\IdeaProjects\\study\\Asteroids\\src\\main\\resources\\imgs\\SpaceshipPlayer.png"));
+        Image image = new Image(getClass().getResource("src/main/resources/imgs/SpaceshipPlayer.png").toExternalForm());
+        player.getImageView().setImage(image);
 
 
         //show the startscreen

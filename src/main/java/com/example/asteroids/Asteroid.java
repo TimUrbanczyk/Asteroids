@@ -50,7 +50,8 @@ public class Asteroid {
 
 
 
-        this.asteroidImage = new ImageView(new Image(this.imgPath));
+        Image img = new Image(getClass().getResource(imgPath).toExternalForm());
+        this.asteroidImage = new ImageView(img);
 
         this.asteroidImage.setX(spawnPoint[0]);
         this.asteroidImage.setY(spawnPoint[1]);
