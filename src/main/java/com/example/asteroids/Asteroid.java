@@ -21,6 +21,7 @@ public class Asteroid {
     private ImageView asteroidImage;
     private boolean wasOnScreen;
     private int damagePoints;
+    private long spawnTime = System.currentTimeMillis();
 
     public Asteroid(double speedX, double speedY, String imgPath, int damagePoints) {
 
@@ -80,6 +81,8 @@ public class Asteroid {
 
     }//end of spawnAsteroid
 
+
+
     public static void moveAsteroid(){
         for(Asteroid asteroid : asteroids){
 
@@ -130,6 +133,15 @@ public class Asteroid {
         getAsteroids().remove(this);
 
     }
+
+
+    public void checkDespawn(){
+        if(this.spawnTime > System.currentTimeMillis()+10000){
+            despawnAsteroid();
+        }
+    }//end of checkDespawn
+
+
 
     public void removeImage(){
         this.asteroidImage.setImage(null);
