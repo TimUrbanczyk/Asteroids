@@ -28,7 +28,7 @@ public class GUI implements Initializable {
     private GraphicsContext gc;
     private long elapsedTime = 0;
     private long elapsedTimeShotable = 0;
-    private final long spawnInterval = 30;
+    private final long spawnInterval = 50;
     private Player player;
     private Timeline gameloop;
     private Healthbar playerHealthbar;
@@ -72,6 +72,8 @@ public class GUI implements Initializable {
     private Label defeatLabel;
     @FXML
     private Label pointsLabel;
+    @FXML
+    private Label labelAutofire;
 
     //---------------------------------------------------------------------------------------------------------------------------------
 
@@ -100,6 +102,7 @@ public class GUI implements Initializable {
 
 
         pointsLabel.setVisible(true);
+        labelAutofire.setVisible(true);
 
         //start the game
         gameRunning = true;
@@ -188,6 +191,9 @@ public class GUI implements Initializable {
                 break;
             case SPACE:
                 shoot = false;
+                break;
+            case R:
+                shoot = !shoot;
             default:
                 break;
         }
@@ -245,6 +251,9 @@ public class GUI implements Initializable {
 
             pointsLabel.setText("Points : "+player.getPoints());
 
+            //check for all the bullets to be despawned by time
+            Bullet.despawnBulletByTime();
+
             //uncomment this bock th see the ships hit box
             // Draw a yellow rectangle
             gc.setStroke(Color.YELLOW);
@@ -261,7 +270,6 @@ public class GUI implements Initializable {
                  asteroid.checkDespawn();
 
              }
-             System.out.println(Asteroid.getAsteroids().size());
             //check for collision and uncomment the stroke to see the asteroids hit boxes for debugging purpose
             for(Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())){
 
@@ -403,6 +411,9 @@ public class GUI implements Initializable {
 
         //Create Player
         player = new Player(100,playerShip);
+
+
+
 
 
         //insert the GUI elements in the corresponding arrays

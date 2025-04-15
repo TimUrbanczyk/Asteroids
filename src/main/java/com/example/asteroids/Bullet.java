@@ -23,6 +23,7 @@ public class Bullet implements iBullet {
     private Bounds bounds ;
     private static boolean shootableFlag = true;
     private static final long shootableInterval = 150;
+    private long spawnTime = System.currentTimeMillis();
 
 
     public Bullet(double coordX, double coordY, double angle){
@@ -95,6 +96,21 @@ public class Bullet implements iBullet {
                 ,player.getImageView().getRotate()));
 
     }//end of spawnBullet
+
+    public static void despawnBulletByTime(){
+
+        for(Bullet bullet : player.getBullets()){
+
+
+            if(System.currentTimeMillis() > bullet.spawnTime+5000){
+                System.out.println(bullet);
+                player.getBullets().remove(bullet);
+                break;
+            }
+
+        }
+
+    }//end of despawnBulletByTime
 
     //getters
     public double getCoordX() {return this.coordX;}
