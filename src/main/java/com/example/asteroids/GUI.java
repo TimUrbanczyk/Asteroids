@@ -28,7 +28,7 @@ public class GUI implements Initializable {
     private GraphicsContext gc;
     private long elapsedTime = 0;
     private long elapsedTimeShotable = 0;
-    private final long spawnInterval = 30;
+    private final long spawnInterval = 50;
     private Player player;
     private Timeline gameloop;
     private Healthbar playerHealthbar;
@@ -267,7 +267,9 @@ public class GUI implements Initializable {
            // gc.strokeRect(x, y, width, height);
 
              for(Asteroid asteroid : Asteroid.getAsteroids()){
-                 asteroid.checkDespawn();
+                 if(asteroid.checkDespawn()){
+                     mainAnchorPane.getChildren().remove(asteroid.getAsteroidImage());
+                 }
 
              }
             //check for collision and uncomment the stroke to see the asteroids hit boxes for debugging purpose
@@ -370,6 +372,8 @@ public class GUI implements Initializable {
 
     }//end of Main
 
+
+
     private void drawHealthBar(){
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.GREEN);
@@ -412,7 +416,7 @@ public class GUI implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         //Create Player
-        player = new Player(100,playerShip);
+        player = new Player(10000,playerShip);
 
 
 

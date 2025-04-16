@@ -135,10 +135,12 @@ public class Asteroid {
     }
 
 
-    public void checkDespawn(){
+    public boolean checkDespawn(){
         if(this.spawnTime > System.currentTimeMillis()+10000){
             despawnAsteroid();
+            return true;
         }
+        return false;
     }//end of checkDespawn
 
 
