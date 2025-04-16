@@ -104,6 +104,7 @@ public class Bullet implements iBullet {
 
             if(System.currentTimeMillis() > bullet.spawnTime+5000){
                 System.out.println(bullet);
+                System.out.println(player.getBullets().size());
                 player.getBullets().remove(bullet);
                 break;
             }

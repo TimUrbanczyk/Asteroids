@@ -28,7 +28,7 @@ public class GUI implements Initializable {
     private GraphicsContext gc;
     private long elapsedTime = 0;
     private long elapsedTimeShotable = 0;
-    private final long spawnInterval = 50;
+    private final long spawnInterval = 30;
     private Player player;
     private Timeline gameloop;
     private Healthbar playerHealthbar;
@@ -354,11 +354,13 @@ public class GUI implements Initializable {
                 playerShip.setRotate(playerShip.getRotate() + player.getRotationSpeed());
             }
 
-            //boundary checking
-            if(player.getCoordX() < 0){player.setCoordX(0);player.getImageView().setX(0);}
-            if(player.getCoordY() < 0){player.setCoordY(0);player.getImageView().setY(0);}
-            if(player.getCoordX()  > 1450){player.setCoordX(1450);player.getImageView().setX(1450);}
-            if(player.getCoordY()  > 750){player.setCoordY(750);player.getImageView().setY(750);}
+            //boundary checking for player and healthbar
+            if(player.getCoordX() < 0){player.setCoordX(0);player.getImageView().setX(0);playerHealthbar.setCoordX(0);}
+            if(player.getCoordY() < 0){player.setCoordY(0);player.getImageView().setY(0);playerHealthbar.setCoordY(0);}
+            if(player.getCoordX()  > 1450){player.setCoordX(1450);player.getImageView().setX(1450);playerHealthbar.setCoordX(1450);}
+            if(player.getCoordY()  > 750){player.setCoordY(750);player.getImageView().setY(750);playerHealthbar.setCoordY(750);}
+
+
 
         }));
 
