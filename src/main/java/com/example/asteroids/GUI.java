@@ -266,11 +266,10 @@ public class GUI implements Initializable {
             // Draw players hitBox
            // gc.strokeRect(x, y, width, height);
 
-             for(Asteroid asteroid : Asteroid.getAsteroids()){
-                 if(asteroid.checkDespawn()){
+             for (Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())) {
+                 if (asteroid.checkDespawn()) {
                      mainAnchorPane.getChildren().remove(asteroid.getAsteroidImage());
                  }
-
              }
             //check for collision and uncomment the stroke to see the asteroids hit boxes for debugging purpose
             for(Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())){

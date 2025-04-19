@@ -136,7 +136,7 @@ public class Asteroid {
 
 
     public boolean checkDespawn(){
-        if(this.spawnTime > System.currentTimeMillis()+10000){
+        if(System.currentTimeMillis() - this.spawnTime > 10000){
             despawnAsteroid();
             return true;
         }
