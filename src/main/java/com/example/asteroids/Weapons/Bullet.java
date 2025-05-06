@@ -11,7 +11,7 @@ They just get invisible then...
 That is why the field isActive exists.
 Number of bullets active at the same time : 10
  */
-public class Bullet implements iBullet {
+public class Bullet {
 
     //fields
     private double coordX;
