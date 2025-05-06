@@ -1,3 +1,58 @@
+# Asteroids Game
+
+## Requirements to Run the Game
+
+1. **Java 17**
+   - Download and install Java 17 (JDK or JRE) from:
+   - Oracle JDK: https://www.oracle.com/java/technologies/downloads/#java17
+   - OR OpenJDK: https://adoptium.net/ (Choose version 17)
+
+2. **JavaFX SDK 17.0.9**
+   - Download JavaFX Windows SDK from: https://gluonhq.com/products/javafx/
+   - Extract the downloaded zip file to a location on your computer
+   - Remember where you extracted it (e.g., `C:\javafx-sdk-17.0.9`)
+
+## How to Run the Game
+
+### Method 1: Using Command Line
+1. Open Command Prompt
+2. Navigate to the folder containing the JAR file
+3. Run the following command (replace the path with your JavaFX location):
+```bash
+java --module-path "C:\javafx-sdk-17.0.9\lib" --add-modules javafx.controls,javafx.fxml,javafx.graphics -jar Asteroids-1.0-SNAPSHOT.jar
+```
+
+### Method 2: Using Batch File
+1. Create a file named `RunAsteroids.bat` in the same folder as the JAR
+2. Add the following content (update the JavaFX path to match your installation):
+```batch
+@echo off
+set JAVAFX_PATH=C:\javafx-sdk-17.0.9\lib
+java --module-path "%JAVAFX_PATH%" --add-modules javafx.controls,javafx.fxml,javafx.graphics -jar Asteroids-1.0-SNAPSHOT.jar
+pause
+```
+3. Double-click the batch file to run the game
+
+## Troubleshooting
+
+If you get any of these errors:
+- "Error: JavaFX runtime components are missing"
+- "Module javafx.controls not found"
+- "Module javafx.fxml not found"
+
+Make sure:
+1. You have installed JavaFX SDK
+2. The path to JavaFX lib folder is correct in your command/batch file
+3. You're using Java 17 (check with `java -version` in command prompt)
+
+## Game Controls
+
+[Add your game controls here]
+
+## About the Game
+
+[Add description of your game here]
+
 # Asteroids-Inspired Space Shooter
 
 A modern take on the classic Asteroids game, built with JavaFX. This is not a direct clone, but rather an inspired minigame that adds unique mechanics and features.
