@@ -1,4 +1,4 @@
-package com.example.asteroids;
+package com.example.asteroids.Asteroids;
 
 /*
 The idea is to make shooting star/star that spawns with a percentage of 0.01
@@ -6,7 +6,7 @@ This shooting star should heal the player on collision
 The player is allowed to kill the shooting star
  */
 
-public class HealingAsteroid extends Asteroid{
+public class HealingAsteroid extends Asteroid {
 
     //static fields
     private static double speedX =5 ;

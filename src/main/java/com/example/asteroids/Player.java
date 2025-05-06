@@ -1,5 +1,9 @@
 package com.example.asteroids;
 
+import com.example.asteroids.Asteroids.Asteroid;
+import com.example.asteroids.Weapons.Bullet;
+import com.example.asteroids.GUI.GUI;
+import com.example.asteroids.GUI.Healthbar;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchorPane" onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: Black" styleClass="Label" stylesheets="@../../../CSS/Style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.asteroids.GUI">
+<AnchorPane fx:id="mainAnchorPane" onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: Black" styleClass="Label" stylesheets="@../../../CSS/Style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.asteroids.GUI.GUI">
    <children>
       <Canvas fx:id="canvas" height="900.0" layoutX="6.0" layoutY="6.0" width="1600.0" />
       <ImageView fx:id="playerShip" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" x="700.0" y="334.0">

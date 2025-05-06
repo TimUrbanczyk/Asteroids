@@ -1,4 +1,4 @@
-package com.example.asteroids;
+package com.example.asteroids.GUI;
 
 
 //use singleton here

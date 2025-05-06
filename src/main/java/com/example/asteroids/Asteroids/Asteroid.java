@@ -1,4 +1,4 @@
-package com.example.asteroids;
+package com.example.asteroids.Asteroids;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

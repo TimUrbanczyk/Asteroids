@@ -1,4 +1,4 @@
-package com.example.asteroids;
+package com.example.asteroids.Weapons;
 
 public interface iBullet {
     static void drawBullets(){};

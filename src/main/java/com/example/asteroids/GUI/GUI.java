@@ -1,5 +1,8 @@
-package com.example.asteroids;
+package com.example.asteroids.GUI;
 
+import com.example.asteroids.Asteroids.Asteroid;
+import com.example.asteroids.Weapons.Bullet;
+import com.example.asteroids.Player;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -17,7 +20,6 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Stack;
 
