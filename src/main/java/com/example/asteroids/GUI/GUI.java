@@ -2,7 +2,9 @@ package com.example.asteroids.GUI;
 
 import com.example.asteroids.Asteroids.Asteroid;
 import com.example.asteroids.Weapons.Bullet;
+import com.example.asteroids.GUI.Healthbar;
 import com.example.asteroids.Player;
+import com.example.asteroids.Weapons.Laser;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -30,6 +32,7 @@ public class GUI implements Initializable {
     private GraphicsContext gc;
     private long elapsedTime = 0;
     private long elapsedTimeShotable = 0;
+    private long elapsedTimeLaser = 0;
     private final long spawnInterval = 50;
     private Player player;
     private Timeline gameloop;
@@ -287,6 +290,7 @@ public class GUI implements Initializable {
 
             elapsedTime+= 7;
             elapsedTimeShotable += 7;
+            elapsedTimeLaser += 7;
 
 
             if(elapsedTime >= spawnInterval ){
@@ -322,6 +326,13 @@ public class GUI implements Initializable {
 
 
             Asteroid.moveAsteroid();
+
+
+            if( elapsedTimeLaser >= Laser.getInstance().getShootableInterval()){
+                Laser.getInstance().shoot();
+                drawLaser();
+                elapsedTimeLaser = 0;
+            }
 
             if(shoot){
                 if(elapsedTimeShotable >= Bullet.getShootableInterval()){
@@ -372,6 +383,27 @@ public class GUI implements Initializable {
         gameloop.play();
 
     }//end of Main
+
+
+    private void drawLaser(){
+
+        double startX = player.getCoordX()+player.getWidth()/2;
+        double startY = player.getCoordY()+player.getHeight()/2;
+        double length = Laser.getInstance().getLength();
+        double width = Laser.getInstance().getWidth();
+        double angle = Laser.getInstance().getAngle();
+
+
+        double endX = startX + length * Math.cos(Math.toRadians(angle));
+        double endY = startY + length * Math.sin(Math.toRadians(angle));
+
+        // Draw the rotated rectangle as a polygon
+        gc.setStroke(Laser.getInstance().getLaserColor());
+        gc.setLineWidth(Laser.getInstance().getWidth());
+        gc.strokeLine(startX,startY,endX,endY);
+        Laser.getInstance().shoot();
+
+    }
 
 
 
