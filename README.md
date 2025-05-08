@@ -89,6 +89,12 @@ A modern take on the classic Asteroids game, built with JavaFX. This is not a di
   
   <img src="src/main/resources/imgs/ReadmeImgs/READMEPICTURE2.png" width="800" alt="Gameplay"/>
   <p><em>Gameplay Screenshot showing Combat and Asteroids</em></p>
+
+  <img src="src/main/resources/imgs/ReadmeImgs/READMEPICTURE3.png" width="800" alt="Gameplay"/>
+  <p><em>Gameplay Screenshot showing Combat and Asteroids</em></p>
+
+  <img src="src/main/resources/imgs/ReadmeImgs/READMEPICTURE4.png" width="800" alt="Gameplay"/>
+  <p><em>Gameplay Screenshot showing Combat and Asteroids</em></p>
 </div>
 
 ## Controls
