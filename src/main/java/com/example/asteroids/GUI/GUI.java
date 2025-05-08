@@ -1,9 +1,9 @@
 package com.example.asteroids.GUI;
 
 import com.example.asteroids.Asteroids.Asteroid;
+import com.example.asteroids.PlayerPackage.Healthbar;
 import com.example.asteroids.Weapons.Bullet;
-import com.example.asteroids.GUI.Healthbar;
-import com.example.asteroids.Player;
+import com.example.asteroids.PlayerPackage.Player;
 import com.example.asteroids.Weapons.Laser;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -97,10 +97,9 @@ public class GUI implements Initializable {
 
 
         //attach the playerObject to the bullets
-        this.playerHealthbar = new Healthbar(player.getCoordX(), player.getCoordY());
         player.attachHealthBar(playerHealthbar);
         Bullet.attachPlayer(player);
-        playerHealthbar.attachPlayer(player);
+
 
         //reset player
         player.setHealthPoints(100);
@@ -219,8 +218,6 @@ public class GUI implements Initializable {
             player.getImageView().setImage(new Image(getClass().getResource("/imgs/Explosion.png").toExternalForm()));
 
 
-
-
             //unalive all the asteroids existing
             for(Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())){
 
@@ -263,13 +260,13 @@ public class GUI implements Initializable {
             // Draw a yellow rectangle
             gc.setStroke(Color.YELLOW);
             // Use playerShip's current position and size
-            double x = player.getCoordX(); // Use the ship's position directly
+            double x = player.getCoordX();
             double y = player.getCoordY();
             double width = player.getWidth();
             double height = player.getHeight();
 
             // Draw players hitBox
-           // gc.strokeRect(x, y, width, height);
+            //gc.strokeRect(x, y, width, height);
 
              for (Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())) {
                  if (asteroid.checkDespawn()) {
@@ -325,6 +322,7 @@ public class GUI implements Initializable {
             drawHealthBar();
 
 
+
             Asteroid.moveAsteroid();
 
 
@@ -344,22 +342,18 @@ public class GUI implements Initializable {
             if (movingUp) {
                 player.setCoordY(player.getCoordY() - player.getSpeed());
                 playerShip.setY(playerShip.getY() - player.getSpeed());
-                playerHealthbar.setCoordY(playerHealthbar.getCoordY() - player.getSpeed());
             }
             if (movingDown) {
                 player.setCoordY(player.getCoordY() + player.getSpeed());
                 playerShip.setY(playerShip.getY() + player.getSpeed());
-                playerHealthbar.setCoordY(playerHealthbar.getCoordY() + player.getSpeed());
             }
             if (movingLeft) {
                 player.setCoordX(player.getCoordX() - player.getSpeed());
                 playerShip.setX(playerShip.getX() - player.getSpeed());
-                playerHealthbar.setCoordX(playerHealthbar.getCoordX() - player.getSpeed());
             }
             if (movingRight) {
                 player.setCoordX(player.getCoordX() + player.getSpeed());
                 playerShip.setX(playerShip.getX() + player.getSpeed());
-                playerHealthbar.setCoordX(playerHealthbar.getCoordX() + player.getSpeed());
             }
             if (rotatingLeft) {
                 playerShip.setRotate(playerShip.getRotate() - player.getRotationSpeed());
@@ -367,13 +361,6 @@ public class GUI implements Initializable {
             if (rotatingRight) {
                 playerShip.setRotate(playerShip.getRotate() + player.getRotationSpeed());
             }
-
-            //boundary checking for player and healthbar
-            if(player.getCoordX() < 0){player.setCoordX(0);player.getImageView().setX(0);playerHealthbar.setCoordX(0);}
-            if(player.getCoordY() < 0){player.setCoordY(0);player.getImageView().setY(0);playerHealthbar.setCoordY(0);}
-            if(player.getCoordX()  > 1450){player.setCoordX(1450);player.getImageView().setX(1450);playerHealthbar.setCoordX(1450);}
-            if(player.getCoordY()  > 750){player.setCoordY(750);player.getImageView().setY(750);playerHealthbar.setCoordY(750);}
-
 
 
         }));
@@ -410,7 +397,7 @@ public class GUI implements Initializable {
     private void drawHealthBar(){
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.GREEN);
-        gc.fillRect(player.getHealthBar().getCoordX()+20,player.getHealthBar().getCoordY()-20, player.getHealthPoints() ,10);
+        gc.fillRect(player.getHealthBar().getCoordX()+20,player.getHealthBar().getCoordY()-20, player.getHealthPoints() ,30);
     }//end of drawHealthBar
 
     //logic to draw a Bullet
@@ -450,11 +437,13 @@ public class GUI implements Initializable {
 
         //Create Player
         player = new Player(10000,playerShip);
+        player.attachHealthBar(playerHealthbar);
+
+        playerHealthbar = new Healthbar();
+
 
 
         Laser.getInstance().attachPlayer(player);
-
-
 
 
 
