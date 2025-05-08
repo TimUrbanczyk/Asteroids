@@ -13,25 +13,6 @@
    - Remember where you extracted it (e.g., `C:\javafx-sdk-17.0.9`)
 
 
-## Troubleshooting
-
-If you get any of these errors:
-- "Error: JavaFX runtime components are missing"
-- "Module javafx.controls not found"
-- "Module javafx.fxml not found"
-
-Make sure:
-1. You have installed JavaFX SDK
-2. The path to JavaFX lib folder is correct in your command/batch file
-3. You're using Java 17 (check with `java -version` in command prompt)
-
-## Game Controls
-
-[Add your game controls here]
-
-## About the Game
-
-[Add description of your game here]
 
 # Asteroids-Inspired Space Shooter
 
