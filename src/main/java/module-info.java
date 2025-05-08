@@ -12,4 +12,6 @@ module com.example.asteroids {
     opens com.example.asteroids.GUI to javafx.fxml;
     exports com.example.asteroids.Weapons;
     opens com.example.asteroids.Weapons to javafx.fxml;
+    exports com.example.asteroids.PlayerPackage;
+    opens com.example.asteroids.PlayerPackage to javafx.fxml;
 }

@@ -2,7 +2,7 @@ package com.example.asteroids.Weapons;
 
 
 import com.example.asteroids.Asteroids.Asteroid;
-import com.example.asteroids.Player;
+import com.example.asteroids.PlayerPackage.Player;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -56,7 +56,6 @@ public class Laser {
     public void shoot(){
         randomizeAngle();
         checkColision();
-
     }
 
 
@@ -109,7 +108,6 @@ public class Laser {
                 asteroid.despawnAsteroid();
                 player.setPoints(player.getPoints()+1);
             }
-
 
 
             x1 = asteroid.getAsteroidImage().getBoundsInParent().getMinX();
