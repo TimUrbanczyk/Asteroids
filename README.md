@@ -3,14 +3,11 @@
 ## Requirements to Run the Game
 
 1. **Java 17**
-   - Download and install Java 17 (JDK or JRE) from:
    - Oracle JDK: https://www.oracle.com/java/technologies/downloads/#java17
    - OR OpenJDK: https://adoptium.net/ (Choose version 17)
 
 2. **JavaFX SDK 17.0.9**
    - Download JavaFX Windows SDK from: https://gluonhq.com/products/javafx/
-   - Extract the downloaded zip file to a location on your computer
-   - Remember where you extracted it (e.g., `C:\javafx-sdk-17.0.9`)
 
 
 
