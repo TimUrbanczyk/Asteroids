@@ -12,26 +12,6 @@
    - Extract the downloaded zip file to a location on your computer
    - Remember where you extracted it (e.g., `C:\javafx-sdk-17.0.9`)
 
-## How to Run the Game
-
-### Method 1: Using Command Line
-1. Open Command Prompt
-2. Navigate to the folder containing the JAR file
-3. Run the following command (replace the path with your JavaFX location):
-```bash
-java --module-path "C:\javafx-sdk-17.0.9\lib" --add-modules javafx.controls,javafx.fxml,javafx.graphics -jar Asteroids-1.0-SNAPSHOT.jar
-```
-
-### Method 2: Using Batch File
-1. Create a file named `RunAsteroids.bat` in the same folder as the JAR
-2. Add the following content (update the JavaFX path to match your installation):
-```batch
-@echo off
-set JAVAFX_PATH=C:\javafx-sdk-17.0.9\lib
-java --module-path "%JAVAFX_PATH%" --add-modules javafx.controls,javafx.fxml,javafx.graphics -jar Asteroids-1.0-SNAPSHOT.jar
-pause
-```
-3. Double-click the batch file to run the game
 
 ## Troubleshooting
 
