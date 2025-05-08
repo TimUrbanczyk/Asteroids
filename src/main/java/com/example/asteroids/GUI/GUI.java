@@ -452,6 +452,9 @@ public class GUI implements Initializable {
         player = new Player(10000,playerShip);
 
 
+        Laser.getInstance().attachPlayer(player);
+
+
 
 
 
