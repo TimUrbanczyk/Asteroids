@@ -63,9 +63,9 @@ public class Laser {
         for(Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())){
            double x1 = asteroid.getAsteroidImage().getBoundsInParent().getMinX();
            double y1 = asteroid.getAsteroidImage().getBoundsInParent().getMinY();
-           double x2 = asteroid.getAsteroidImage().getBoundsInParent().getMinX();
+           double x2 = asteroid.getAsteroidImage().getBoundsInParent().getMaxX();
            double y2 = asteroid.getAsteroidImage().getBoundsInParent().getMaxY();
-           double x3 = this.player.getCoordX()+this.player.getWidth()/2;
+           double x3 = this.player.getCoordX()+this.player.getWidth()/2-100;
            double y3 = this.player.getCoordY()+this.player.getHeight()/2;
            double x4 = x3+this.length*Math.cos(Math.toRadians(this.angle));
            double y4 = y3+this.length*Math.sin(Math.toRadians(this.angle));

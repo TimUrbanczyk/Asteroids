@@ -374,7 +374,7 @@ public class GUI implements Initializable {
 
     private void drawLaser(){
 
-        double startX = player.getCoordX()+player.getWidth()/2;
+        double startX = player.getCoordX()+player.getWidth()/2-100;
         double startY = player.getCoordY()+player.getHeight()/2;
         double length = Laser.getInstance().getLength();
         double width = Laser.getInstance().getWidth();
