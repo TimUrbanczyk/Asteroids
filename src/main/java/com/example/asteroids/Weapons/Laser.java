@@ -135,10 +135,12 @@ public class Laser {
     public double getWidth() {return this.width;}
     public double getAngle() {return this.angle;}
     public Color getLaserColor() {return this.laserColor;}
-    public boolean isShootable(){return this.shootableFlag;}
     public long getShootableInterval(){return this.shootableInterval;}
+    public boolean isShootable(){return this.shootableFlag;}
 
 
+    public void setShootable(boolean s){this.shootableFlag = s;}
+    public void increaseWidth(){this.width += 1;}
 
 
 }//end of Laser

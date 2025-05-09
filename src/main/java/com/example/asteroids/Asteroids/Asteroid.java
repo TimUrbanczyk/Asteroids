@@ -1,5 +1,6 @@
 package com.example.asteroids.Asteroids;
 
+import com.example.asteroids.Items.LaserItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.util.ArrayList;
@@ -70,12 +71,14 @@ public class Asteroid {
         //System.out.println("[ASTEROID SPAWNED] TOTAL NUMBER OF ASTEROIDS: " + asteroids.size());
 
 
-        if(numberRandom < 0.9){
+        if(numberRandom < 0.8){
             asteroids.addFirst(new SmallAsteroid());
-        }else if(numberRandom < 0.95 && numberRandom >= 0.9){
+        }else if(numberRandom < 0.85 && numberRandom >= 0.8){
             asteroids.addFirst(new BigAsteroid());
-        }else if(numberRandom >= 0.95){
+        }else if(numberRandom >= 0.85 && numberRandom < 0.9){
             asteroids.addFirst(new HealingAsteroid());
+        }else if(numberRandom >= 0.9){
+            asteroids.addFirst(new LaserItem());
         }
 
 

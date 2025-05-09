@@ -326,10 +326,13 @@ public class GUI implements Initializable {
             Asteroid.moveAsteroid();
 
 
-            if( elapsedTimeLaser >= Laser.getInstance().getShootableInterval()){
-                Laser.getInstance().shoot();
-                drawLaser();
-                elapsedTimeLaser = 0;
+            if(elapsedTimeLaser >= Laser.getInstance().getShootableInterval()){
+                if(Laser.getInstance().isShootable()) {
+                    Laser.getInstance().shoot();
+                    drawLaser();
+                    elapsedTimeLaser = 0;
+                }
+
             }
 
             if(shoot){
@@ -388,7 +391,6 @@ public class GUI implements Initializable {
         gc.setStroke(Laser.getInstance().getLaserColor());
         gc.setLineWidth(Laser.getInstance().getWidth());
         gc.strokeLine(startX,startY,endX,endY);
-        Laser.getInstance().shoot();
 
     }
 

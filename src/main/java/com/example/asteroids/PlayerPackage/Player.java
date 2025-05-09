@@ -1,6 +1,7 @@
 package com.example.asteroids.PlayerPackage;
 
 import com.example.asteroids.Asteroids.Asteroid;
+import com.example.asteroids.Items.ItemInterface;
 import com.example.asteroids.Weapons.Bullet;
 import com.example.asteroids.GUI.GUI;
 import javafx.geometry.BoundingBox;
@@ -78,6 +79,9 @@ public class Player {
 
     public void handleCollision(Asteroid asteroid) {
 
+            if(asteroid instanceof ItemInterface){
+                ((ItemInterface) asteroid).onCollision();
+            }
             asteroid.despawnAsteroid();
 
     }//end of handleCollision
