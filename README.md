@@ -22,6 +22,7 @@ A modern take on the classic Asteroids game, built with JavaFX. This is not a di
   - Arrow keys for rotation
   - Space bar for shooting
   - R key to toggle auto-fire mode
+  - Collacteble and upgreadable items
 
 - **Dynamic Asteroid System**
   - Small asteroids: Fast but less damaging
