@@ -230,6 +230,8 @@ public class GUI implements Initializable {
             player.setBullets(new Stack<>());
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
+
+            Laser.getInstance().resetLaser();
             buttonBackToMenu.setVisible(true);
             exitButton.setVisible(true);
             defeatLabel.setVisible(true);
