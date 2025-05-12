@@ -258,17 +258,6 @@ public class GUI implements Initializable {
             //check for all the bullets to be despawned by time
             Bullet.despawnBulletByTime();
 
-            //uncomment this bock th see the ships hit box
-            // Draw a yellow rectangle
-            gc.setStroke(Color.YELLOW);
-            // Use playerShip's current position and size
-            double x = player.getCoordX();
-            double y = player.getCoordY();
-            double width = player.getWidth();
-            double height = player.getHeight();
-
-            // Draw players hitBox
-            //gc.strokeRect(x, y, width, height);
 
              for (Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())) {
                  if (asteroid.checkDespawn()) {
@@ -310,13 +299,7 @@ public class GUI implements Initializable {
                 bullet.moveBullet();
             }
 
-            /*
-            //draw bullets hitbox
-             for(Bullet bullet : player.getBullets()){
-                 gc.strokeRect(bullet.getBounds().getMinX(), bullet.getBounds().getMinY(),20,20);
-             }
 
-             */
 
             //draw the bullets using the javafx canvas
              for (Bullet bullet : new ArrayList<>(player.getBullets())) {drawBullet(bullet); bullet.checkCollision();}
@@ -366,6 +349,17 @@ public class GUI implements Initializable {
             if (rotatingRight) {
                 playerShip.setRotate(playerShip.getRotate() + player.getRotationSpeed());
             }
+
+
+             if(player.getCoordX() < 0){player.setCoordX(0);player.getImageView().setX(0);}
+             if(player.getCoordY() < 0){player.setCoordY(0);player.getImageView().setY(0);}
+             if(player.getCoordX()  > 1450){player.setCoordX(1450);player.getImageView().setX(1450);}
+             if(player.getCoordY()  > 750){player.setCoordY(750);player.getImageView().setY(750);}
+
+
+
+
+
 
 
         }));
