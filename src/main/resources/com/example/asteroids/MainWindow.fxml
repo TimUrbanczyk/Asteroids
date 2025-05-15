@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchorPane" onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: Black" styleClass="Label" stylesheets="@../../../CSS/Style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.asteroids.GUI.GUI">
+<AnchorPane fx:id="mainAnchorPane" onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: Black" styleClass="Label" stylesheets="@../../../CSS/Style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.asteroids.GUI.MainWindowController">
    <children>
       <ImageView fitHeight="1208.0" fitWidth="2113.0" layoutX="-2.0" layoutY="-93.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -27,7 +27,7 @@
          </font>
       </Label>
       <Button fx:id="buttonStartGame" layoutX="675.0" layoutY="573.0" mnemonicParsing="false" onAction="#onButtonStartGame" prefHeight="60.0" prefWidth="200.0" styleClass="Button" stylesheets="@../../../CSS/Style.css" text="START" />
-      <Button fx:id="exitButton" layoutX="675.0" layoutY="685.0" mnemonicParsing="false" onAction="#onExitButton" styleClass="Button" stylesheets="@../../../CSS/Style.css" text="EXIT" />
+      <Button fx:id="exitButton" layoutX="675.0" layoutY="762.0" mnemonicParsing="false" onAction="#onExitButton" styleClass="Button" stylesheets="@../../../CSS/Style.css" text="EXIT" />
       <ImageView fx:id="pressToPlay1" fitHeight="150.0" fitWidth="200.0" layoutX="149.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../imgs/PresstoPlay1.png" />
@@ -60,5 +60,6 @@
          </font>
       </Label>
       <Label fx:id="labelAutofire" layoutX="730.0" layoutY="850.0" text="AUTOFIRE : PRESS R" textFill="WHITE" visible="false" />
+      <Button fx:id="journalButton" layoutX="676.0" layoutY="667.0" mnemonicParsing="false" onAction="#onButtonJournal" styleClass="Button" stylesheets="@../../../CSS/Style.css" text="JOURNAL" />
    </children>
 </AnchorPane>

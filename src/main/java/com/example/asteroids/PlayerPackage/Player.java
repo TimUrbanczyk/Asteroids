@@ -3,7 +3,7 @@ package com.example.asteroids.PlayerPackage;
 import com.example.asteroids.Asteroids.Asteroid;
 import com.example.asteroids.Items.ItemInterface;
 import com.example.asteroids.Weapons.Bullet;
-import com.example.asteroids.GUI.GUI;
+import com.example.asteroids.GUI.MainWindowController;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;
@@ -93,7 +93,7 @@ public class Player {
 
     private void checkForDeath() {
         if (this.healthPoints <= 0){
-            GUI.setGameRunning(false);
+            MainWindowController.setGameRunning(false);
         }
     }//end of checkForDeath
 
