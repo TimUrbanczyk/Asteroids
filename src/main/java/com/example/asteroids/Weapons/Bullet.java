@@ -118,28 +118,16 @@ public class Bullet {
 
     public double getCoordY() {return this.coordY;}
 
-    public double getAngle() {return this.angle;}
-
     public double getRadius() {return this.radius;}
-
-    public boolean isActive(){return this.isActive;}
 
     public double getSpeed() {return this.speed;}
 
-    public boolean isShootable(){return this.shootableFlag;}
-
     public static long getShootableInterval(){return shootableInterval;}
-
-    public Bounds getBounds(){return this.bounds;}
 
     //setters
     public void setCoordX(double coordX) {this.coordX = coordX;}
 
     public void setCoordY(double coordY) {this.coordY = coordY;}
-
-    public void toggleActive(){this.isActive = !this.isActive;}
-
-    public static void setShootable(boolean s){shootableFlag = s;}
 
 
 }//end of Bullet

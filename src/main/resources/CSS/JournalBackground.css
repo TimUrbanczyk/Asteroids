@@ -1,0 +1,12 @@
+.MainBackground {
+    /* Cosmic Gradient Background */
+    -fx-background-color: linear-gradient(to bottom, #000000 0%, #0A0A1A 30%, #1A1A3A 70%, #000033 100%);
+    -fx-background-radius: 30px;
+
+    /* Nebula Border Glow */
+    -fx-border-color: linear-gradient(to right, #00F5FF, #8A2BE2); /* Blue-to-purple nebula */
+    -fx-border-width: 2px;
+    -fx-border-radius: 30px;
+    -fx-effect: dropshadow(gaussian, rgba(138, 43, 226, 0.3), 25, 0.3, 0, 0);
+
+}

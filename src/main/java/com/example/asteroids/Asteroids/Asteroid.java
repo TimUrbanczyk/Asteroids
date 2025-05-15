@@ -159,7 +159,6 @@ public class Asteroid {
 
     public double getSpeedY() {return this.speedY;}
 
-    public double[] getSpawnPoint() {return this.spawnPoint;}
 
     public static ArrayList<Asteroid> getAsteroids() {return asteroids;}
 
@@ -167,18 +166,10 @@ public class Asteroid {
 
     public double getCoordY() {return this.coordY;}
 
-    public String getImgPath() {return this.imgPath;}
-
     public ImageView getAsteroidImage() {return this.asteroidImage;}
 
-    public boolean getWasOnScreen() {return this.wasOnScreen;}
 
     //setters
-    public void setDamagePoints(int d) {this.damagePoints = d;}
-
-    public void setSpeedX(double speedX) {this.speedX = speedX;}
-
-    public void setSpeedY(double speedY) {this.speedY = speedY;}
 
     public void setcoordX(double coordX) {this.coordX = coordX;}
 

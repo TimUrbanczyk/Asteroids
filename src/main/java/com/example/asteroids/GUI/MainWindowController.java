@@ -22,8 +22,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -71,6 +73,8 @@ public class MainWindowController implements Initializable {
     @FXML
     private Button buttonBackToMenu;
     @FXML
+    private Button journalButton;
+    @FXML
     private Canvas canvas;
     @FXML
     private ImageView pressToPlay1;
@@ -90,15 +94,40 @@ public class MainWindowController implements Initializable {
     //---------------------------------------------------------------------------------------------------------------------------------
 
     @FXML
-    private void onButtonJournal(){
+    private void onButtonJournal() {
         try {
+            // Load the journal FXML file from the same package
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/asteroids/JournalWindow.fxml"));
+            Parent root = (loader.load());
 
-           //TODO
-git git
-        }catch (IOException e){
+            // Create the new stage
+            Stage mainStage = (Stage) journalButton.getScene().getWindow();
+            Stage journalStage = new Stage();
+            journalStage.setTitle("Journal");
+            Scene journalScene = new Scene(root);
+            journalStage.setHeight(mainStage.getHeight()/2.2);
+            journalStage.setWidth(mainStage.getWidth()/2.2);
+            journalScene.setFill(Color.TRANSPARENT);
+            journalStage.setScene(journalScene);
+            journalStage.initStyle(StageStyle.TRANSPARENT);
+            journalStage.setX(mainStage.getX() + (mainStage.getWidth() - journalStage.getWidth())/2);
+            journalStage.setY(mainStage.getY() + (mainStage.getHeight() - journalStage.getHeight())/2);
+
+
+
+            journalStage.initOwner(mainStage);
+            journalStage.initModality(Modality.WINDOW_MODAL);
+
+            journalStage.setResizable(false);
+            journalStage.show();
+
+        } catch (IOException e) {
             e.printStackTrace();
+
         }
     }
+
+
     @FXML
     private void onExitButton(){System.exit(0);}
     @FXML
