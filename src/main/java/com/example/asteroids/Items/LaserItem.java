@@ -1,7 +1,6 @@
 package com.example.asteroids.Items;
 
 import com.example.asteroids.Asteroids.Asteroid;
-import com.example.asteroids.PlayerPackage.Player;
 import com.example.asteroids.Weapons.Laser;
 
 
@@ -13,6 +12,7 @@ public class LaserItem extends Asteroid implements ItemInterface{
     private static double speedY = 2.3;
     private static int damagePoints = 0; // negative damage == healing (5head)
     private static String imgPath = "/imgs/LaserItem.png";
+    private static String name = "LaserUpgread";
 
 
     public LaserItem(){
@@ -29,4 +29,6 @@ public class LaserItem extends Asteroid implements ItemInterface{
             Laser.getInstance().increaseWidth();
         }
     }
+
+    public static String getName(){return name;}
 }

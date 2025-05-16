@@ -140,7 +140,7 @@ public class Laser {
 
 
     public void setShootable(boolean s){this.shootableFlag = s;}
-    public void increaseWidth(){this.width += 1;}
+    public void increaseWidth(){this.width += 5;}
     public void resetLaser(){
         this.shootableFlag = false;
         this.width = 3;

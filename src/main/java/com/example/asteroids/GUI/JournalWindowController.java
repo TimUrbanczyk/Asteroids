@@ -1,5 +1,12 @@
 package com.example.asteroids.GUI;
 
+import com.example.asteroids.Items.LaserItem;
+import com.example.asteroids.Asteroids.BigAsteroid;
+import com.example.asteroids.Asteroids.HealingAsteroid;
+import com.example.asteroids.Asteroids.SmallAsteroid;
+import com.example.asteroids.PlayerPackage.Player;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,15 +25,17 @@ public class JournalWindowController implements Initializable {
 
 
     @FXML
-    Button closeJournalWindowButton;
+    private Button closeJournalWindowButton;
     @FXML
-    AnchorPane journalAnchorPane;
+    private AnchorPane journalAnchorPane;
     @FXML
-    Separator separator1;
+    private Separator separator1;
     @FXML
-    Label journalLabel;
+    private Label journalLabel;
     @FXML
-    ListView listView;
+    public ListView listView;
+
+
 
     @FXML
     private void onButtonCloseJournalWindow(ActionEvent event) {
@@ -41,10 +50,17 @@ public class JournalWindowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //move the elements to the right position according to screensize etc
         closeJournalWindowButton.setLayoutX(journalAnchorPane.getPrefWidth()+(journalAnchorPane.getPrefWidth()/7));
         separator1.setPrefWidth(journalAnchorPane.getPrefWidth()+(journalAnchorPane.getPrefWidth()/5));
         journalLabel.setLayoutX((journalAnchorPane.getPrefWidth()+journalLabel.getWidth())/2);
         listView.setPrefHeight(journalAnchorPane.getPrefHeight()-70);
+
+        //add the journalpages to the listview
+        ObservableList journalPages = FXCollections.observableArrayList();
+        journalPages.addAll(Player.getName(), SmallAsteroid.getName(), BigAsteroid.getName(), HealingAsteroid.getName(),
+                            LaserItem.getName());
+        listView.setItems(journalPages);
 
     }
 }

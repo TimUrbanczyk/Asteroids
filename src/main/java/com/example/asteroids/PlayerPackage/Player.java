@@ -23,6 +23,7 @@ public class Player {
     private double rotationSpeed = 4.5;
     private Stack<Bullet> bullets = new Stack<>(); //use a stack to make it easier to despawn the bullets after a certian time
     private Healthbar healthBar ;
+    private static String name = "Spaceship";
 
     /*
     I am planning to have about 10-15 bullets active at the same time.
@@ -98,6 +99,11 @@ public class Player {
     }//end of checkForDeath
 
 
+    public static  String getDescrption(){
+        return "Player";
+    }
+
+
     //getters
     public int getHealthPoints() {return healthPoints;}
 
@@ -120,6 +126,8 @@ public class Player {
     public Healthbar getHealthBar() {return healthBar;}
 
     public int getPoints() {return this.points;}
+
+    public static String getName(){return name;}
 
 
     //setters

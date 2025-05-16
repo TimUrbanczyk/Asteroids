@@ -24,7 +24,9 @@ public class Asteroid {
     private int damagePoints;
     private long spawnTime = System.currentTimeMillis();
 
+
     public Asteroid(double speedX, double speedY, String imgPath, int damagePoints) {
+
 
 
         spawnPoint = generateSpawnPoint();
@@ -67,8 +69,6 @@ public class Asteroid {
         Random random = new Random(); //set up random
         double numberRandom = random.nextDouble();
 
-        //comment the next line in for debugging purpose
-        //System.out.println("[ASTEROID SPAWNED] TOTAL NUMBER OF ASTEROIDS: " + asteroids.size());
 
 
         if(numberRandom < 0.8){
@@ -159,7 +159,6 @@ public class Asteroid {
 
     public double getSpeedY() {return this.speedY;}
 
-
     public static ArrayList<Asteroid> getAsteroids() {return asteroids;}
 
     public double getCoordX() {return this.coordX;}
@@ -169,13 +168,12 @@ public class Asteroid {
     public ImageView getAsteroidImage() {return this.asteroidImage;}
 
 
+
     //setters
 
     public void setcoordX(double coordX) {this.coordX = coordX;}
 
     public void setcoordY(double coordY) {this.coordY = coordY;}
-
-    public void setWasOnScreen(boolean wasOnScreen) {this.wasOnScreen = wasOnScreen;}
 
     public static void setAsteroids(ArrayList<Asteroid> a) {asteroids = a;}
 

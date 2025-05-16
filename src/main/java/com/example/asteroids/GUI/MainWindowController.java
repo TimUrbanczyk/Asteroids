@@ -37,7 +37,7 @@ import java.util.Stack;
 public class MainWindowController implements Initializable {
 
     //Fields
-    private Parent[] startScreenElements = new Parent[4];
+    private Parent[] startScreenElements = new Parent[5];
     private GraphicsContext gc;
     private long elapsedTime = 0;
     private long elapsedTimeShotable = 0;
@@ -183,6 +183,8 @@ public class MainWindowController implements Initializable {
         for(javafx.scene.Node element : startScreenElements){
             element.setVisible(true);
         }
+
+
         pressToPlay1.setVisible(true);
         pressToPlay2.setVisible(true);
         pressToPlay3.setVisible(true);
@@ -316,10 +318,7 @@ public class MainWindowController implements Initializable {
                 if(player.checkCollision(asteroid.getAsteroidImage())){
                     lost();
                 }
-            /*
-               gc.strokeRect(asteroid.getAsteroidImage().getBoundsInParent().getMinX() , asteroid.getAsteroidImage().getBoundsInParent().getMinY()
-                              ,asteroid.getAsteroidImage().getBoundsInParent().getWidth() , asteroid.getAsteroidImage().getBoundsInParent().getHeight());
-            */
+
             }
 
             elapsedTime+= 7;
@@ -496,6 +495,7 @@ public class MainWindowController implements Initializable {
         startScreenElements[1] = labelAsteroids;
         startScreenElements[2] = exitButton;
         startScreenElements[3] = pressToPlayLabel;
+        startScreenElements[4] = journalButton;
 
 
         //play initial label animation the call also starts the spawning etc....

@@ -17,3 +17,20 @@
     -fx-background-color: linear-gradient(to bottom, #00F5FF, #8A2BE2);
     -fx-background-radius: 5px;
 }
+
+/* Style for each cell */
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8px;
+}
+
+.list-cell:filled:selected, .list-cell:filled:selected:hover {
+    -fx-background-color: rgba(0, 245, 255, 0.3);
+    -fx-text-fill: white;
+}
+
+.list-cell:hover {
+    -fx-background-color: rgba(138, 43, 226, 0.2);
+}

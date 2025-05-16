@@ -13,6 +13,7 @@ public class HealingAsteroid extends Asteroid {
     private static double speedY = 5;
     private static int damagePoints = -50; // negative damage == healing (5head)
     private static String imgPath = "/imgs/HealAsteroid.png";
+    private static String name = "ShootingStar";
 
 
     public HealingAsteroid() {
@@ -20,5 +21,7 @@ public class HealingAsteroid extends Asteroid {
         super.getAsteroidImage().setScaleX(0.15);
         super.getAsteroidImage().setScaleY(0.15);
     }//end of constructor
+
+    public static String getName(){return name;}
 
 }//end of HealingAsteroid

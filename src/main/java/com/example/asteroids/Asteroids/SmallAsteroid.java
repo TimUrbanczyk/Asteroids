@@ -9,6 +9,7 @@ public class SmallAsteroid extends Asteroid {
     private static double speedY  = -4;
     private static int damagePoints = 30;
     private static String imPath = "/imgs/SmallAsteroid.png";
+    private static String name = "SmallAsteroid";
 
     public SmallAsteroid() {
 
@@ -22,5 +23,7 @@ public class SmallAsteroid extends Asteroid {
         speedY = random.nextDouble(3.5)+1;
 
     }//end of constructor
+
+    public static String getName(){return name;}
 
 }//end of SmallAsteroid
