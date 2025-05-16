@@ -10,3 +10,24 @@
     -fx-effect: dropshadow(gaussian, rgba(138, 43, 226, 0.3), 25, 0.3, 0, 0);
 
 }
+
+.separator {
+    -fx-background-color: transparent;
+    -fx-padding: 0 5px;
+
+}
+.separator:horizontal .line {
+    -fx-border-color: linear-gradient(to right, transparent, #00F5FF, #8A2BE2, transparent);
+    -fx-border-width: 1px 0 0 0; /* Top border only */
+    -fx-border-insets: 0 10px; /* Shorten the line */
+    -fx-effect: dropshadow(gaussian, rgba(0, 245, 255, 0.5), 5, 0.3, 0, 0);
+}
+
+
+.Button{
+
+}
+
+.Button:hover{
+    -fx-underline: true;
+}

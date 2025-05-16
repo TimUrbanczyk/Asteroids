@@ -11,6 +11,7 @@
 
 .Button:hover{
     -fx-border-color: Black;
+    -fx-underline: true;
 }
 
 .Label{
