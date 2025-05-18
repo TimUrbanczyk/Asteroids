@@ -109,14 +109,15 @@ public class MainWindowController implements Initializable {
             journalStage.setWidth(mainStage.getWidth()/2.2);
             journalScene.setFill(Color.TRANSPARENT);
             journalStage.setScene(journalScene);
-            journalStage.initStyle(StageStyle.TRANSPARENT);
             journalStage.setX(mainStage.getX() + (mainStage.getWidth() - journalStage.getWidth())/2);
             journalStage.setY(mainStage.getY() + (mainStage.getHeight() - journalStage.getHeight())/2);
 
 
-
             journalStage.initOwner(mainStage);
             journalStage.initModality(Modality.WINDOW_MODAL);
+            journalStage.initStyle(StageStyle.UNDECORATED);
+            journalStage.initStyle(StageStyle.TRANSPARENT);
+
 
             journalStage.setResizable(false);
             journalStage.show();

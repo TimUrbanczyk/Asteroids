@@ -29,6 +29,8 @@ public class Player {
     I am planning to have about 10-15 bullets active at the same time.
      */
 
+
+
     public Player(int healthPoints, ImageView imageView) {
 
         this.healthBar = healthBar;

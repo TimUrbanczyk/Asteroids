@@ -4,7 +4,7 @@
     -fx-background-radius: 30px;
 
     /* Nebula Border Glow */
-    -fx-border-color: linear-gradient(to right, #00F5FF, #8A2BE2); /* Blue-to-purple nebula */
+    -fx-border-color: linear-gradient(to right, #00F5FF, #8A2BE2);
     -fx-border-width: 2px;
     -fx-border-radius: 30px;
     -fx-effect: dropshadow(gaussian, rgba(138, 43, 226, 0.3), 25, 0.3, 0, 0);
@@ -20,6 +20,13 @@
     -fx-border-color: linear-gradient(to right, transparent, #00F5FF, #8A2BE2, transparent);
     -fx-border-width: 1px 0 0 0; /* Top border only */
     -fx-border-insets: 0 10px; /* Shorten the line */
+    -fx-effect: dropshadow(gaussian, rgba(0, 245, 255, 0.5), 5, 0.3, 0, 0);
+}
+
+.separator:vertical .line {
+    -fx-border-color: linear-gradient(to bottom, transparent, #00F5FF, #8A2BE2, transparent);
+    -fx-border-width: 0 1px 0 0; /* Right border only */
+    -fx-border-insets: 10px 0; /* Shorten the line vertically */
     -fx-effect: dropshadow(gaussian, rgba(0, 245, 255, 0.5), 5, 0.3, 0, 0);
 }
 
