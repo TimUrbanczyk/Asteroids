@@ -37,8 +37,8 @@ public class Bullet {
         this.bounds = new BoundingBox(
             this.coordX,
             this.coordY,
-            40,
-            40
+            this.radius,
+            this.radius
         );
 
     }//end of constructor
@@ -56,8 +56,8 @@ public class Bullet {
         this.bounds = new BoundingBox(
                 this.coordX,
                 this.coordY,
-                40,
-                40
+                this.radius,
+                this.radius
         );
 
     }//end of moveBullet
