@@ -1,5 +1,6 @@
 package com.example.asteroids.GUI;
 
+import com.example.asteroids.Descriptions.*;
 import com.example.asteroids.Items.LaserItem;
 import com.example.asteroids.Asteroids.BigAsteroid;
 import com.example.asteroids.Asteroids.HealingAsteroid;
@@ -18,6 +19,8 @@ import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -41,6 +44,8 @@ public class JournalWindowController implements Initializable {
     private ListView listView;
     @FXML
     private ImageView journalImageview;
+    @FXML
+    private Text journalText;
 
 
 
@@ -60,18 +65,23 @@ public class JournalWindowController implements Initializable {
         String name = listView.getSelectionModel().getSelectedItem().toString();
         switch(name){
             case "SmallAsteroid":
+                journalText.setText(DescriptionSmallAsteroid.getDescription());
                 journalImageview.setImage(new SmallAsteroid().getAsteroidImage().getImage());
                 break;
             case "ShootingStar":
+                journalText.setText(DescriptionHealingAsteroid.getDescription());
                 journalImageview.setImage(new HealingAsteroid().getAsteroidImage().getImage());
                 break;
             case "BigAsteroid":
+                journalText.setText(DescriptionBigAsteroid.getDescription());
                 journalImageview.setImage(new BigAsteroid().getAsteroidImage().getImage());
                 break;
             case "Spaceship":
+                journalText.setText(DescriptionPlayer.getDescription());
                 journalImageview.setImage(new Image(getClass().getResource("/imgs/SpaceshipPlayer.png").toExternalForm()));
                 break;
             case "LaserUpgread":
+                journalText.setText(DescriptionLaser.getDescription());
                 journalImageview.setImage(new LaserItem().getAsteroidImage().getImage());
                 break;
             default:
@@ -104,6 +114,9 @@ public class JournalWindowController implements Initializable {
         journalImageview.setScaleX(0.5);
         journalImageview.setScaleY(0.5);
         journalImageview.setLayoutX(journalAnchorPane.getPrefWidth()-journalImageview.getFitWidth()/4);
+
+        //setup text
+        journalText.setFill(Color.WHITE);
 
 
 

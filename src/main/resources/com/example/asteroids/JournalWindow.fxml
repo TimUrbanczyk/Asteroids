@@ -7,6 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="journalAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="605.0" styleClass="MainBackground" stylesheets="@../../../CSS/JournalBackground.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.asteroids.GUI.JournalWindowController">
    <children>
@@ -25,5 +26,6 @@
       <ImageView fx:id="journalImageview" fitHeight="170.0" fitWidth="206.0" layoutX="300.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true" />
       <Separator fx:id="separator2" layoutX="416.0" layoutY="68.0" orientation="VERTICAL" prefHeight="200.0" />
       <Separator fx:id="separator3" layoutX="422.0" layoutY="247.0" prefHeight="6.0" prefWidth="178.0" />
+      <Text fx:id="journalText" layoutX="225.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="178.0" />
    </children>
 </AnchorPane>
