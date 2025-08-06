@@ -87,8 +87,7 @@ public class Bullet {
         return false;
     }//end of checkCollision
 
-    public static void attachPlayer(Player p){player = p;
-    }//end of attachPlayer
+    public static void attachPlayer(Player p){player = p;}//end of attachPlayer
 
     public static void spawnBullet(){
         if(player.getBullets().size() > 9){ for(int i = 0; i <5;i++){player.getBullets().removeFirst();}}

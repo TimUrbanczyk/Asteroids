@@ -80,49 +80,7 @@ public class Laser {
                player.setPoints(player.getPoints()+1);
            }
 
-           x1 = asteroid.getAsteroidImage().getBoundsInParent().getMinX();
-           y1 = asteroid.getAsteroidImage().getBoundsInParent().getMinY();
-           x2 = asteroid.getAsteroidImage().getBoundsInParent().getMaxX();
-           y2 = asteroid.getAsteroidImage().getBoundsInParent().getMinY();
 
-           uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
-
-           uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
-
-           if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
-               asteroid.despawnAsteroid();
-               player.setPoints(player.getPoints()+1);
-           }
-
-
-            x1 = asteroid.getAsteroidImage().getBoundsInParent().getMaxX();
-            y1 = asteroid.getAsteroidImage().getBoundsInParent().getMinY();
-            x2 = asteroid.getAsteroidImage().getBoundsInParent().getMaxX();
-            y2 = asteroid.getAsteroidImage().getBoundsInParent().getMaxY();
-
-            uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
-
-            uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
-
-            if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
-                asteroid.despawnAsteroid();
-                player.setPoints(player.getPoints()+1);
-            }
-
-
-            x1 = asteroid.getAsteroidImage().getBoundsInParent().getMinX();
-            y1 = asteroid.getAsteroidImage().getBoundsInParent().getMaxY();
-            x2 = asteroid.getAsteroidImage().getBoundsInParent().getMaxX();
-            y2 = asteroid.getAsteroidImage().getBoundsInParent().getMaxY();
-
-            uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
-
-            uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
-
-            if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
-                asteroid.despawnAsteroid();
-                player.setPoints(player.getPoints()+1);
-            }
 
         }
 

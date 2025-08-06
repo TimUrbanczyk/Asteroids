@@ -117,6 +117,7 @@ public class JournalWindowController implements Initializable {
 
         //setup text
         journalText.setFill(Color.WHITE);
+        journalText.setText("");
 
 
 
