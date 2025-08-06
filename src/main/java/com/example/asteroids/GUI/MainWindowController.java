@@ -284,6 +284,7 @@ public class MainWindowController implements Initializable {
             buttonBackToMenu.setVisible(true);
             exitButton.setVisible(true);
             defeatLabel.setVisible(true);
+            labelAutofire.setVisible(false);
 
 
         }//end of if
