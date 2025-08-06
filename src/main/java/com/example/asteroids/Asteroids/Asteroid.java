@@ -1,5 +1,6 @@
 package com.example.asteroids.Asteroids;
 
+import com.example.asteroids.Items.BoostItem;
 import com.example.asteroids.Items.LaserItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -77,8 +78,10 @@ public class Asteroid {
             asteroids.addFirst(new BigAsteroid());
         }else if(numberRandom >= 0.85 && numberRandom < 0.9){
             asteroids.addFirst(new HealingAsteroid());
-        }else if(numberRandom >= 0.9){
+        }else if(numberRandom >= 0.9 && numberRandom< 0.95){
             asteroids.addFirst(new LaserItem());
+        }else if(numberRandom >= 0.95){
+            asteroids.addFirst(new BoostItem());
         }
 
 

@@ -10,7 +10,7 @@ public class LaserItem extends Asteroid implements ItemInterface{
     //static fields
     private static double speedX = 2.3 ;
     private static double speedY = 2.3;
-    private static int damagePoints = 0; // negative damage == healing (5head)
+    private static int damagePoints = 0;
     private static String imgPath = "/imgs/LaserItem.png";
     private static String name = "LaserUpgread";
 
@@ -22,6 +22,7 @@ public class LaserItem extends Asteroid implements ItemInterface{
     }
 
 
+    @Override
     public void onCollision(){
         if(!Laser.getInstance().isShootable()){
             Laser.getInstance().setShootable(true);

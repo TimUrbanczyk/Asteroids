@@ -24,7 +24,7 @@ public class Bullet {
     private static Player player;
     private Bounds bounds ;
     private static boolean shootableFlag = true;
-    private static final long shootableInterval = 150;
+    private static long shootableInterval = 150;
     private long spawnTime = System.currentTimeMillis();
 
 
@@ -127,6 +127,12 @@ public class Bullet {
     public void setCoordX(double coordX) {this.coordX = coordX;}
 
     public void setCoordY(double coordY) {this.coordY = coordY;}
+
+    public static void decreaseShootableInterval(){
+        if(shootableInterval > 50) {
+            shootableInterval -= 5;
+        }
+    }
 
 
 }//end of Bullet
