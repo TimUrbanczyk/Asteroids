@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+
+<AnchorPane fx:id="InfernoidAnchorPane" onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" prefHeight="850.0" prefWidth="1600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.asteroids.BossFights.InfernoidFightController">
+   <children>
+      <ImageView fitHeight="900.0" fitWidth="1600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../imgs/InfernoidFightBackground.png" />
+         </image>
+      </ImageView>
+      <Circle fill="#04090d" layoutX="1536.0" layoutY="815.0" radius="31.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <ImageView fx:id="playerShip" fitHeight="150.0" fitWidth="200.0" layoutX="591.0" layoutY="361.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../imgs/SpaceshipPlayer.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

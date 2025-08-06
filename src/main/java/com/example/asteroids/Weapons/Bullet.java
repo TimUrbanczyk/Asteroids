@@ -1,7 +1,7 @@
 package com.example.asteroids.Weapons;
 
 import com.example.asteroids.Asteroids.Asteroid;
-import com.example.asteroids.PlayerPackage.Player;
+import com.example.asteroids.Player.Player;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 

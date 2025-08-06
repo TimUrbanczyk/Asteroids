@@ -1,9 +1,9 @@
-package com.example.asteroids.PlayerPackage;
+package com.example.asteroids.Player;
 
 import com.example.asteroids.Asteroids.Asteroid;
 import com.example.asteroids.Items.ItemInterface;
 import com.example.asteroids.Weapons.Bullet;
-import com.example.asteroids.GUI.MainWindowController;
+import com.example.asteroids.Level.MainWindowController;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;

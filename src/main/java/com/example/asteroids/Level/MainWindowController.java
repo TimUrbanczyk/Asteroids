@@ -1,10 +1,12 @@
-package com.example.asteroids.GUI;
+package com.example.asteroids.Level;
 
 import com.example.asteroids.Asteroids.Asteroid;
-import com.example.asteroids.PlayerPackage.Healthbar;
+import com.example.asteroids.BossFights.InfernoidFightController;
+import com.example.asteroids.Player.Healthbar;
 import com.example.asteroids.Weapons.Bullet;
-import com.example.asteroids.PlayerPackage.Player;
+import com.example.asteroids.Player.Player;
 import com.example.asteroids.Weapons.Laser;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -12,7 +14,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.SubScene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -23,11 +24,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -49,6 +48,7 @@ public class MainWindowController implements Initializable {
 
     //static fields
     private static boolean gameRunning = false;
+    private boolean infernoidFightStarted = false;
 
     // Flags to track key states
     private boolean movingUp = false;
@@ -305,6 +305,18 @@ public class MainWindowController implements Initializable {
 
             pointsLabel.setText("Points : "+player.getPoints());
 
+
+            // Trigger Infernoid fight when player reaches 1000 points (only once)
+            if(player.getPoints() >= 5 && !infernoidFightStarted){
+
+                try {
+                    infernoidFightStarted = true;
+                    startInfernoidFight();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
             //check for all the bullets to be despawned by time
             Bullet.despawnBulletByTime();
 
@@ -475,6 +487,71 @@ public class MainWindowController implements Initializable {
         timelineAsteroidsLabel.play();
 
     }//end of StartAnimationAsteroidsLabel
+
+
+    private void startInfernoidFight() throws IOException {
+
+            Stage stage = (Stage) mainAnchorPane.getScene().getWindow();
+
+            // Check if stage is null and try alternative ways to get it
+            if (stage == null) {
+                stage = (Stage) buttonStartGame.getScene().getWindow();
+            }
+            if (stage == null) {
+                stage = (Stage) canvas.getScene().getWindow();
+            }
+
+            // If still null, we can't proceed
+            if (stage == null) {
+                System.err.println("Could not get stage reference");
+                return;
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/asteroids/InfernoidFight.fxml"));
+            Parent root = loader.load();
+
+            InfernoidFightController controller = loader.getController();
+
+            Scene scene = new Scene(root);
+
+            // Create smooth fade transition for stage change
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(1000), stage.getScene().getRoot());
+            fadeOut.setFromValue(1.0);
+            fadeOut.setToValue(0.7);
+
+            Stage finalStage = stage;
+            fadeOut.setOnFinished(event -> {
+                // Set the new scene after fade out
+                finalStage.setScene(scene);
+
+                controller.main(); // Start the game loop
+                controller.InfernoidAnchorPane.setFocusTraversable(true);
+                controller.InfernoidAnchorPane.requestFocus();
+
+                // Create smooth fade in transition for the new scene
+                FadeTransition fadeIn = new FadeTransition(Duration.millis(1000), scene.getRoot());
+                fadeIn.setFromValue(0.7);
+                fadeIn.setToValue(1.0);
+                fadeIn.play();
+            });
+
+            fadeOut.play();
+
+            Asteroid.disableSpawn();
+            Asteroid.despawnAll();
+
+            InfernoidFightController.attachPlayer(player,playerShip);
+
+            mainAnchorPane.setFocusTraversable(false);
+
+
+            gameloop.pause();
+
+
+
+
+
+    }
 
     //init
     @Override

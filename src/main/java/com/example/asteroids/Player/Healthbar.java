@@ -1,4 +1,4 @@
-package com.example.asteroids.PlayerPackage;
+package com.example.asteroids.Player;
 
 
 public class Healthbar {

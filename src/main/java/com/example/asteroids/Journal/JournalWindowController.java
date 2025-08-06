@@ -1,11 +1,11 @@
-package com.example.asteroids.GUI;
+package com.example.asteroids.Journal;
 
 import com.example.asteroids.Descriptions.*;
 import com.example.asteroids.Items.LaserItem;
 import com.example.asteroids.Asteroids.BigAsteroid;
 import com.example.asteroids.Asteroids.HealingAsteroid;
 import com.example.asteroids.Asteroids.SmallAsteroid;
-import com.example.asteroids.PlayerPackage.Player;
+import com.example.asteroids.Player.Player;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

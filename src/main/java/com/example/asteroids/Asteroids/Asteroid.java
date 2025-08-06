@@ -12,6 +12,7 @@ public class Asteroid {
     //static fields
     private static String[] spawnPoints = {"NORTH","EAST","SOUTH","WEST"}; //coords of possible spawn points (x,y)
     private static ArrayList<Asteroid> asteroids = new ArrayList<>();
+    private static boolean spawnable = true;
 
     //fields
     private double speedX;
@@ -21,7 +22,6 @@ public class Asteroid {
     private double[] spawnPoint;
     private String imgPath;
     private ImageView asteroidImage;
-    private boolean wasOnScreen;
     private int damagePoints;
     private long spawnTime = System.currentTimeMillis();
 
@@ -67,6 +67,7 @@ public class Asteroid {
 
     public static void spawnAsteroid(){
 
+        if(!spawnable){return;}
         Random random = new Random(); //set up random
         double numberRandom = random.nextDouble();
 
@@ -148,6 +149,13 @@ public class Asteroid {
         }
         return false;
     }//end of checkDespawn
+
+
+    public static void  despawnAll(){asteroids = new ArrayList<>();}
+
+    public static void disableSpawn(){spawnable = false;}
+    public static void enableSpawn(){spawnable = true;}
+
 
 
 
