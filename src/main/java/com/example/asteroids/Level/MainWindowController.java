@@ -45,7 +45,7 @@ public class MainWindowController implements Initializable {
     private Player player;
     private Timeline gameloop;
     private Healthbar playerHealthbar;
-
+    private final int thresholdInfernoidFight = 500;
     //static fields
     private static boolean gameRunning = false;
     private boolean infernoidFightStarted = false;
@@ -307,7 +307,7 @@ public class MainWindowController implements Initializable {
 
 
             // Trigger Infernoid fight when player reaches 1000 points (only once)
-            if(player.getPoints() >= 5 && !infernoidFightStarted){
+            if(player.getPoints() >= thresholdInfernoidFight && !infernoidFightStarted){
 
                 try {
                     infernoidFightStarted = true;
