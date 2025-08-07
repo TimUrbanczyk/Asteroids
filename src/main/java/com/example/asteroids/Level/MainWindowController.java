@@ -45,7 +45,7 @@ public class MainWindowController implements Initializable {
     private Player player;
     private Timeline gameloop;
     private Healthbar playerHealthbar;
-    private final int thresholdInfernoidFight = 500;
+    private final int thresholdInfernoidFight = 10;
     //static fields
     private static boolean gameRunning = false;
     private boolean infernoidFightStarted = false;
