@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchorPane" onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: Black" styleClass="Label" stylesheets="@../../../CSS/Button.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.asteroids.Level.MainWindowController">
+<AnchorPane fx:id="mainAnchorPane" onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: Black" styleClass="Label" stylesheets="@../../../CSS/Button.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.asteroids.Level.MainWindowController">
    <children>
       <ImageView fitHeight="1208.0" fitWidth="2113.0" layoutX="-2.0" layoutY="-93.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../imgs/Background.png" />
          </image>
       </ImageView>
-      <Canvas fx:id="canvas" height="1000.0" layoutX="111.0" layoutY="11.0" width="1700.0" />
+      <Canvas fx:id="canvas" height="1115.0" layoutX="-2.0" width="1703.0" />
       <ImageView fx:id="playerShip" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" x="700.0" y="334.0">
          <image>
             <Image url="@../../../imgs/SpaceshipPlayer.png" />

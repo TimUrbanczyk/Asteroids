@@ -9,8 +9,8 @@ public class Healthbar {
 
 
     public Healthbar() {
-        this.coordX = 600;
-        this.coordY = 880;
+        this.coordX = 710;
+        this.coordY = 820;
     }//end of constructor
 
 

@@ -31,7 +31,7 @@ public class Bullet {
     public Bullet(double coordX, double coordY, double angle){
 
         angleInRadians = Math.toRadians(player.getImageView().getRotate()) - (Math.PI / 2);
-        this.coordX = coordX-100;
+        this.coordX = coordX;
         this.coordY = coordY;
         this.angle = angle;
         this.bounds = new BoundingBox(
