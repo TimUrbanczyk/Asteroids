@@ -1,6 +1,7 @@
 package com.example.asteroids.BossFights;
 
 
+import com.example.asteroids.BossFights.Bosses.Infernoid;
 import com.example.asteroids.Player.Player;
 import com.example.asteroids.Weapons.Bullet;
 import javafx.animation.KeyFrame;
@@ -24,6 +25,8 @@ public class InfernoidFightController implements Initializable {
     private long elapsedTime = 0;
     private long elapsedTimeShotable = 0;
     private long elapsedTimeLaser = 0;
+
+   private Infernoid infernoid;
 
 
 
@@ -106,6 +109,12 @@ public class InfernoidFightController implements Initializable {
         InfernoidAnchorPane.setFocusTraversable(true);
         InfernoidAnchorPane.requestFocus();
         gameloop = new Timeline(new KeyFrame(Duration.millis(7), event -> {
+
+
+
+
+
+
             if(shoot){
                 if(elapsedTimeShotable >= Bullet.getShootableInterval()){
                     Bullet.spawnBullet();
@@ -157,6 +166,8 @@ public class InfernoidFightController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Start the game loop for player movement
+
+        infernoid = Infernoid.getInfernoid();
         main();
     }
 }

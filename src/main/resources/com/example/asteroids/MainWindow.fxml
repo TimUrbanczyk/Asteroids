@@ -21,7 +21,7 @@
             <Image url="@../../../imgs/SpaceshipPlayer.png" />
          </image>
       </ImageView>
-      <Label fx:id="labelAsteroids" layoutX="522.0" layoutY="48.0" prefHeight="128.0" prefWidth="526.0" text="ASTEROIDS" textFill="WHITE">
+      <Label fx:id="labelOrbitbreaker" layoutX="470.0" layoutY="48.0" prefHeight="141.0" prefWidth="654.0" text="ORBITBREAKER" textFill="WHITE">
          <font>
             <Font size="96.0" />
          </font>

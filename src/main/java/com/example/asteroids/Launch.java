@@ -11,10 +11,11 @@ public class Launch extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Launch.class.getResource("MainWindow.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1600, 900);
-        stage.setTitle("Asteroids");
+        stage.setTitle("Orbitbreaker");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+        stage.setAlwaysOnTop(true);
     }
 
     public static void main(String[] args) {

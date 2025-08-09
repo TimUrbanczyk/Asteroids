@@ -3,6 +3,7 @@ module com.example.asteroids {
     requires javafx.fxml;
     requires javafx.graphics;
     requires java.desktop;
+    requires javafx.media;
 
 
     opens com.example.asteroids to javafx.fxml;

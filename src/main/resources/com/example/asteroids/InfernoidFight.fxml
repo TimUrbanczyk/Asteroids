@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -23,5 +24,6 @@
             <Image url="@../../../imgs/Infernoid.png" />
          </image>
       </ImageView>
+      <Canvas fx:id="canvas" height="900.0" width="1600.0" />
    </children>
 </AnchorPane>

@@ -3,6 +3,7 @@ package com.example.asteroids.Level;
 import com.example.asteroids.Asteroids.Asteroid;
 import com.example.asteroids.BossFights.InfernoidFightController;
 import com.example.asteroids.Player.Healthbar;
+import com.example.asteroids.SoundHandling.MusicPlayer;
 import com.example.asteroids.Weapons.Bullet;
 import com.example.asteroids.Player.Player;
 import com.example.asteroids.Weapons.Laser;
@@ -46,6 +47,7 @@ public class MainWindowController implements Initializable {
     private Timeline gameloop;
     private Healthbar playerHealthbar;
     private final int thresholdInfernoidFight = 10;
+    private MusicPlayer lobbyMusicPlayer = new MusicPlayer("src/main/resources/Sounds/Audios/LobbyBackgroundSound.mp3");
     //static fields
     private static boolean gameRunning = false;
     private boolean infernoidFightStarted = false;
@@ -61,7 +63,7 @@ public class MainWindowController implements Initializable {
 
     //FXML fields
     @FXML
-    private Label labelAsteroids = LabelAsteroids.getInstance().getLabelAsteroids();
+    private Label labelOrbitbreaker = LabelOrbitbreaker.getInstance().getLabelOrbitbreaker();
     @FXML
     private Button buttonStartGame;
     @FXML
@@ -141,6 +143,9 @@ public class MainWindowController implements Initializable {
         pressToPlay1.setVisible(false);
         pressToPlay2.setVisible(false);
         pressToPlay3.setVisible(false);
+
+        //stop lobby sound
+        lobbyMusicPlayer.stopSound();
 
 
         //attach the playerObject to the bullets
@@ -475,11 +480,11 @@ public class MainWindowController implements Initializable {
 
         KeyFrame keyFrameTimelineAsteroidsLabel = new KeyFrame(Duration.millis(16.67) , actionEvent -> {
 
-           double currentScaleX = labelAsteroids.getScaleX();
-           double currentScaleY = labelAsteroids.getScaleY();
+           double currentScaleX = labelOrbitbreaker.getScaleX();
+           double currentScaleY = labelOrbitbreaker.getScaleY();
 
-           if(currentScaleX <= 1.5 && currentScaleY <= 1.5) {labelAsteroids.setScaleX(currentScaleX + 0.01); labelAsteroids.setScaleY(currentScaleY + 0.01);}
-           else{labelAsteroids.setScaleX(1); labelAsteroids.setScaleY(1);}
+           if(currentScaleX <= 1.5 && currentScaleY <= 1.5) {labelOrbitbreaker.setScaleX(currentScaleX + 0.01); labelOrbitbreaker.setScaleY(currentScaleY + 0.01);}
+           else{labelOrbitbreaker.setScaleX(1); labelOrbitbreaker.setScaleY(1);}
 
         });//end of Keyframe
 
@@ -571,7 +576,7 @@ public class MainWindowController implements Initializable {
 
         //insert the GUI elements in the corresponding arrays
         startScreenElements[0] = buttonStartGame;
-        startScreenElements[1] = labelAsteroids;
+        startScreenElements[1] = labelOrbitbreaker;
         startScreenElements[2] = exitButton;
         startScreenElements[3] = pressToPlayLabel;
         startScreenElements[4] = journalButton;
@@ -579,6 +584,9 @@ public class MainWindowController implements Initializable {
 
         //play initial label animation the call also starts the spawning etc....
         StartAnimationAsteroidsLabel();
+
+        //play lobby music
+        lobbyMusicPlayer.playSound();
 
     }//end of initialize
 
