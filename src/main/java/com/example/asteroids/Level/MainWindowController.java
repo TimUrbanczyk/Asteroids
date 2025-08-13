@@ -24,6 +24,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -157,7 +160,7 @@ public class MainWindowController implements Initializable {
 
 
         //reset player
-        player.setHealthPoints(1000);
+        player.setHealthPoints(100);
 
 
         pointsLabel.setVisible(true);
@@ -457,32 +460,95 @@ public class MainWindowController implements Initializable {
     }//end of Main
 
 
-    private void drawLaser(){
-
-        double startX = player.getCoordX()+player.getWidth()/2;
-        double startY = player.getCoordY()+player.getHeight()/2;
+    private void drawLaser() {
+        double startX = player.getCoordX() + player.getWidth() / 2;
+        double startY = player.getCoordY() + player.getHeight() / 2;
         double length = Laser.getInstance().getLength();
-        double width = Laser.getInstance().getWidth();
+        double baseWidth = Laser.getInstance().getWidth();
         double angle = Laser.getInstance().getAngle();
-
 
         double endX = startX + length * Math.cos(Math.toRadians(angle));
         double endY = startY + length * Math.sin(Math.toRadians(angle));
 
-        // Draw the rotated rectangle as a polygon
-        gc.setStroke(Laser.getInstance().getLaserColor());
-        gc.setLineWidth(Laser.getInstance().getWidth());
-        gc.strokeLine(startX,startY,endX,endY);
+        // Colors
+        Color coreColor = Laser.getInstance().getLaserColor(); // base color
+        Color glowColor = coreColor.deriveColor(0, 1, 1.5, 0.4); // brighter, transparent
+        Color outerGlow = Color.rgb(0, 255, 255, 0.15); // subtle cyan haze
 
+        // Time-based flicker
+        double flicker = 0.9 + Math.random() * 0.2; // random intensity factor
+        double pulse = 0.75 + 0.25 * Math.sin(System.nanoTime() / 80_000_000.0); // smooth pulse
+
+        // Outer haze (widest, faint)
+        gc.setStroke(outerGlow);
+        gc.setLineWidth(baseWidth * 3 * pulse);
+        gc.strokeLine(startX, startY, endX, endY);
+
+        // Main glow
+        gc.setStroke(glowColor);
+        gc.setLineWidth(baseWidth * 1.8 * pulse * flicker);
+        gc.strokeLine(startX, startY, endX, endY);
+
+        // Gradient core
+        Stop[] stops = new Stop[]{
+                new Stop(0, coreColor.brighter()),
+                new Stop(0.5, coreColor),
+                new Stop(1, coreColor.darker())
+        };
+        LinearGradient gradient = new LinearGradient(
+                startX, startY, endX, endY,
+                false, CycleMethod.NO_CYCLE, stops
+        );
+        gc.setStroke(gradient);
+        gc.setLineWidth(baseWidth * pulse);
+        gc.strokeLine(startX, startY, endX, endY);
+
+        // Add a sharper inner streak for energy core
+        gc.setStroke(coreColor.deriveColor(0, 1, 2, 1));
+        gc.setLineWidth(baseWidth * 0.4 * flicker);
+        gc.strokeLine(startX, startY, endX, endY);
     }
 
 
 
-    private void drawHealthBar(){
+
+
+    private void drawHealthBar() {
         gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.GREEN);
-        gc.fillRect(player.getHealthBar().getCoordX()+20,player.getHealthBar().getCoordY()-20, player.getHealthPoints() ,30);
-    }//end of drawHealthBar
+
+        // Position and size
+        double x = player.getHealthBar().getCoordX() + 20;
+        double y = player.getHealthBar().getCoordY() - 20;
+        double width = 200; // max width of the health bar
+        double height = 30;
+
+        double healthRatio = Math.max(0, Math.min(1, player.getHealthPoints() / 100.0));
+        double currentWidth = width * healthRatio;
+
+        // Background (empty health)
+        gc.setFill(Color.rgb(20, 20, 30)); // dark space grey
+        gc.fillRoundRect(x, y, width, height, 10, 10);
+
+        // Gradient for health fill
+        Color startColor = Color.GREEN.interpolate(Color.RED, 1 - healthRatio);
+        LinearGradient gradient = new LinearGradient(
+                0, 0, 1, 0, true, CycleMethod.NO_CYCLE,
+                new Stop(0, startColor.brighter()),
+                new Stop(1, startColor.darker())
+        );
+        gc.setFill(gradient);
+        gc.fillRoundRect(x, y, currentWidth, height, 10, 10);
+
+        // Border
+        gc.setStroke(Color.LIGHTGRAY);
+        gc.setLineWidth(2);
+        gc.strokeRoundRect(x, y, width, height, 10, 10);
+
+        // Glow effect (optional space vibe)
+        gc.setStroke(Color.CYAN);
+        gc.setLineWidth(1);
+        gc.strokeRoundRect(x - 2, y - 2, width + 4, height + 4, 12, 12);
+    }
 
     //logic to draw a Bullet
     private void drawBullet(Bullet bullet) {

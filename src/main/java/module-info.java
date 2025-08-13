@@ -4,6 +4,8 @@ module com.example.asteroids {
     requires javafx.graphics;
     requires java.desktop;
     requires javafx.media;
+    requires jdk.jsobject;
+    requires com.fasterxml.jackson.databind;
 
 
     opens com.example.asteroids to javafx.fxml;

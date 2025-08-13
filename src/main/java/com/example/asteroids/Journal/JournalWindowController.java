@@ -1,11 +1,15 @@
 package com.example.asteroids.Journal;
 
 import com.example.asteroids.Descriptions.*;
+import com.example.asteroids.Items.BoostItem;
 import com.example.asteroids.Items.LaserItem;
 import com.example.asteroids.Asteroids.BigAsteroid;
 import com.example.asteroids.Asteroids.HealingAsteroid;
 import com.example.asteroids.Asteroids.SmallAsteroid;
 import com.example.asteroids.Player.Player;
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.databind.DatabindException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +26,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -84,12 +90,39 @@ public class JournalWindowController implements Initializable {
                 journalText.setText(DescriptionLaser.getDescription());
                 journalImageview.setImage(new LaserItem().getAsteroidImage().getImage());
                 break;
+            case "BoostUpgread":
+                journalText.setText(DescriptionBoost.getDescription());
+                journalImageview.setImage(new BoostItem().getAsteroidImage().getImage());
+                break;
             default:
                 break;
         }
 
 
     }
+
+    private DiscoveredEntities getDiscoveredEntities(){
+        ObjectMapper mapper = new ObjectMapper();
+        File discoveredEntitiesFile = new File("src/main/java/com/example/asteroids/Journal/DiscoveredEntities.json");
+        try {
+
+            return mapper.readValue(discoveredEntitiesFile, DiscoveredEntities.class);
+
+
+        } catch (StreamReadException e) {
+            throw new RuntimeException(e);
+        } catch (DatabindException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
+
+
 
 
     @Override
@@ -108,7 +141,17 @@ public class JournalWindowController implements Initializable {
 
         //add the journalpages to the listview
         ObservableList journalPages = FXCollections.observableArrayList();
-        journalPages.addAll(Player.getName(), SmallAsteroid.getName(), BigAsteroid.getName(), HealingAsteroid.getName(), LaserItem.getName());
+        journalPages.addAll(
+                Player.getName(),
+                SmallAsteroid.getName(),
+                BigAsteroid.getName(),
+                HealingAsteroid.getName(),
+                LaserItem.getName()
+
+
+        );
+
+        System.out.println(getDiscoveredEntities().getDiscovered().toString());
         listView.setItems(journalPages);
 
         journalImageview.setScaleX(0.5);
