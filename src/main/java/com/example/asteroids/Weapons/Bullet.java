@@ -2,6 +2,7 @@ package com.example.asteroids.Weapons;
 
 import com.example.asteroids.Asteroids.Asteroid;
 import com.example.asteroids.Player.Player;
+import com.example.asteroids.SoundHandling.MusicPlayer;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 
@@ -26,6 +27,8 @@ public class Bullet {
     private static boolean shootableFlag = true;
     private static long shootableInterval = 150;
     private long spawnTime = System.currentTimeMillis();
+    private final MusicPlayer shootSoundPlayer = new MusicPlayer("src/main/resources/Sounds/Audios/BulletSound.mp3");
+    private final MusicPlayer hitmarkerPlayer = new MusicPlayer("src/main/resources/Sounds/Audios/Hitmarker.mp3");
 
 
     public Bullet(double coordX, double coordY, double angle){
@@ -40,6 +43,9 @@ public class Bullet {
             this.radius,
             this.radius
         );
+
+        this.shootSoundPlayer.setVolume(0.3);
+        this.hitmarkerPlayer.setVolume(0.5);
 
     }//end of constructor
 
@@ -77,6 +83,9 @@ public class Bullet {
 
             if(this.bounds.intersects(asteroidBounds)){
 
+                hitmarkerPlayer.disableRepeat();
+                hitmarkerPlayer.playSound();
+
                 asteroid.removeImage();
                 asteroid.despawnAsteroid();
                 player.getBullets().remove(this);
@@ -89,12 +98,26 @@ public class Bullet {
 
     public static void attachPlayer(Player p){player = p;}//end of attachPlayer
 
+
     public static void spawnBullet(){
+
         if(player.getBullets().size() > 9){ for(int i = 0; i <5;i++){player.getBullets().removeFirst();}}
-        player.getBullets().push(new Bullet(
+
+
+        Bullet newBullet = new Bullet(
                 player.getImageView().getBoundsInParent().getCenterX()-18,
-                player.getImageView().getBoundsInParent().getCenterY()
-                ,player.getImageView().getRotate()));
+                        player.getImageView().getBoundsInParent().getCenterY(),
+                        player.getImageView().getRotate());
+
+        player.getBullets().push(newBullet);
+
+        newBullet.shootSoundPlayer.disableRepeat();
+        newBullet.shootSoundPlayer.playSound();
+
+
+
+
+
 
     }//end of spawnBullet
 

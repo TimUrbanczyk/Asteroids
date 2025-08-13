@@ -46,7 +46,7 @@ public class MainWindowController implements Initializable {
     private Player player;
     private Timeline gameloop;
     private Healthbar playerHealthbar;
-    private final int thresholdInfernoidFight = 10;
+    private final int thresholdInfernoidFight = 1000;
     private MusicPlayer lobbyMusicPlayer = new MusicPlayer("src/main/resources/Sounds/Audios/LobbyBackgroundSound.mp3");
     //static fields
     private static boolean gameRunning = false;
@@ -586,6 +586,7 @@ public class MainWindowController implements Initializable {
         StartAnimationAsteroidsLabel();
 
         //play lobby music
+        lobbyMusicPlayer.setRepeat();
         lobbyMusicPlayer.playSound();
 
     }//end of initialize

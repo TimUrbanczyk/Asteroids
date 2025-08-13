@@ -14,7 +14,14 @@ public class MusicPlayer {
         mp3Path = new File(URL).toURI().toString();
         media = new Media(mp3Path);
         mediaPlayer = new MediaPlayer(media);
+    }
+
+    public void setRepeat(){
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+    }
+
+    public void disableRepeat(){
+        mediaPlayer.setCycleCount(1);
     }
 
     public void playSound(){
@@ -23,5 +30,9 @@ public class MusicPlayer {
 
     public void stopSound(){
         mediaPlayer.stop();
+    }
+
+    public void setVolume(double volume){
+        mediaPlayer.setVolume(volume);
     }
 }
