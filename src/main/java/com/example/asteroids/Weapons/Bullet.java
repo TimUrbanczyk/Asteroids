@@ -27,8 +27,8 @@ public class Bullet {
     private static boolean shootableFlag = true;
     private static long shootableInterval = 150;
     private long spawnTime = System.currentTimeMillis();
-    private final MusicPlayer shootSoundPlayer = new MusicPlayer("src/main/resources/Sounds/Audios/BulletSound.mp3");
-    private final MusicPlayer hitmarkerPlayer = new MusicPlayer("src/main/resources/Sounds/Audios/Hitmarker.mp3");
+    private final MusicPlayer shootSoundPlayer = new MusicPlayer("src/main/resources/Sounds/Sounds/BulletSound.mp3");
+    private final MusicPlayer hitmarkerPlayer = new MusicPlayer("src/main/resources/Sounds/Sounds/Hitmarker.mp3");
 
 
     public Bullet(double coordX, double coordY, double angle){
