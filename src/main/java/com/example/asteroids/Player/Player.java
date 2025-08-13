@@ -1,11 +1,13 @@
 package com.example.asteroids.Player;
 
 import com.example.asteroids.Asteroids.Asteroid;
+import com.example.asteroids.Asteroids.HealingAsteroid;
 import com.example.asteroids.Items.ItemInterface;
 import com.example.asteroids.Weapons.Bullet;
 import com.example.asteroids.Level.MainWindowController;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 import java.util.Stack;
@@ -24,7 +26,9 @@ public class Player {
     private Stack<Bullet> bullets = new Stack<>(); //use a stack to make it easier to despawn the bullets after a certian time
     private Healthbar healthBar ;
     private static String name = "Spaceship";
-
+    private Image damageImage = new Image(getClass().getResource("/imgs/SpaceShipPlayerOnDamage.png").toExternalForm());
+    private Image playerImage;
+    private boolean isInDamageState = false;
     /*
     I am planning to have about 10-15 bullets active at the same time.
      */
@@ -34,6 +38,7 @@ public class Player {
     public Player(int healthPoints, ImageView imageView) {
 
         this.healthBar = healthBar;
+        this.playerImage = imageView.getImage();
         this.healthPoints = healthPoints;
         this.imageView = imageView;
         this.coordX = imageView.getX();
@@ -68,6 +73,11 @@ public class Player {
                 //comment in the line for debugging purpose it shows the collisions in the console with timestamp
                 //System.out.println("Collision"+System.currentTimeMillis());
 
+
+                if(!(asteroid instanceof ItemInterface) && !(asteroid instanceof HealingAsteroid)) {
+                    this.imageView.setImage(damageImage);
+                    this.isInDamageState = true;
+                }
                 calculateNewHealthPoints(asteroid);
                 handleCollision(asteroid);
                 return true;
@@ -79,6 +89,11 @@ public class Player {
 
 
     }//end of checkCollision
+
+    public void resetDamageImage(){
+        this.imageView.setImage(playerImage);
+        this.isInDamageState = false;
+    }
 
     public void handleCollision(Asteroid asteroid) {
 
@@ -130,6 +145,8 @@ public class Player {
     public int getPoints() {return this.points;}
 
     public static String getName(){return name;}
+
+    public boolean getDamageState(){return this.isInDamageState;}
 
 
     //setters

@@ -47,6 +47,9 @@ public class MainWindowController implements Initializable {
     private Timeline gameloop;
     private Healthbar playerHealthbar;
     private final int thresholdInfernoidFight = 1000;
+    // Improved damage image reset logic
+    private long damageImageStartTime = 0;
+    private final long damageImageDuration = 100;
     private MusicPlayer lobbyMusicPlayer = new MusicPlayer("src/main/resources/Sounds/Audios/LobbyBackgroundSound.mp3");
     //static fields
     private static boolean gameRunning = false;
@@ -154,7 +157,7 @@ public class MainWindowController implements Initializable {
 
 
         //reset player
-        player.setHealthPoints(100);
+        player.setHealthPoints(1000);
 
 
         pointsLabel.setVisible(true);
@@ -184,6 +187,8 @@ public class MainWindowController implements Initializable {
         Image image = new Image(getClass().getResource( "/imgs/SpaceshipPlayer.png").toExternalForm());
         player.getImageView().setImage(image);
 
+
+        lobbyMusicPlayer.playSound();
 
         //show the startscreen
         for(javafx.scene.Node element : startScreenElements){
@@ -304,7 +309,7 @@ public class MainWindowController implements Initializable {
         mainAnchorPane.setFocusTraversable(true);
         mainAnchorPane.requestFocus();
 
-         gameloop = new Timeline(new KeyFrame(Duration.millis(7), event -> {
+        gameloop = new Timeline(new KeyFrame(Duration.millis(7), event -> {
 
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
@@ -325,12 +330,29 @@ public class MainWindowController implements Initializable {
             //check for all the bullets to be despawned by time
             Bullet.despawnBulletByTime();
 
+            // Improved damage image reset logic
+            if(player.getDamageState()){
+                // If damage just started, record the start time
+                if(damageImageStartTime == 0) {
+                    damageImageStartTime = System.currentTimeMillis();
+                }
 
-             for (Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())) {
-                 if (asteroid.checkDespawn()) {
-                     mainAnchorPane.getChildren().remove(asteroid.getAsteroidImage());
-                 }
-             }
+                // Check if enough time has passed to reset the image
+                if(System.currentTimeMillis() - damageImageStartTime >= damageImageDuration) {
+                    player.resetDamageImage();
+                    damageImageStartTime = 0; // Reset the timer
+                }
+            } else {
+                // Reset timer if player is not in damage state
+                damageImageStartTime = 0;
+            }
+
+
+            for (Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())) {
+                if (asteroid.checkDespawn()) {
+                    mainAnchorPane.getChildren().remove(asteroid.getAsteroidImage());
+                }
+            }
             //check for collision and uncomment the stroke to see the asteroids hit boxes for debugging purpose
             for(Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())){
 
@@ -366,7 +388,7 @@ public class MainWindowController implements Initializable {
 
 
             //draw the bullets using the javafx canvas
-             for (Bullet bullet : new ArrayList<>(player.getBullets())) {drawBullet(bullet); bullet.checkCollision();}
+            for (Bullet bullet : new ArrayList<>(player.getBullets())) {drawBullet(bullet); bullet.checkCollision();}
 
             drawHealthBar();
 
@@ -415,10 +437,10 @@ public class MainWindowController implements Initializable {
             }
 
 
-             if(player.getCoordX() < 0){player.setCoordX(0);player.getImageView().setX(0);}
-             if(player.getCoordY() < 0){player.setCoordY(0);player.getImageView().setY(0);}
-             if(player.getCoordX()  > 1450){player.setCoordX(1450);player.getImageView().setX(1450);}
-             if(player.getCoordY()  > 750){player.setCoordY(750);player.getImageView().setY(750);}
+            if(player.getCoordX() < 0){player.setCoordX(0);player.getImageView().setX(0);}
+            if(player.getCoordY() < 0){player.setCoordY(0);player.getImageView().setY(0);}
+            if(player.getCoordX()  > 1450){player.setCoordX(1450);player.getImageView().setX(1450);}
+            if(player.getCoordY()  > 750){player.setCoordY(750);player.getImageView().setY(750);}
 
 
 
@@ -437,7 +459,7 @@ public class MainWindowController implements Initializable {
 
     private void drawLaser(){
 
-        double startX = player.getCoordX()+player.getWidth()/2-100;
+        double startX = player.getCoordX()+player.getWidth()/2;
         double startY = player.getCoordY()+player.getHeight()/2;
         double length = Laser.getInstance().getLength();
         double width = Laser.getInstance().getWidth();
@@ -480,11 +502,11 @@ public class MainWindowController implements Initializable {
 
         KeyFrame keyFrameTimelineAsteroidsLabel = new KeyFrame(Duration.millis(16.67) , actionEvent -> {
 
-           double currentScaleX = labelOrbitbreaker.getScaleX();
-           double currentScaleY = labelOrbitbreaker.getScaleY();
+            double currentScaleX = labelOrbitbreaker.getScaleX();
+            double currentScaleY = labelOrbitbreaker.getScaleY();
 
-           if(currentScaleX <= 1.5 && currentScaleY <= 1.5) {labelOrbitbreaker.setScaleX(currentScaleX + 0.01); labelOrbitbreaker.setScaleY(currentScaleY + 0.01);}
-           else{labelOrbitbreaker.setScaleX(1); labelOrbitbreaker.setScaleY(1);}
+            if(currentScaleX <= 1.5 && currentScaleY <= 1.5) {labelOrbitbreaker.setScaleX(currentScaleX + 0.01); labelOrbitbreaker.setScaleY(currentScaleY + 0.01);}
+            else{labelOrbitbreaker.setScaleX(1); labelOrbitbreaker.setScaleY(1);}
 
         });//end of Keyframe
 
@@ -496,74 +518,74 @@ public class MainWindowController implements Initializable {
 
     private void startInfernoidFight() throws IOException {
 
-            Stage stage = (Stage) mainAnchorPane.getScene().getWindow();
+        Stage stage = (Stage) mainAnchorPane.getScene().getWindow();
 
-            // Check if stage is null and try alternative ways to get it
-            if (stage == null) {
-                stage = (Stage) buttonStartGame.getScene().getWindow();
-            }
-            if (stage == null) {
-                stage = (Stage) canvas.getScene().getWindow();
-            }
+        // Check if stage is null and try alternative ways to get it
+        if (stage == null) {
+            stage = (Stage) buttonStartGame.getScene().getWindow();
+        }
+        if (stage == null) {
+            stage = (Stage) canvas.getScene().getWindow();
+        }
 
-            // If still null, we can't proceed
-            if (stage == null) {
-                System.err.println("Could not get stage reference");
-                return;
-            }
+        // If still null, we can't proceed
+        if (stage == null) {
+            System.err.println("Could not get stage reference");
+            return;
+        }
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/asteroids/InfernoidFight.fxml"));
-            Parent root = loader.load();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/asteroids/InfernoidFight.fxml"));
+        Parent root = loader.load();
 
-            InfernoidFightController controller = loader.getController();
+        InfernoidFightController controller = loader.getController();
 
-            Scene scene = new Scene(root);
+        Scene scene = new Scene(root);
 
-            // Create smooth fade transition for stage change
-            FadeTransition fadeOut = new FadeTransition(Duration.millis(1000), stage.getScene().getRoot());
-            fadeOut.setFromValue(1.0);
-            fadeOut.setToValue(0.7);
+        // Create smooth fade transition for stage change
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(1000), stage.getScene().getRoot());
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.7);
 
-            Stage finalStage = stage;
-            fadeOut.setOnFinished(event -> {
-                // Set the new scene after fade out
-                finalStage.setScene(scene);
+        Stage finalStage = stage;
+        fadeOut.setOnFinished(event -> {
+            // Set the new scene after fade out
+            finalStage.setScene(scene);
 
-                controller.main(); // Start the game loop
-                controller.InfernoidAnchorPane.setFocusTraversable(true);
-                controller.InfernoidAnchorPane.requestFocus();
+            controller.main(); // Start the game loop
+            controller.InfernoidAnchorPane.setFocusTraversable(true);
+            controller.InfernoidAnchorPane.requestFocus();
 
-                // Create smooth fade in transition for the new scene
-                FadeTransition fadeIn = new FadeTransition(Duration.millis(1000), scene.getRoot());
-                fadeIn.setFromValue(0.7);
-                fadeIn.setToValue(1.0);
-                fadeIn.play();
-            });
+            // Create smooth fade in transition for the new scene
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(1000), scene.getRoot());
+            fadeIn.setFromValue(0.7);
+            fadeIn.setToValue(1.0);
+            fadeIn.play();
+        });
 
-            fadeOut.play();
+        fadeOut.play();
 
-            Asteroid.disableSpawn();
-            Asteroid.despawnAll();
+        Asteroid.disableSpawn();
+        Asteroid.despawnAll();
 
-            InfernoidFightController.attachPlayer(player,playerShip);
+        InfernoidFightController.attachPlayer(player,playerShip);
 
-            mainAnchorPane.setFocusTraversable(false);
-
-
-            gameloop.pause();
+        mainAnchorPane.setFocusTraversable(false);
 
 
+        gameloop.pause();
 
 
 
     }
+
+
 
     //init
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         //Create Player
-        player = new Player(10000,playerShip);
+        player = new Player(0,playerShip);
         player.attachHealthBar(playerHealthbar);
 
         playerHealthbar = new Healthbar();
@@ -586,6 +608,7 @@ public class MainWindowController implements Initializable {
         StartAnimationAsteroidsLabel();
 
         //play lobby music
+        lobbyMusicPlayer.setVolume(0.3);
         lobbyMusicPlayer.setRepeat();
         lobbyMusicPlayer.playSound();
 
