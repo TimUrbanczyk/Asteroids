@@ -6,11 +6,11 @@ import com.example.asteroids.Weapons.Bullet;
 public class BoostItem extends Asteroid implements ItemInterface{
 
     //static fields
-    private static double speedX = 3.5 ;
-    private static double speedY = 3.5;
-    private static int damagePoints = 0;
-    private static String imgPath = "/imgs/BoostItem.png";
-    private static String name = "BoostUpgread";
+    private static final double speedX = 3.5 ;
+    private static final double speedY = 3.5;
+    private static final int damagePoints = 0;
+    private static final String imgPath = "/imgs/BoostItem.png";
+    private static final String name = "BoostUpgread";
 
 
     public BoostItem(){

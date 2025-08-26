@@ -10,7 +10,7 @@ import java.util.Random;
 public class Asteroid {
 
     //static fields
-    private static String[] spawnPoints = {"NORTH","EAST","SOUTH","WEST"}; //coords of possible spawn points (x,y)
+    private static final String[] spawnPoints = {"NORTH","EAST","SOUTH","WEST"}; //coords of possible spawn points (x,y)
     private static ArrayList<Asteroid> asteroids = new ArrayList<>();
     private static boolean spawnable = true;
 
@@ -19,11 +19,11 @@ public class Asteroid {
     private double speedY;
     private double coordX;
     private double coordY;
-    private double[] spawnPoint;
-    private String imgPath;
-    private ImageView asteroidImage;
-    private int damagePoints;
-    private long spawnTime = System.currentTimeMillis();
+    private final double[] spawnPoint;
+    private final String imgPath;
+    private final ImageView asteroidImage;
+    private final int damagePoints;
+    private final long spawnTime = System.currentTimeMillis();
 
 
     public Asteroid(double speedX, double speedY, String imgPath, int damagePoints) {

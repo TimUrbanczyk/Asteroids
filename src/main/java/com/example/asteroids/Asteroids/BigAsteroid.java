@@ -7,9 +7,9 @@ public class BigAsteroid extends Asteroid {
     //static fields
     private static double speedX =2.7 ;
     private static double speedY = 2.7;
-    private static int damagePoints = 100;
-    private static String imgPath = "/imgs/BigAstroid.png";
-    private static String name = "BigAsteroid";
+    private static final int damagePoints = 100;
+    private static final String imgPath = "/imgs/BigAstroid.png";
+    private static final String name = "BigAsteroid";
 
     public BigAsteroid(){
 

@@ -15,19 +15,18 @@ import java.util.Stack;
 public class Player {
 
     private int healthPoints;
-    private ImageView imageView;
+    private final ImageView imageView;
     private double coordX;
     private double coordY;
     private final double width;
     private final double height;
-    private double speed = 6.5;
-    private int points = 0;
-    private double rotationSpeed = 4.5;
-    private Stack<Bullet> bullets = new Stack<>(); //use a stack to make it easier to despawn the bullets after a certian time
+    private final double speed = 6.5;
+    private final double rotationSpeed = 4.5;
+    private Stack<Bullet> bullets = new Stack<>();
     private Healthbar healthBar ;
-    private static String name = "Spaceship";
-    private Image damageImage = new Image(getClass().getResource("/imgs/SpaceShipPlayerOnDamage.png").toExternalForm());
-    private Image playerImage;
+    private static final String name = "Spaceship";
+    private final Image damageImage = new Image(getClass().getResource("/imgs/SpaceShipPlayerOnDamage.png").toExternalForm());
+    private final Image playerImage;
     private boolean isInDamageState = false;
     /*
     I am planning to have about 10-15 bullets active at the same time.
@@ -142,8 +141,6 @@ public class Player {
 
     public Healthbar getHealthBar() {return healthBar;}
 
-    public int getPoints() {return this.points;}
-
     public static String getName(){return name;}
 
     public boolean getDamageState(){return this.isInDamageState;}
@@ -161,5 +158,4 @@ public class Player {
 
     public void setHealthPoints(int h) {this.healthPoints = h;}
 
-    public void setPoints(int p) {this.points = p;}
 }//end of Player

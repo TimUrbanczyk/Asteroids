@@ -12,10 +12,10 @@ public class Infernoid extends Asteroid {
     //singleton instance
     private static Infernoid infernoid;
     //fields
-    private static double speedX =2.7 ;
-    private static double speedY = 2.7;
-    private static int damagePoints = 100;
-    private static String name = "Infernoid";
+    private static final double speedX =2.7 ;
+    private static final double speedY = 2.7;
+    private static final int damagePoints = 100;
+    private static final String name = "Infernoid";
 
 
     private Infernoid(){
@@ -39,7 +39,7 @@ public class Infernoid extends Asteroid {
         double newCoordX = rand.nextDouble()+1;
         double newCoordY = rand.nextDouble()+1;
 
-        double output[] = new double[2];
+        double[] output = new double[2];
         output[0] = newCoordX;
         output[1] = newCoordY;
         return output;

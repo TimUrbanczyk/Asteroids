@@ -15,7 +15,7 @@
             <Image url="@../../../imgs/Background.png" />
          </image>
       </ImageView>
-      <Canvas fx:id="canvas" height="1115.0" layoutX="-2.0" width="1703.0" />
+      <Canvas fx:id="canvas" height="1115.0" layoutX="-1.0" width="1703.0" />
       <ImageView fx:id="playerShip" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" x="700.0" y="334.0">
          <image>
             <Image url="@../../../imgs/SpaceshipPlayer.png" />
@@ -26,8 +26,8 @@
             <Font size="96.0" />
          </font>
       </Label>
-      <Button fx:id="buttonStartGame" layoutX="675.0" layoutY="573.0" mnemonicParsing="false" onAction="#onButtonStartGame" prefHeight="60.0" prefWidth="200.0" styleClass="Button" stylesheets="@../../../CSS/Button.css" text="START" />
-      <Button fx:id="exitButton" layoutX="675.0" layoutY="762.0" mnemonicParsing="false" onAction="#onExitButton" styleClass="Button" stylesheets="@../../../CSS/Button.css" text="EXIT" />
+      <Button fx:id="buttonStartGame" layoutX="676.0" layoutY="580.0" mnemonicParsing="false" onAction="#onButtonStartGame" prefHeight="101.0" prefWidth="280.0" styleClass="Button" stylesheets="@../../../CSS/Button.css" text="START" />
+      <Button fx:id="overworldButton" layoutX="676.0" layoutY="660.0" mnemonicParsing="false" styleClass="Button" stylesheets="@../../../CSS/Button.css" text="Overworld" />
       <ImageView fx:id="pressToPlay1" fitHeight="150.0" fitWidth="200.0" layoutX="149.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../imgs/PresstoPlay1.png" />
@@ -54,12 +54,13 @@
             <Font size="96.0" />
          </font>
       </Label>
-      <Label fx:id="pointsLabel" layoutX="630.0" layoutY="17.0" prefHeight="62.0" prefWidth="291.0" styleClass="Label" text="Points :" textFill="#fffb00" visible="false">
+      <Label fx:id="currencyLabel" layoutX="630.0" layoutY="17.0" prefHeight="62.0" prefWidth="291.0" styleClass="Label" text="Points :" textFill="#fffb00" visible="false">
          <font>
             <Font size="42.0" />
          </font>
       </Label>
       <Label fx:id="labelAutofire" layoutX="730.0" layoutY="850.0" text="AUTOFIRE : PRESS R" textFill="WHITE" visible="false" />
-      <Button fx:id="journalButton" layoutX="676.0" layoutY="667.0" mnemonicParsing="false" onAction="#onButtonJournal" styleClass="Button" stylesheets="@../../../CSS/Button.css" text="JOURNAL" />
+      <Button fx:id="journalButton" layoutX="675.0" layoutY="740.0" mnemonicParsing="false" onAction="#onButtonJournal" styleClass="Button" stylesheets="@../../../CSS/Button.css" text="JOURNAL" />
+      <Button fx:id="exitButton1" layoutX="676.0" layoutY="820.0" mnemonicParsing="false" onAction="#onExitButton" styleClass="Button" stylesheets="@../../../CSS/Button.css" text="EXIT" />
    </children>
 </AnchorPane>

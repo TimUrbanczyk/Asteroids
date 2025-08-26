@@ -4,6 +4,7 @@ import com.example.asteroids.Asteroids.Asteroid;
 import com.example.asteroids.BossFights.InfernoidFightController;
 import com.example.asteroids.Player.Healthbar;
 import com.example.asteroids.SoundHandling.MusicPlayer;
+import com.example.asteroids.Transaction.PlayerCurrencyHandler;
 import com.example.asteroids.Weapons.Bullet;
 import com.example.asteroids.Player.Player;
 import com.example.asteroids.Weapons.Laser;
@@ -37,10 +38,11 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Stack;
 
+
 public class MainWindowController implements Initializable {
 
     //Fields
-    private Parent[] startScreenElements = new Parent[5];
+    private final Parent[] startScreenElements = new Parent[5];
     private GraphicsContext gc;
     private long elapsedTime = 0;
     private long elapsedTimeShotable = 0;
@@ -53,7 +55,7 @@ public class MainWindowController implements Initializable {
     // Improved damage image reset logic
     private long damageImageStartTime = 0;
     private final long damageImageDuration = 100;
-    private MusicPlayer lobbyMusicPlayer = new MusicPlayer("src/main/resources/Sounds/Audios/LobbyBackgroundSound.mp3");
+    private final MusicPlayer lobbyMusicPlayer = new MusicPlayer("src/main/resources/Sounds/Audios/LobbyBackgroundSound.mp3");
     //static fields
     private static boolean gameRunning = false;
     private boolean infernoidFightStarted = false;
@@ -95,7 +97,7 @@ public class MainWindowController implements Initializable {
     @FXML
     private Label defeatLabel;
     @FXML
-    private Label pointsLabel;
+    private Label currencyLabel;
     @FXML
     private Label labelAutofire;
 
@@ -163,7 +165,7 @@ public class MainWindowController implements Initializable {
         player.setHealthPoints(100);
 
 
-        pointsLabel.setVisible(true);
+        currencyLabel.setVisible(true);
         labelAutofire.setVisible(true);
 
         //start the game
@@ -177,8 +179,7 @@ public class MainWindowController implements Initializable {
         //stop the game
         buttonBackToMenu.setVisible(false);
         defeatLabel.setVisible(false);
-        player.setPoints(0);
-        pointsLabel.setVisible(false);
+        currencyLabel.setVisible(false);
         gameRunning = false;
 
         //change player visuals back to default
@@ -316,11 +317,11 @@ public class MainWindowController implements Initializable {
 
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-            pointsLabel.setText("Points : "+player.getPoints());
+            currencyLabel.setText("SpaceCoins : "+ PlayerCurrencyHandler.getPlayerSpaceCoins());
 
 
             // Trigger Infernoid fight when player reaches 1000 points (only once)
-            if(player.getPoints() >= thresholdInfernoidFight && !infernoidFightStarted){
+            if(PlayerCurrencyHandler.getPlayerSpaceCoins() >= thresholdInfernoidFight && !infernoidFightStarted){
 
                 try {
                     infernoidFightStarted = true;
@@ -481,7 +482,7 @@ public class MainWindowController implements Initializable {
 
         // Outer haze (widest, faint)
         gc.setStroke(outerGlow);
-        gc.setLineWidth(baseWidth * 3 * pulse);
+        gc.setLineWidth(baseWidth * 3 * pulse);                                             
         gc.strokeLine(startX, startY, endX, endY);
 
         // Main glow

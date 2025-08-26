@@ -3,6 +3,7 @@ package com.example.asteroids.Weapons;
 
 import com.example.asteroids.Asteroids.Asteroid;
 import com.example.asteroids.Player.Player;
+import com.example.asteroids.Transaction.PlayerCurrencyHandler;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -15,13 +16,13 @@ import java.util.Random;
 public class Laser {
 
     //fields
-    private double length = 1000;
+    private final double length = 1000;
     private double width = 3;
     private double angle;
     private Player player;
     private boolean shootableFlag = false;
-    private long shootableInterval = 500;
-    private long spawnTime = System.currentTimeMillis();
+    private final long shootableInterval = 500;
+    private final long spawnTime = System.currentTimeMillis();
     private static Laser instance;
     private final Color laserColor = Color.RED;
 
@@ -77,7 +78,7 @@ public class Laser {
 
            if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
                asteroid.despawnAsteroid();
-               player.setPoints(player.getPoints()+1);
+               PlayerCurrencyHandler.increasePlayerSpaceCoins(1);
            }
 
 

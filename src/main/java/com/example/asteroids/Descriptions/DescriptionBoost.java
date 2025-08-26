@@ -2,7 +2,7 @@ package com.example.asteroids.Descriptions;
 
 public class DescriptionBoost {
 
-    private static String description =
+    private static final String description =
             "The Boost Item is a rare upgrade that enhances your ship's firing capabilities. "
                     + "When collected, it reduces the time between your shots, allowing for faster and more aggressive attacks. "
                     + "Its small size and quick movement make it tricky to catch, but the reward is well worth the effort. "

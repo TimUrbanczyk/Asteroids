@@ -1,7 +1,7 @@
 package com.example.asteroids.Descriptions;
 
 public class DescriptionPlayer {
-     private static String Description =
+     private static final String Description =
              "The Player controls a spaceship navigating through the asteroid field. "
             + "It has health points that decrease when colliding with asteroids, "
             + "and can shoot bullets to destroy threats. "

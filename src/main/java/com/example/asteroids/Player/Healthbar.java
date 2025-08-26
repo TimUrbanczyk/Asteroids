@@ -3,8 +3,8 @@ package com.example.asteroids.Player;
 
 public class Healthbar {
 
-    private double coordX;
-    private double coordY;
+    private final double coordX;
+    private final double coordY;
 
 
 

@@ -22,9 +22,9 @@ public class InfernoidFightController implements Initializable {
     private static Player player;
 
     private Timeline gameloop;
-    private long elapsedTime = 0;
+    private final long elapsedTime = 0;
     private long elapsedTimeShotable = 0;
-    private long elapsedTimeLaser = 0;
+    private final long elapsedTimeLaser = 0;
 
    private Infernoid infernoid;
 

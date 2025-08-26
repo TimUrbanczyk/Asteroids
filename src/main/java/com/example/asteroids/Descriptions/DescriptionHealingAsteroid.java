@@ -1,7 +1,7 @@
 package com.example.asteroids.Descriptions;
 
 public class DescriptionHealingAsteroid {
-    private static String Description =
+    private static final String Description =
                     "The Shooting Star is a rare healing asteroid that has a 1% chance to spawn. "
                     + "Unlike regular asteroids, it restores the player's health upon collision, "
                     + "thanks to its negative damage value. "

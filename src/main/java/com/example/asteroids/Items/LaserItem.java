@@ -8,11 +8,11 @@ import com.example.asteroids.Weapons.Laser;
 public class LaserItem extends Asteroid implements ItemInterface{
 
     //static fields
-    private static double speedX = 2.3 ;
-    private static double speedY = 2.3;
-    private static int damagePoints = 0;
-    private static String imgPath = "/imgs/LaserItem.png";
-    private static String name = "LaserUpgread";
+    private static final double speedX = 2.3 ;
+    private static final double speedY = 2.3;
+    private static final int damagePoints = 0;
+    private static final String imgPath = "/imgs/LaserItem.png";
+    private static final String name = "LaserUpgread";
 
 
     public LaserItem(){

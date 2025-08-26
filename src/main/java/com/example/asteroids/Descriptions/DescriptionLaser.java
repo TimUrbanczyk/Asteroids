@@ -1,7 +1,7 @@
 package com.example.asteroids.Descriptions;
 
 public class DescriptionLaser {
-    private static String Description =
+    private static final String Description =
             "The Laser Upgrade is a powerful item that allows the player to shoot a laser beam. "
             + "When collected, it activates the laser weapon if it's not already available, "
             + "or enhances the laser's width if already active. "

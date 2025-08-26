@@ -2,7 +2,7 @@ package com.example.asteroids.Descriptions;
 
 public class DescriptionBigAsteroid {
 
-    private static String Description =
+    private static final String Description =
                     "The Big Asteroid is a massive space rock that moves slower than smaller asteroids, "
                     + "but causes significantly more damage upon impact. "
                     + "Its large size makes it easier to hit, but also harder to avoid. "

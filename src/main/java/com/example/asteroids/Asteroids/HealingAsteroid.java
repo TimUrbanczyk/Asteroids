@@ -9,11 +9,11 @@ The player is allowed to kill the shooting star
 public class HealingAsteroid extends Asteroid {
 
     //static fields
-    private static double speedX =5 ;
-    private static double speedY = 5;
-    private static int damagePoints = -50; // negative damage == healing (5head)
-    private static String imgPath = "/imgs/HealAsteroid.png";
-    private static String name = "ShootingStar";
+    private static final double speedX =5 ;
+    private static final double speedY = 5;
+    private static final int damagePoints = -50; // negative damage == healing (5head)
+    private static final String imgPath = "/imgs/HealAsteroid.png";
+    private static final String name = "ShootingStar";
 
 
     public HealingAsteroid() {

@@ -3,6 +3,8 @@ package com.example.asteroids.Weapons;
 import com.example.asteroids.Asteroids.Asteroid;
 import com.example.asteroids.Player.Player;
 import com.example.asteroids.SoundHandling.MusicPlayer;
+import com.example.asteroids.Transaction.PlayerCurrencyHandler;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 
@@ -17,16 +19,16 @@ public class Bullet {
     //fields
     private double coordX;
     private double coordY;
-    private double speed = 60;
+    private final double speed = 60;
     private final double radius = 20;
-    private double angle;
-    private boolean isActive = true;
-    private double angleInRadians;
+    private final double angle;
+    private final boolean isActive = true;
+    private final double angleInRadians;
     private static Player player;
     private Bounds bounds ;
-    private static boolean shootableFlag = true;
+    private static final boolean shootableFlag = true;
     private static long shootableInterval = 150;
-    private long spawnTime = System.currentTimeMillis();
+    private final long spawnTime = System.currentTimeMillis();
     private final MusicPlayer shootSoundPlayer = new MusicPlayer("src/main/resources/Sounds/Sounds/BulletSound.mp3");
     private final MusicPlayer hitmarkerPlayer = new MusicPlayer("src/main/resources/Sounds/Sounds/Hitmarker.mp3");
 
@@ -89,7 +91,8 @@ public class Bullet {
                 asteroid.removeImage();
                 asteroid.despawnAsteroid();
                 player.getBullets().remove(this);
-                player.setPoints(player.getPoints() + 1);
+                PlayerCurrencyHandler.increasePlayerSpaceCoins(1);
+
                 return true;
             }
         }

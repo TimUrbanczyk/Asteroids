@@ -3,12 +3,11 @@ import java.io.File;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-
-
 public class MusicPlayer {
-    private String mp3Path;
-    private Media media;
-    private MediaPlayer mediaPlayer;
+
+    private final String mp3Path;
+    private final Media media;
+    private final MediaPlayer mediaPlayer;
 
     public MusicPlayer(String URL){
         mp3Path = new File(URL).toURI().toString();
