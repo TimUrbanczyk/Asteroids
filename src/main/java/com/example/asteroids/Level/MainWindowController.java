@@ -35,6 +35,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Stack;
 
@@ -51,7 +52,7 @@ public class MainWindowController implements Initializable {
     private Player player;
     private Timeline gameloop;
     private Healthbar playerHealthbar;
-    private final int thresholdInfernoidFight = 10;
+    private final int thresholdInfernoidFight = 1000;
     // Improved damage image reset logic
     private long damageImageStartTime = 0;
     private final long damageImageDuration = 100;
@@ -315,6 +316,8 @@ public class MainWindowController implements Initializable {
 
         gameloop = new Timeline(new KeyFrame(Duration.millis(16), event -> {
 
+            List<Asteroid> asteroidList = new ArrayList<>(Asteroid.getAsteroids());
+
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
             currencyLabel.setText("SpaceCoins : "+ PlayerCurrencyHandler.getPlayerSpaceCoins());
@@ -352,13 +355,13 @@ public class MainWindowController implements Initializable {
             }
 
 
-            for (Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())) {
+            for (Asteroid asteroid : asteroidList) {
                 if (asteroid.checkDespawn()) {
                     mainAnchorPane.getChildren().remove(asteroid.getAsteroidImage());
                 }
             }
             //check for collision and uncomment the stroke to see the asteroids hit boxes for debugging purpose
-            for(Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())){
+            for(Asteroid asteroid : asteroidList){
 
                 if(player.checkCollision(asteroid.getAsteroidImage())){
                     lost();

@@ -53,7 +53,7 @@
             <Font size="96.0" />
          </font>
       </Label>
-      <Label fx:id="currencyLabel" layoutX="630.0" layoutY="17.0" prefHeight="62.0" prefWidth="291.0" styleClass="Label" text="Points :" textFill="#fffb00" visible="false">
+      <Label fx:id="currencyLabel" layoutX="630.0" layoutY="17.0" prefHeight="62.0" prefWidth="392.0" styleClass="Label" text="Points :" textFill="#fffb00" visible="false">
          <font>
             <Font size="42.0" />
          </font>
