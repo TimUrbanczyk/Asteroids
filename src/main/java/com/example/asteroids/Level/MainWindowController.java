@@ -51,7 +51,7 @@ public class MainWindowController implements Initializable {
     private Player player;
     private Timeline gameloop;
     private Healthbar playerHealthbar;
-    private final int thresholdInfernoidFight = 1000;
+    private final int thresholdInfernoidFight = 60;
     // Improved damage image reset logic
     private long damageImageStartTime = 0;
     private final long damageImageDuration = 100;
@@ -313,7 +313,7 @@ public class MainWindowController implements Initializable {
         mainAnchorPane.setFocusTraversable(true);
         mainAnchorPane.requestFocus();
 
-        gameloop = new Timeline(new KeyFrame(Duration.millis(7), event -> {
+        gameloop = new Timeline(new KeyFrame(Duration.millis(16), event -> {
 
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 

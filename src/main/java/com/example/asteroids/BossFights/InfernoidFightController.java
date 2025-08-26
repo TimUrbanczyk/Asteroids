@@ -108,7 +108,7 @@ public class InfernoidFightController implements Initializable {
 
         InfernoidAnchorPane.setFocusTraversable(true);
         InfernoidAnchorPane.requestFocus();
-        gameloop = new Timeline(new KeyFrame(Duration.millis(7), event -> {
+        gameloop = new Timeline(new KeyFrame(Duration.millis(16), event -> {
 
 
             elapsedTimeShotable += 7;

@@ -12,6 +12,8 @@ target/
 *.iml
 *.ipr
 
+**/PlayerWallet.json
+
 ### Eclipse ###
 .apt_generated
 .classpath
