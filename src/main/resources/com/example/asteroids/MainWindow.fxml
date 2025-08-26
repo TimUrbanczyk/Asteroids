@@ -27,7 +27,6 @@
          </font>
       </Label>
       <Button fx:id="buttonStartGame" layoutX="676.0" layoutY="580.0" mnemonicParsing="false" onAction="#onButtonStartGame" prefHeight="101.0" prefWidth="280.0" styleClass="Button" stylesheets="@../../../CSS/Button.css" text="START" />
-      <Button fx:id="overworldButton" layoutX="676.0" layoutY="660.0" mnemonicParsing="false" styleClass="Button" stylesheets="@../../../CSS/Button.css" text="Overworld" />
       <ImageView fx:id="pressToPlay1" fitHeight="150.0" fitWidth="200.0" layoutX="149.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../imgs/PresstoPlay1.png" />
@@ -60,7 +59,7 @@
          </font>
       </Label>
       <Label fx:id="labelAutofire" layoutX="730.0" layoutY="850.0" text="AUTOFIRE : PRESS R" textFill="WHITE" visible="false" />
-      <Button fx:id="journalButton" layoutX="675.0" layoutY="740.0" mnemonicParsing="false" onAction="#onButtonJournal" styleClass="Button" stylesheets="@../../../CSS/Button.css" text="JOURNAL" />
-      <Button fx:id="exitButton1" layoutX="676.0" layoutY="820.0" mnemonicParsing="false" onAction="#onExitButton" styleClass="Button" stylesheets="@../../../CSS/Button.css" text="EXIT" />
+      <Button fx:id="journalButton" layoutX="675.0" layoutY="680.0" mnemonicParsing="false" onAction="#onButtonJournal" styleClass="Button" stylesheets="@../../../CSS/Button.css" text="JOURNAL" />
+      <Button fx:id="exitButton" layoutX="676.0" layoutY="780.0" mnemonicParsing="false" onAction="#onExitButton" styleClass="Button" stylesheets="@../../../CSS/Button.css" text="EXIT" />
    </children>
 </AnchorPane>
