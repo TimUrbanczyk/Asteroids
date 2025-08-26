@@ -455,7 +455,7 @@ public class MainWindowController implements Initializable {
         }));
 
         gameloop.setCycleCount(Timeline.INDEFINITE);
-        gameloop.setAutoReverse(true);
+        //gameloop.setAutoReverse(true);
         gameloop.play();
 
     }//end of Main

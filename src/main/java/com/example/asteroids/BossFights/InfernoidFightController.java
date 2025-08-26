@@ -111,9 +111,7 @@ public class InfernoidFightController implements Initializable {
         gameloop = new Timeline(new KeyFrame(Duration.millis(7), event -> {
 
 
-
-
-
+            elapsedTimeShotable += 7;
 
             if(shoot){
                 if(elapsedTimeShotable >= Bullet.getShootableInterval()){
@@ -154,7 +152,7 @@ public class InfernoidFightController implements Initializable {
         }));
 
         gameloop.setCycleCount(Timeline.INDEFINITE);
-        gameloop.setAutoReverse(true);
+        //gameloop.setAutoReverse(true);
         gameloop.play();
     }
 
