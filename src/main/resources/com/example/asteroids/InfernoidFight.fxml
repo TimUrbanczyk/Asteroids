@@ -14,7 +14,7 @@
          </image>
       </ImageView>
       <Circle fill="#04090d" layoutX="1536.0" layoutY="815.0" radius="31.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-      <ImageView fx:id="playerShip" fitHeight="150.0" fitWidth="200.0" layoutX="591.0" layoutY="547.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="playerShip" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" x="700.0" y="334.0">
          <image>
             <Image url="@../../../imgs/SpaceshipPlayer.png" />
          </image>
@@ -24,6 +24,6 @@
             <Image url="@../../../imgs/Infernoid.png" />
          </image>
       </ImageView>
-      <Canvas fx:id="canvas" height="900.0" width="1600.0" />
+      <Canvas fx:id="canvas" height="1115.0" layoutX="-1.0" width="1703.0" />
    </children>
 </AnchorPane>

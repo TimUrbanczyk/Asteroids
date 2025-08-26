@@ -32,6 +32,7 @@ public class InfernoidFightController implements Initializable {
 
     @FXML
     private ImageView playerShip;
+
     @FXML
     public AnchorPane InfernoidAnchorPane;
 
@@ -133,7 +134,6 @@ public class InfernoidFightController implements Initializable {
                 playerShip.setX(playerShip.getX() - player.getSpeed());
             }
             if (movingRight) {
-                System.out.println("§d");
                 player.setCoordX(player.getCoordX() + player.getSpeed());
                 playerShip.setX(playerShip.getX() + player.getSpeed());
             }
@@ -145,10 +145,12 @@ public class InfernoidFightController implements Initializable {
             }
 
 
-            if(player.getCoordX() < 0){player.setCoordX(0);player.getImageView().setX(0);}
-            if(player.getCoordY() < 0){player.setCoordY(0);player.getImageView().setY(0);}
-            if(player.getCoordX()  > 1450){player.setCoordX(1450);player.getImageView().setX(1450);}
-            if(player.getCoordY()  > 750){player.setCoordY(750);player.getImageView().setY(750);}
+
+
+            if(player.getCoordX() < 0){player.setCoordX(0);playerShip.setX(0);}
+            if(player.getCoordY() < 0){player.setCoordY(0);playerShip.setY(0);}
+            if(player.getCoordX()  > 1450){player.setCoordX(1450);playerShip.setX(1450);}
+            if(player.getCoordY()  > 750){player.setCoordY(750);playerShip.setY(750);}
         }));
 
         gameloop.setCycleCount(Timeline.INDEFINITE);
@@ -157,7 +159,7 @@ public class InfernoidFightController implements Initializable {
     }
 
 
-    public static void attachPlayer(Player p, ImageView playerShip){
+    public static void attachPlayer(Player p){
         player = p;
     }
 

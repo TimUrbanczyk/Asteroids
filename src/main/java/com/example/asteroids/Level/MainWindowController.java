@@ -51,7 +51,7 @@ public class MainWindowController implements Initializable {
     private Player player;
     private Timeline gameloop;
     private Healthbar playerHealthbar;
-    private final int thresholdInfernoidFight = 60;
+    private final int thresholdInfernoidFight = 10;
     // Improved damage image reset logic
     private long damageImageStartTime = 0;
     private final long damageImageDuration = 100;
@@ -606,7 +606,8 @@ public class MainWindowController implements Initializable {
 
         InfernoidFightController controller = loader.getController();
 
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 1600, 900);
+        stage.setScene(scene);
 
         // Create smooth fade transition for stage change
         FadeTransition fadeOut = new FadeTransition(Duration.millis(1000), stage.getScene().getRoot());
@@ -634,7 +635,7 @@ public class MainWindowController implements Initializable {
         Asteroid.disableSpawn();
         Asteroid.despawnAll();
 
-        InfernoidFightController.attachPlayer(player,playerShip);
+        InfernoidFightController.attachPlayer(player);
 
         mainAnchorPane.setFocusTraversable(false);
 
