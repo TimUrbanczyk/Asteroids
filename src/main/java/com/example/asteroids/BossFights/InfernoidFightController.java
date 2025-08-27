@@ -168,27 +168,26 @@ public class InfernoidFightController implements Initializable {
             }
 
             if(infernoidImageView.getX() < -500){
-                Infernoid.getInfernoid().setcoordX(-500);
-                infernoidImageView.setX(-500);
+                Infernoid.getInfernoid().setcoordX(-490);
+                infernoidImageView.setX(-490);
                 Infernoid.getInfernoid().setCollisionLeft(true);
             }
-            if(infernoidImageView.getY() < 0){
-                Infernoid.getInfernoid().setcoordY(0);
-                infernoidImageView.setY(0);
+            if(infernoidImageView.getY() < -50){
+                Infernoid.getInfernoid().setcoordY(-40);
+                infernoidImageView.setY(-40);
                 Infernoid.getInfernoid().setCollisionTop(true);
             }
             if(infernoidImageView.getX() > 810){
-                Infernoid.getInfernoid().setcoordX(810);
-                infernoidImageView.setX(810);
+                Infernoid.getInfernoid().setcoordX(800);
+                infernoidImageView.setX(800);
                 Infernoid.getInfernoid().setCollisionRight(true);
             }
             if(infernoidImageView.getY() > 600){
-                Infernoid.getInfernoid().setcoordY(600);
-                infernoidImageView.setY(600);
+                Infernoid.getInfernoid().setcoordY(590);
+                infernoidImageView.setY(590);
                 Infernoid.getInfernoid().setCollisionDown(true);
             }
 
-            System.out.println(infernoidImageView.getX() +" "+infernoidImageView.getY());
         }));
 
         gameloop.setCycleCount(Timeline.INDEFINITE);

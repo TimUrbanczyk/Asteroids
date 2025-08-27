@@ -50,6 +50,9 @@ public class Infernoid extends Asteroid {
 
     private double[] moveWander() {
 
+        double currentCoordX = this.getCoordX();
+        double currentCoordY = this.getCoordY();
+
 
         double jitter = 0.2;
         double deltaTime = 0.16;
@@ -59,19 +62,22 @@ public class Infernoid extends Asteroid {
         if(collisionLeft){
             wanderAngle = 0;
             collisionLeft = false;
+            this.setcoordX(currentCoordX + 15);
         }
         if(collisionRight){
             wanderAngle = Math.PI;
             collisionRight = false;
+            this.setcoordX(currentCoordX - 15);
         }
         if(collisionDown){
             wanderAngle = 3 * Math.PI / 2;
             collisionDown = false;
+            this.setcoordY(currentCoordY - 15);
         }
         if(collisionTop){
             wanderAngle = Math.PI / 2;
             collisionTop = false;
-
+            this.setcoordY(currentCoordY + 15);
         }
 
         wanderAngle = (wanderAngle + 2 * Math.PI) % (2 * Math.PI);
@@ -79,8 +85,8 @@ public class Infernoid extends Asteroid {
         double dx = Math.cos(wanderAngle) * this.getSpeedX() * deltaTime;
         double dy = Math.sin(wanderAngle) * this.getSpeedY() * deltaTime;
 
-        double newcoordX = this.getCoordX() + dx;
-        double newcoordY = this.getCoordY() + dy;
+        double newcoordX = currentCoordX + dx;
+        double newcoordY = currentCoordY + dy;
 
         this.setcoordX(newcoordX);
         this.setcoordY(newcoordY);
