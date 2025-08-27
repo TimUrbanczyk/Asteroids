@@ -1,6 +1,5 @@
 package com.example.asteroids.BossFights;
 
-
 import com.example.asteroids.BossFights.Bosses.Infernoid;
 import com.example.asteroids.Player.Player;
 import com.example.asteroids.Weapons.Bullet;
@@ -12,7 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -25,11 +23,12 @@ public class InfernoidFightController implements Initializable {
     private final long elapsedTime = 0;
     private long elapsedTimeShotable = 0;
     private final long elapsedTimeLaser = 0;
-
-   private Infernoid infernoid;
-
+    private Infernoid infernoid;
 
 
+
+    @FXML
+    private ImageView infernoidImageView;
     @FXML
     private ImageView playerShip;
 
@@ -114,6 +113,10 @@ public class InfernoidFightController implements Initializable {
 
             elapsedTimeShotable += 7;
 
+            double[] infernoidCoords = infernoid.move();
+            infernoidImageView.setX(infernoidCoords[0]);
+            infernoidImageView.setY(infernoidCoords[1]);
+
             if(shoot){
                 if(elapsedTimeShotable >= Bullet.getShootableInterval()){
                     Bullet.spawnBullet();
@@ -147,10 +150,45 @@ public class InfernoidFightController implements Initializable {
 
 
 
-            if(player.getCoordX() < 0){player.setCoordX(0);playerShip.setX(0);}
-            if(player.getCoordY() < 0){player.setCoordY(0);playerShip.setY(0);}
-            if(player.getCoordX()  > 1450){player.setCoordX(1450);playerShip.setX(1450);}
-            if(player.getCoordY()  > 750){player.setCoordY(750);playerShip.setY(750);}
+            if(player.getCoordX() < 0){
+                player.setCoordX(0);
+                playerShip.setX(0);
+            }
+            if(player.getCoordY() < 0){
+                player.setCoordY(0);
+                playerShip.setY(0);
+            }
+            if(player.getCoordX() > 1450){
+                player.setCoordX(1450);
+                playerShip.setX(1450);
+            }
+            if(player.getCoordY() > 750){
+                player.setCoordY(750);
+                playerShip.setY(750);
+            }
+
+            if(infernoidImageView.getX() < -500){
+                Infernoid.getInfernoid().setcoordX(-500);
+                infernoidImageView.setX(-500);
+                Infernoid.getInfernoid().setCollisionLeft(true);
+            }
+            if(infernoidImageView.getY() < 0){
+                Infernoid.getInfernoid().setcoordY(0);
+                infernoidImageView.setY(0);
+                Infernoid.getInfernoid().setCollisionTop(true);
+            }
+            if(infernoidImageView.getX() > 810){
+                Infernoid.getInfernoid().setcoordX(810);
+                infernoidImageView.setX(810);
+                Infernoid.getInfernoid().setCollisionRight(true);
+            }
+            if(infernoidImageView.getY() > 600){
+                Infernoid.getInfernoid().setcoordY(600);
+                infernoidImageView.setY(600);
+                Infernoid.getInfernoid().setCollisionDown(true);
+            }
+
+            System.out.println(infernoidImageView.getX() +" "+infernoidImageView.getY());
         }));
 
         gameloop.setCycleCount(Timeline.INDEFINITE);

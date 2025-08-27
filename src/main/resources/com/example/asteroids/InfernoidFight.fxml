@@ -19,7 +19,7 @@
             <Image url="@../../../imgs/SpaceshipPlayer.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="343.0" fitWidth="401.0" layoutX="495.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="343.0" fitWidth="401.0" layoutX="495.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" fx:id="infernoidImageView">
          <image>
             <Image url="@../../../imgs/Infernoid.png" />
          </image>

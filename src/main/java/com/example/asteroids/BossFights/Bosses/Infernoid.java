@@ -1,23 +1,29 @@
 package com.example.asteroids.BossFights.Bosses;
 
-
 import com.example.asteroids.Asteroids.Asteroid;
-
 import java.util.Random;
 
 public class Infernoid extends Asteroid {
 
     private static Infernoid infernoid;
-    private static final double speedX =2.7 ;
-    private static final double speedY = 2.7;
+    private static final double speedX = 10;
+    private static final double speedY = 10;
     private static final int damagePoints = 100;
     private static final String name = "Infernoid";
     private BossState currentState;
+    private double wanderAngle = 0;
+    private boolean collisionLeft = false;
+    private boolean collisionRight = false;
+    private boolean collisionTop = false;
+    private boolean collisionDown = false;
+    private final Random rng = new Random();
 
 
     private Infernoid(){
         super(speedX,speedY,"",damagePoints);
         this.currentState = BossState.WANDER;
+        this.setcoordX(495);
+        this.setcoordY(32);
     }
 
     public enum BossState {
@@ -31,18 +37,59 @@ public class Infernoid extends Asteroid {
         this.currentState = newState;
     }
 
-    public void move(){
+    public double[] move(){
         switch (currentState){
-            case WANDER -> {}
-            case SUMMOM -> {}
-            case SPLIT -> {}
-            case DIE -> {}
+            case WANDER -> {return moveWander();}
+            case SUMMOM -> {moveSummon();}
+            case SPLIT -> {moveSplit();}
+            case DIE -> {moveDie();}
         }
+        return null;
     }
 
 
-    private void moveWander(){
-        //TODO
+    private double[] moveWander() {
+
+
+        double jitter = 0.2;
+        double deltaTime = 0.16;
+
+        wanderAngle += rng.nextGaussian() * deltaTime * jitter;
+
+        if(collisionLeft){
+            wanderAngle = 0;
+            collisionLeft = false;
+        }
+        if(collisionRight){
+            wanderAngle = Math.PI;
+            collisionRight = false;
+        }
+        if(collisionDown){
+            wanderAngle = 3 * Math.PI / 2;
+            collisionDown = false;
+        }
+        if(collisionTop){
+            wanderAngle = Math.PI / 2;
+            collisionTop = false;
+
+        }
+
+        wanderAngle = (wanderAngle + 2 * Math.PI) % (2 * Math.PI);
+
+        double dx = Math.cos(wanderAngle) * this.getSpeedX() * deltaTime;
+        double dy = Math.sin(wanderAngle) * this.getSpeedY() * deltaTime;
+
+        double newcoordX = this.getCoordX() + dx;
+        double newcoordY = this.getCoordY() + dy;
+
+        this.setcoordX(newcoordX);
+        this.setcoordY(newcoordY);
+        this.getAsteroidImage().setX(newcoordX);
+        this.getAsteroidImage().setY(newcoordY);
+
+        double output[] = {newcoordX,newcoordY};
+        return output;
+
     }
 
     private void moveSummon(){
@@ -65,6 +112,32 @@ public class Infernoid extends Asteroid {
         }
 
         return infernoid;
+    }
+
+    public void setCollisionLeft(boolean newstate){
+        this.collisionLeft = newstate;
+    }
+    public void setCollisionRight(boolean newstate){
+        this.collisionRight = newstate;
+    }
+    public void setCollisionTop(boolean newstate){
+        this.collisionTop = newstate;
+    }
+    public void setCollisionDown(boolean newstate){
+        this.collisionDown = newstate;
+    }
+
+    public boolean isCollisionLeft(){
+        return this.collisionLeft;
+    }
+    public boolean isCollisionRight(){
+        return this.collisionRight;
+    }
+    public boolean isCollisionDown(){
+        return this.collisionDown;
+    }
+    public boolean isCollisionTop(){
+        return this.collisionTop ;
     }
 
 
