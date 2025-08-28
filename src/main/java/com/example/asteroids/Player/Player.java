@@ -15,7 +15,7 @@ import java.util.Stack;
 public class Player {
 
     private int healthPoints;
-    private final ImageView imageView;
+    private ImageView imageView;
     private double coordX;
     private double coordY;
     private final double width;
@@ -26,7 +26,7 @@ public class Player {
     private Healthbar healthBar ;
     private static final String name = "Spaceship";
     private final Image damageImage = new Image(getClass().getResource("/imgs/SpaceShipPlayerOnDamage.png").toExternalForm());
-    private final Image playerImage;
+    private Image playerImage;
     private boolean isInDamageState = false;
     /*
     I am planning to have about 10-15 bullets active at the same time.
@@ -47,16 +47,16 @@ public class Player {
 
     }//end of constructor
 
-    public boolean checkCollision(ImageView target) {
+    public boolean checkCollision(ImageView targetImageView, Asteroid target) {
 
-        for(Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())) {
+
 
             //set up the both bounds as good as possible somehow i wasted to much time here idk
             Bounds asteroidBounds = new BoundingBox(
-                    asteroid.getAsteroidImage().getBoundsInParent().getMinX(),
-                    asteroid.getAsteroidImage().getBoundsInParent().getMinY(),
-                    asteroid.getAsteroidImage().getBoundsInParent().getWidth(),
-                    asteroid.getAsteroidImage().getBoundsInParent().getHeight()
+                    targetImageView.getBoundsInParent().getMinX(),
+                    targetImageView.getBoundsInParent().getMinY(),
+                    targetImageView.getBoundsInParent().getWidth(),
+                    targetImageView.getBoundsInParent().getHeight()
             );
 
             Bounds playerBounds = new BoundingBox(
@@ -73,16 +73,16 @@ public class Player {
                 //System.out.println("Collision"+System.currentTimeMillis());
 
 
-                if(!(asteroid instanceof ItemInterface) && !(asteroid instanceof HealingAsteroid)) {
+                if(!(target instanceof ItemInterface) && !(target instanceof HealingAsteroid)) {
                     this.imageView.setImage(damageImage);
                     this.isInDamageState = true;
                 }
-                calculateNewHealthPoints(asteroid);
-                handleCollision(asteroid);
+                calculateNewHealthPoints(target);
+                handleCollision(target);
                 return true;
 
             }
-        }
+
 
         return false;
 
@@ -114,10 +114,6 @@ public class Player {
         }
     }//end of checkForDeath
 
-
-    public static  String getDescrption(){
-        return "Player";
-    }
 
 
     //getters
@@ -155,6 +151,10 @@ public class Player {
     public void attachHealthBar(Healthbar healthBar) {this.healthBar = healthBar;}
 
     public void setBullets(Stack<Bullet> bullets) {this.bullets = bullets;}
+
+    public void setImageView(ImageView imageView){
+        this.imageView = imageView;
+    }
 
     public void setHealthPoints(int h) {this.healthPoints = h;}
 

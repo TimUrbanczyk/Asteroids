@@ -18,12 +18,16 @@ import java.util.ResourceBundle;
 public class InfernoidFightController implements Initializable {
 
     private static Player player;
+    private static boolean playerAttached = false;
 
     private Timeline gameloop;
     private final long elapsedTime = 0;
     private long elapsedTimeShotable = 0;
     private final long elapsedTimeLaser = 0;
     private Infernoid infernoid;
+    private long damageImageStartTime = 0;
+    private final long damageImageDuration = 100;
+
 
 
 
@@ -31,7 +35,6 @@ public class InfernoidFightController implements Initializable {
     private ImageView infernoidImageView;
     @FXML
     private ImageView playerShip;
-
     @FXML
     public AnchorPane InfernoidAnchorPane;
 
@@ -117,6 +120,40 @@ public class InfernoidFightController implements Initializable {
             infernoidImageView.setX(infernoidCoords[0]);
             infernoidImageView.setY(infernoidCoords[1]);
 
+            if(playerAttached){
+               player.setImageView(playerShip);
+            }
+
+
+
+
+            if(player.getDamageState()){
+                // If damage just started, record the start time
+                if(damageImageStartTime == 0) {
+                    damageImageStartTime = System.currentTimeMillis();
+                }
+
+                // Check if enough time has passed to reset the image
+                if(System.currentTimeMillis() - damageImageStartTime >= damageImageDuration) {
+                    player.resetDamageImage();
+                    damageImageStartTime = 0; // Reset the timer
+                }
+            } else {
+                // Reset timer if player is not in damage state
+                damageImageStartTime = 0;
+            }
+
+
+
+            if(player.checkCollision(infernoidImageView,infernoid)){
+                System.out.println("FMCDKMFKL");
+            }
+
+
+
+
+
+
             if(shoot){
                 if(elapsedTimeShotable >= Bullet.getShootableInterval()){
                     Bullet.spawnBullet();
@@ -191,19 +228,18 @@ public class InfernoidFightController implements Initializable {
         }));
 
         gameloop.setCycleCount(Timeline.INDEFINITE);
-        //gameloop.setAutoReverse(true);
         gameloop.play();
     }
 
 
     public static void attachPlayer(Player p){
         player = p;
+        playerAttached = true;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Start the game loop for player movement
-
         infernoid = Infernoid.getInfernoid();
         main();
     }

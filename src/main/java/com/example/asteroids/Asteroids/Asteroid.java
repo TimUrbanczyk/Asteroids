@@ -10,7 +10,7 @@ import java.util.Random;
 public class Asteroid {
 
     //static fields
-    private static final String[] spawnPoints = {"NORTH","EAST","SOUTH","WEST"}; //coords of possible spawn points (x,y)
+    private static final String[] spawnPoints = {"NORTH","EAST","SOUTH","WEST"};
     private static ArrayList<Asteroid> asteroids = new ArrayList<>();
     private static boolean spawnable = true;
 
@@ -153,8 +153,12 @@ public class Asteroid {
 
     public static void  despawnAll(){asteroids = new ArrayList<>();}
 
-    public static void disableSpawn(){spawnable = false;}
-    public static void enableSpawn(){spawnable = true;}
+    public static void disableSpawn(){
+        spawnable = false;
+    }
+    public static void enableSpawn(){
+        spawnable = true;
+    }
 
 
 
@@ -164,29 +168,53 @@ public class Asteroid {
     }
 
     //getters
-    public int getDamagePoints() {return this.damagePoints;}
+    public int getDamagePoints() {
+        return this.damagePoints;
+    }
 
-    public double getSpeedX() {return this.speedX;}
+    public double getSpeedX() {
+        return this.speedX;
+    }
 
-    public double getSpeedY() {return this.speedY;}
+    public double getSpeedY() {
+        return this.speedY;
+    }
 
-    public static ArrayList<Asteroid> getAsteroids() {return asteroids;}
+    public static ArrayList<Asteroid> getAsteroids() {
+        return asteroids;
+    }
 
-    public double getCoordX() {return this.coordX;}
+    public double getCoordX() {
+        return this.coordX;
+    }
 
-    public double getCoordY() {return this.coordY;}
+    public double getCoordY() {
+        return this.coordY;
+    }
 
-    public ImageView getAsteroidImage() {return this.asteroidImage;}
+    public ImageView getAsteroidImage() {
+        return this.asteroidImage;
+    }
 
 
 
     //setters
 
-    public void setcoordX(double coordX) {this.coordX = coordX;}
+    public void setcoordX(double coordX) {
+        this.coordX = coordX;
+    }
 
-    public void setcoordY(double coordY) {this.coordY = coordY;}
+    public void setcoordY(double coordY) {
+        this.coordY = coordY;
+    }
 
-    public static void setAsteroids(ArrayList<Asteroid> a) {asteroids = a;}
+    public static void addAsteroid(Asteroid a){
+        asteroids.addFirst(a);
+    }
+
+    public static void setAsteroids(ArrayList<Asteroid> a) {
+        asteroids = a;
+    }
 
 }//end of Asteroid
 

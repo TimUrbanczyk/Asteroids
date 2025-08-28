@@ -1,13 +1,17 @@
 package com.example.asteroids.BossFights.Bosses;
 
 import com.example.asteroids.Asteroids.Asteroid;
+import com.example.asteroids.Player.Player;
+import javafx.geometry.Bounds;
+import javafx.scene.image.ImageView;
+
 import java.util.Random;
 
 public class Infernoid extends Asteroid {
 
     private static Infernoid infernoid;
-    private static final double speedX = 10;
-    private static final double speedY = 10;
+    private static final double speedX = 6;
+    private static final double speedY = 6;
     private static final int damagePoints = 100;
     private static final String name = "Infernoid";
     private BossState currentState;
@@ -24,6 +28,7 @@ public class Infernoid extends Asteroid {
         this.currentState = BossState.WANDER;
         this.setcoordX(495);
         this.setcoordY(32);
+        Asteroid.addAsteroid(this);
     }
 
     public enum BossState {
@@ -109,6 +114,9 @@ public class Infernoid extends Asteroid {
     private void moveDie(){
         //TODO
     }
+
+
+
 
 
 

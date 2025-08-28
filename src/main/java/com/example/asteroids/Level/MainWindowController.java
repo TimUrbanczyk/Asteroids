@@ -52,7 +52,7 @@ public class MainWindowController implements Initializable {
     private Player player;
     private Timeline gameloop;
     private Healthbar playerHealthbar;
-    private final int thresholdInfernoidFight = 100;
+    private final int thresholdInfernoidFight = 10;
     // Improved damage image reset logic
     private long damageImageStartTime = 0;
     private final long damageImageDuration = 100;
@@ -359,10 +359,9 @@ public class MainWindowController implements Initializable {
                     mainAnchorPane.getChildren().remove(asteroid.getAsteroidImage());
                 }
             }
-            //check for collision and uncomment the stroke to see the asteroids hit boxes for debugging purpose
-            for(Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())){
 
-                if(player.checkCollision(asteroid.getAsteroidImage())){
+            for(Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())){
+                if(player.checkCollision(asteroid.getAsteroidImage(),asteroid)){
                     lost();
                 }
 
@@ -585,6 +584,7 @@ public class MainWindowController implements Initializable {
 
     private void startInfernoidFight() throws IOException {
 
+        Asteroid.setAsteroids(new ArrayList<>());
         Stage stage = (Stage) mainAnchorPane.getScene().getWindow();
 
         // Check if stage is null and try alternative ways to get it
