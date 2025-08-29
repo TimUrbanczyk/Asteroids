@@ -24,7 +24,7 @@ public class Infernoid extends Asteroid {
 
 
     private Infernoid(){
-        super(speedX,speedY,"",damagePoints);
+        super(speedX,speedY,"",damagePoints,name);
         this.currentState = BossState.WANDER;
         this.setcoordX(495);
         this.setcoordY(32);

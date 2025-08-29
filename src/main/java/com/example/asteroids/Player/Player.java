@@ -3,12 +3,17 @@ package com.example.asteroids.Player;
 import com.example.asteroids.Asteroids.Asteroid;
 import com.example.asteroids.Asteroids.HealingAsteroid;
 import com.example.asteroids.Items.ItemInterface;
+import com.example.asteroids.Journal.DiscoveredEntities;
 import com.example.asteroids.Weapons.Bullet;
 import com.example.asteroids.Level.MainWindowController;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -28,10 +33,6 @@ public class Player {
     private final Image damageImage = new Image(getClass().getResource("/imgs/SpaceShipPlayerOnDamage.png").toExternalForm());
     private Image playerImage;
     private boolean isInDamageState = false;
-    /*
-    I am planning to have about 10-15 bullets active at the same time.
-     */
-
 
 
     public Player(int healthPoints, ImageView imageView) {
@@ -45,21 +46,16 @@ public class Player {
         this.width = imageView.getBoundsInParent().getWidth()-20;
         this.height = imageView.getBoundsInParent().getHeight()-10;
 
-    }//end of constructor
+    }
 
-    public boolean checkCollision(ImageView targetImageView, Asteroid target) {
-
-
-
-            //set up the both bounds as good as possible somehow i wasted to much time here idk
-            Bounds asteroidBounds = new BoundingBox(
+    public boolean checkCollision(ImageView targetImageView, Asteroid target) throws IOException {
+        Bounds asteroidBounds = new BoundingBox(
                     targetImageView.getBoundsInParent().getMinX(),
                     targetImageView.getBoundsInParent().getMinY(),
                     targetImageView.getBoundsInParent().getWidth(),
                     targetImageView.getBoundsInParent().getHeight()
             );
-
-            Bounds playerBounds = new BoundingBox(
+        Bounds playerBounds = new BoundingBox(
                     this.getImageView().getBoundsInParent().getMinX(),
                     this.getImageView().getBoundsInParent().getMinY(),
                     this.width,
@@ -67,12 +63,7 @@ public class Player {
 
             );
 
-            if(playerBounds.intersects(asteroidBounds)) {
-
-                //comment in the line for debugging purpose it shows the collisions in the console with timestamp
-                //System.out.println("Collision"+System.currentTimeMillis());
-
-
+        if(playerBounds.intersects(asteroidBounds)) {
                 if(!(target instanceof ItemInterface) && !(target instanceof HealingAsteroid)) {
                     this.imageView.setImage(damageImage);
                     this.isInDamageState = true;
@@ -80,82 +71,112 @@ public class Player {
                 calculateNewHealthPoints(target);
                 handleCollision(target);
                 return true;
-
             }
-
-
         return false;
 
-
-    }//end of checkCollision
+    }
 
     public void resetDamageImage(){
         this.imageView.setImage(playerImage);
         this.isInDamageState = false;
     }
 
-    public void handleCollision(Asteroid asteroid) {
+    public void handleCollision(Asteroid asteroid) throws IOException {
+        addAsteroidToDiscoveredEntities(asteroid);
+        if(asteroid instanceof ItemInterface){
+            ((ItemInterface) asteroid).onCollision();
+        }
+        asteroid.despawnAsteroid();
+    }
 
-            if(asteroid instanceof ItemInterface){
-                ((ItemInterface) asteroid).onCollision();
-            }
-            asteroid.despawnAsteroid();
+    //TODO
+    private void addAsteroidToDiscoveredEntities(Asteroid asteroid) throws IOException {
 
-    }//end of handleCollision
+    }
 
     private void calculateNewHealthPoints(Asteroid asteroid) {
             this.healthPoints = this.healthPoints - asteroid.getDamagePoints();
             checkForDeath();
-    }//end of calculateNewHealthPoints
+    }
 
     private void checkForDeath() {
         if (this.healthPoints <= 0){
             MainWindowController.setGameRunning(false);
         }
-    }//end of checkForDeath
+    }
 
 
+    public int getHealthPoints() {
+        return healthPoints;
+    }
 
-    //getters
-    public int getHealthPoints() {return healthPoints;}
+    public ImageView getImageView() {
+        return imageView;
+    }
 
-    public ImageView getImageView() {return imageView;}
+    public double getSpeed() {
+        return speed;
+    }
 
-    public double getSpeed() {return speed;}
+    public double getRotationSpeed() {
+        return rotationSpeed;
+    }
 
-    public double getRotationSpeed() {return rotationSpeed;}
+    public double getCoordX() {
+        return coordX;
+    }
 
-    public double getCoordX() {return coordX;}
+    public double getCoordY() {
+        return coordY;
+    }
 
-    public double getCoordY() {return coordY;}
+    public double getWidth() {
+        return width;
+    }
 
-    public double getWidth() {return width;}
+    public double getHeight() {
+        return height;
+    }
 
-    public double getHeight() {return height;}
+    public Stack<Bullet> getBullets() {
+        return bullets;
+    }
 
-    public Stack<Bullet> getBullets() {return bullets;}
+    public Healthbar getHealthBar() {
+        return healthBar;
+    }
 
-    public Healthbar getHealthBar() {return healthBar;}
+    public static String getName(){
+        return name;
+    }
 
-    public static String getName(){return name;}
+    public boolean getDamageState(){
+        return this.isInDamageState;
+    }
 
-    public boolean getDamageState(){return this.isInDamageState;}
 
+    public void setCoordX(double coordX) {
+        this.coordX = coordX;
+    }
 
-    //setters
+    public void setCoordY(double coordY) {
+        this.coordY = coordY;
+    }
 
-    public void setCoordX(double coordX) {this.coordX = coordX;}
+    public void attachHealthBar(Healthbar healthBar) {
+        this.healthBar = healthBar;
+    }
 
-    public void setCoordY(double coordY) {this.coordY = coordY;}
-
-    public void attachHealthBar(Healthbar healthBar) {this.healthBar = healthBar;}
-
-    public void setBullets(Stack<Bullet> bullets) {this.bullets = bullets;}
+    public void setBullets(Stack<Bullet> bullets) {
+        this.bullets = bullets;
+    }
 
     public void setImageView(ImageView imageView){
         this.imageView = imageView;
     }
 
-    public void setHealthPoints(int h) {this.healthPoints = h;}
+    public void setHealthPoints(int h) {
+        this.healthPoints = h;
+    }
 
 }//end of Player

@@ -11,6 +11,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -144,14 +146,13 @@ public class InfernoidFightController implements Initializable {
             }
 
 
-
-            if(player.checkCollision(infernoidImageView,infernoid)){
-                System.out.println("FMCDKMFKL");
+            try {
+                if(player.checkCollision(infernoidImageView,infernoid)){
+                    System.out.println("FMCDKMFKL");
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-
-
-
-
 
 
             if(shoot){

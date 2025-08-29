@@ -3,11 +3,9 @@ package com.example.asteroids.Items;
 import com.example.asteroids.Asteroids.Asteroid;
 import com.example.asteroids.Weapons.Laser;
 
-
-//extend Asteroid because i want to make the items to fly around
 public class LaserItem extends Asteroid implements ItemInterface{
 
-    //static fields
+
     private static final double speedX = 2.3 ;
     private static final double speedY = 2.3;
     private static final int damagePoints = 0;
@@ -16,7 +14,7 @@ public class LaserItem extends Asteroid implements ItemInterface{
 
 
     public LaserItem(){
-        super(speedX,speedY,imgPath,damagePoints);
+        super(speedX,speedY,imgPath,damagePoints,name);
         super.getAsteroidImage().setScaleX(0.15);
         super.getAsteroidImage().setScaleY(0.15);
     }
@@ -31,5 +29,4 @@ public class LaserItem extends Asteroid implements ItemInterface{
         }
     }
 
-    public static String getName(){return name;}
 }

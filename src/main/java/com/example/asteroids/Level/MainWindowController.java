@@ -35,7 +35,6 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Stack;
 
@@ -52,7 +51,7 @@ public class MainWindowController implements Initializable {
     private Player player;
     private Timeline gameloop;
     private Healthbar playerHealthbar;
-    private final int thresholdInfernoidFight = 10;
+    private final int thresholdInfernoidFight = 1090;
     // Improved damage image reset logic
     private long damageImageStartTime = 0;
     private final long damageImageDuration = 100;
@@ -361,8 +360,12 @@ public class MainWindowController implements Initializable {
             }
 
             for(Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())){
-                if(player.checkCollision(asteroid.getAsteroidImage(),asteroid)){
-                    lost();
+                try {
+                    if(player.checkCollision(asteroid.getAsteroidImage(),asteroid)){
+                        lost();
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
 
             }

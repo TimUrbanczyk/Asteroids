@@ -9,12 +9,9 @@ import java.util.Random;
 
 public class Asteroid {
 
-    //static fields
     private static final String[] spawnPoints = {"NORTH","EAST","SOUTH","WEST"};
     private static ArrayList<Asteroid> asteroids = new ArrayList<>();
     private static boolean spawnable = true;
-
-    //fields
     private double speedX;
     private double speedY;
     private double coordX;
@@ -24,11 +21,13 @@ public class Asteroid {
     private final ImageView asteroidImage;
     private final int damagePoints;
     private final long spawnTime = System.currentTimeMillis();
+    private String name;
 
 
-    public Asteroid(double speedX, double speedY, String imgPath, int damagePoints) {
 
+    public Asteroid(double speedX, double speedY, String imgPath, int damagePoints, String name) {
 
+        name = name;
 
         spawnPoint = generateSpawnPoint();
         coordX = spawnPoint[0];
@@ -53,24 +52,18 @@ public class Asteroid {
             this.speedY = speedY;
         }
 
-
-
         Image img = new Image(getClass().getResource(imgPath).toExternalForm());
         this.asteroidImage = new ImageView(img);
-
         this.asteroidImage.setX(spawnPoint[0]);
         this.asteroidImage.setY(spawnPoint[1]);
 
-
-
-    }//end of constuctor
+    }
 
     public static void spawnAsteroid(){
 
         if(!spawnable){return;}
-        Random random = new Random(); //set up random
+        Random random = new Random();
         double numberRandom = random.nextDouble();
-
 
 
         if(numberRandom < 0.8){
@@ -86,8 +79,7 @@ public class Asteroid {
         }
 
 
-    }//end of spawnAsteroid
-
+    }
 
 
     public static void moveAsteroid(){
@@ -99,14 +91,13 @@ public class Asteroid {
             asteroid.getAsteroidImage().setX(asteroid.getCoordX());
             asteroid.getAsteroidImage().setY(asteroid.getCoordY());
         }
-    }//end of moveAsteroids
+    }
 
     public static double[] generateSpawnPoint(){
 
         double[] Output = new double[2];
-        Random random = new Random(); //set up random
+        Random random = new Random();
         int numberRandom = random.nextInt(spawnPoints.length);
-
 
         switch(spawnPoints[numberRandom]){
             case "NORTH":
@@ -133,7 +124,7 @@ public class Asteroid {
 
         return Output;
 
-    }//end of generateSpawnPoint
+    }
 
     public void despawnAsteroid(){
         removeImage();
@@ -141,17 +132,17 @@ public class Asteroid {
 
     }
 
-
     public boolean checkDespawn(){
         if(System.currentTimeMillis() - this.spawnTime > 10000){
             despawnAsteroid();
             return true;
         }
         return false;
-    }//end of checkDespawn
+    }
 
-
-    public static void  despawnAll(){asteroids = new ArrayList<>();}
+    public static void  despawnAll(){
+        asteroids = new ArrayList<>();
+    }
 
     public static void disableSpawn(){
         spawnable = false;
@@ -167,7 +158,10 @@ public class Asteroid {
         this.asteroidImage.setImage(null);
     }
 
-    //getters
+    public String getName(){
+        return this.name;
+    }
+
     public int getDamagePoints() {
         return this.damagePoints;
     }
@@ -196,10 +190,6 @@ public class Asteroid {
         return this.asteroidImage;
     }
 
-
-
-    //setters
-
     public void setcoordX(double coordX) {
         this.coordX = coordX;
     }
@@ -216,5 +206,5 @@ public class Asteroid {
         asteroids = a;
     }
 
-}//end of Asteroid
+}
 
