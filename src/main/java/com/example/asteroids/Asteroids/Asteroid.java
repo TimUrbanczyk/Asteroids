@@ -27,7 +27,7 @@ public class Asteroid {
 
     public Asteroid(double speedX, double speedY, String imgPath, int damagePoints, String name) {
 
-        name = name;
+        this.name = name;
 
         spawnPoint = generateSpawnPoint();
         coordX = spawnPoint[0];
@@ -147,12 +147,6 @@ public class Asteroid {
     public static void disableSpawn(){
         spawnable = false;
     }
-    public static void enableSpawn(){
-        spawnable = true;
-    }
-
-
-
 
     public void removeImage(){
         this.asteroidImage.setImage(null);

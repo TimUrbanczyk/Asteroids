@@ -11,10 +11,10 @@ import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Stack;
 
 public class Player {
@@ -89,9 +89,20 @@ public class Player {
         asteroid.despawnAsteroid();
     }
 
-    //TODO
-    private void addAsteroidToDiscoveredEntities(Asteroid asteroid) throws IOException {
 
+    public static void addAsteroidToDiscoveredEntities(Asteroid asteroid) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String discoveredEntitiespath = "src/main/java/com/example/asteroids/Journal/DiscoveredEntities.json";
+        File discoveredEntitiesFile = new File(discoveredEntitiespath);
+        DiscoveredEntities entities = objectMapper.readValue(discoveredEntitiesFile, DiscoveredEntities.class);
+        objectMapper.writerWithDefaultPrettyPrinter().writeValue(discoveredEntitiesFile, entities);
+        String discoveredEntitiesFileAsString = Files.readString(Path.of(discoveredEntitiespath));
+        if(discoveredEntitiesFileAsString.contains(asteroid.getName())){
+            return;
+        }
+        entities.getDiscovered().add(asteroid.getName());
+        System.out.println(asteroid.getName());
+        objectMapper.writerWithDefaultPrettyPrinter().writeValue(discoveredEntitiesFile, entities);
     }
 
     private void calculateNewHealthPoints(Asteroid asteroid) {

@@ -396,7 +396,14 @@ public class MainWindowController implements Initializable {
 
 
             //draw the bullets using the javafx canvas
-            for (Bullet bullet : new ArrayList<>(player.getBullets())) {drawBullet(bullet); bullet.checkCollision();}
+            for (Bullet bullet : new ArrayList<>(player.getBullets())) {
+                drawBullet(bullet);
+                try {
+                    bullet.checkCollision();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
             drawHealthBar();
 

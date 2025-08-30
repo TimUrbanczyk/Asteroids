@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 
+import java.io.IOException;
+
 /*
 I create the bullets at the start of the game and after this they won´t be deleted to safe some performance.
 They just get invisible then...
@@ -70,7 +72,7 @@ public class Bullet {
 
     }//end of moveBullet
 
-    public boolean checkCollision() {
+    public boolean checkCollision() throws IOException {
 
         for(Asteroid asteroid : Asteroid.getAsteroids()) {
 
@@ -84,6 +86,8 @@ public class Bullet {
 
 
             if(this.bounds.intersects(asteroidBounds)){
+
+                Player.addAsteroidToDiscoveredEntities(asteroid);
 
                 hitmarkerPlayer.disableRepeat();
                 hitmarkerPlayer.playSound();
