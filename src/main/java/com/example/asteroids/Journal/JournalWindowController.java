@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class JournalWindowController implements Initializable {
@@ -81,7 +82,7 @@ public class JournalWindowController implements Initializable {
                 break;
             case "Spaceship":
                 journalText.setText(DescriptionPlayer.getDescription());
-                journalImageview.setImage(new Image(getClass().getResource("/imgs/SpaceshipPlayer.png").toExternalForm()));
+                journalImageview.setImage(new Image(Objects.requireNonNull(getClass().getResource("/imgs/SpaceshipPlayer.png")).toExternalForm()));
                 break;
             case "LaserUpgread":
                 journalText.setText(DescriptionLaser.getDescription());
@@ -108,12 +109,9 @@ public class JournalWindowController implements Initializable {
         }
     }
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //move the elements to the right position according to screensize etc
         closeJournalWindowButton.setLayoutX(journalAnchorPane.getPrefWidth()+(journalAnchorPane.getPrefWidth()/7));
 
         separator1.setPrefWidth(journalAnchorPane.getPrefWidth()+(journalAnchorPane.getPrefWidth()/5));
@@ -124,7 +122,6 @@ public class JournalWindowController implements Initializable {
 
         listView.setPrefHeight(journalAnchorPane.getPrefHeight()-70);
 
-        //add the journalpages to the listview
         ObservableList<Object> journalPages = FXCollections.observableArrayList();
         List<String> discoveredEntities  = getDiscoveredEntities().getDiscovered();
         journalPages.addAll(discoveredEntities);
@@ -135,7 +132,6 @@ public class JournalWindowController implements Initializable {
         journalImageview.setScaleY(0.5);
         journalImageview.setLayoutX(journalAnchorPane.getPrefWidth()-journalImageview.getFitWidth()/4);
 
-        //setup text
         journalText.setFill(Color.WHITE);
         journalText.setText("");
 
