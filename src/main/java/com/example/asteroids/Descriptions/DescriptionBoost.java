@@ -1,6 +1,6 @@
 package com.example.asteroids.Descriptions;
 
-public class DescriptionBoost {
+public class DescriptionBoost implements DescriptionInterface{
 
     private static final String description =
             "The Boost Item is a rare upgrade that enhances your ship's firing capabilities. "

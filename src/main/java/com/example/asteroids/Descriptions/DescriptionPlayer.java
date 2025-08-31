@@ -1,6 +1,6 @@
 package com.example.asteroids.Descriptions;
 
-public class DescriptionPlayer {
+public class DescriptionPlayer implements DescriptionInterface {
      private static final String Description =
              "The Player controls a spaceship navigating through the asteroid field. "
             + "It has health points that decrease when colliding with asteroids, "
@@ -8,5 +8,7 @@ public class DescriptionPlayer {
             + "The player can collect items and upgrades to improve survivability and firepower. "
             + "Skillful maneuvering and shooting are key to surviving as long as possible and earning points.";
 
-    public static String getDescription(){return Description;}
+    public static String getDescription(){
+        return Description;
+    }
 }
