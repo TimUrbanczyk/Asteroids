@@ -5,6 +5,7 @@ import com.example.asteroids.Items.LaserItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 public class Asteroid {
@@ -42,17 +43,17 @@ public class Asteroid {
 
         if(randomX == 0) {
             this.speedX = -speedX;
-        }else if(randomX == 1) {
+        }else {
             this.speedX = speedX;
         }
 
         if(randomY == 0) {
             this.speedY = -speedY;
-        }else if(randomY == 1) {
+        }else {
             this.speedY = speedY;
         }
 
-        Image img = new Image(getClass().getResource(imgPath).toExternalForm());
+        Image img = new Image(Objects.requireNonNull(getClass().getResource(imgPath)).toExternalForm());
         this.asteroidImage = new ImageView(img);
         this.asteroidImage.setX(spawnPoint[0]);
         this.asteroidImage.setY(spawnPoint[1]);
@@ -61,33 +62,33 @@ public class Asteroid {
 
     public static void spawnAsteroid(){
 
-        if(!spawnable){return;}
+        if(!spawnable){
+            return;
+        }
         Random random = new Random();
         double numberRandom = random.nextDouble();
 
-
         if(numberRandom < 0.8){
-            asteroids.addFirst(new SmallAsteroid());
-        }else if(numberRandom < 0.85 && numberRandom >= 0.8){
+           asteroids.addFirst(new SmallAsteroid());
+        }else if(numberRandom < 0.85){
             asteroids.addFirst(new BigAsteroid());
-        }else if(numberRandom >= 0.85 && numberRandom < 0.9){
+        }else if(numberRandom < 0.9){
             asteroids.addFirst(new HealingAsteroid());
-        }else if(numberRandom >= 0.9 && numberRandom< 0.95){
+        }else if(numberRandom< 0.95){
             asteroids.addFirst(new LaserItem());
-        }else if(numberRandom >= 0.95){
+        }else if(numberRandom < 0.98){
             asteroids.addFirst(new BoostItem());
+        }else if(numberRandom < 0.99){
+            DualityCores newDualityCore = new DualityCores(true);
+            newDualityCore.linkToSecondaryCore();
+            asteroids.addFirst(newDualityCore);
         }
-
-
     }
-
 
     public static void moveAsteroid(){
         for(Asteroid asteroid : asteroids){
-
             asteroid.setcoordX(asteroid.getCoordX()+asteroid.getSpeedX());
             asteroid.setcoordY(asteroid.getCoordY()+asteroid.getSpeedY());
-
             asteroid.getAsteroidImage().setX(asteroid.getCoordX());
             asteroid.getAsteroidImage().setY(asteroid.getCoordY());
         }
@@ -127,9 +128,21 @@ public class Asteroid {
     }
 
     public void despawnAsteroid(){
+        if(this instanceof DualityCores){
+            DualityCores dualityCore = (DualityCores) this;
+
+            if(dualityCore.isMainCore()){
+                DualityCores secondaryCore = dualityCore.getSecondaryCore();
+                if(secondaryCore != null){
+                    secondaryCore.removeImage();
+                    getAsteroids().remove(secondaryCore);
+                }
+            } else {
+                return;
+            }
+        }
         removeImage();
         getAsteroids().remove(this);
-
     }
 
     public boolean checkDespawn(){
@@ -198,6 +211,14 @@ public class Asteroid {
 
     public static void setAsteroids(ArrayList<Asteroid> a) {
         asteroids = a;
+    }
+
+    public void setSpeedX(double speedX){
+        this.speedX = speedX;
+    }
+
+    public void setSpeedY(double speedY){
+        this.speedY = speedY;
     }
 
 }

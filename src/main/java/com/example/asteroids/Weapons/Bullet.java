@@ -1,6 +1,7 @@
 package com.example.asteroids.Weapons;
 
 import com.example.asteroids.Asteroids.Asteroid;
+import com.example.asteroids.Asteroids.DualityCores;
 import com.example.asteroids.Player.Player;
 import com.example.asteroids.SoundHandling.MusicPlayer;
 import com.example.asteroids.Transaction.PlayerCurrencyHandler;
@@ -67,6 +68,10 @@ public class Bullet {
     public boolean checkCollision() throws IOException {
 
         for(Asteroid asteroid : Asteroid.getAsteroids()) {
+
+            if(asteroid instanceof DualityCores){
+                break;
+            }
 
             Bounds asteroidBounds = new BoundingBox(
                     asteroid.getAsteroidImage().getBoundsInParent().getMinX(),

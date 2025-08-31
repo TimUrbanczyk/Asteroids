@@ -1,6 +1,7 @@
 package com.example.asteroids.Level;
 
 import com.example.asteroids.Asteroids.Asteroid;
+import com.example.asteroids.Asteroids.DualityCores;
 import com.example.asteroids.BossFights.InfernoidFightController;
 import com.example.asteroids.Player.Healthbar;
 import com.example.asteroids.SoundHandling.MusicPlayer;
@@ -205,7 +206,7 @@ public class MainWindowController implements Initializable {
         pressToPlay3.setVisible(true);
 
 
-    }//end of onButtonBackToMenu
+    }
     @FXML
     private void handleKeyPressed(KeyEvent event) {
         // Set movement and rotation flags based on key presses
@@ -273,9 +274,7 @@ public class MainWindowController implements Initializable {
 
         if(!gameRunning){
 
-            //stop the game
             gameloop.stop();
-
 
             //swap the spaceship with an explosion
             player.getImageView().setImage(new Image(getClass().getResource("/imgs/Explosion.png").toExternalForm()));
@@ -287,12 +286,11 @@ public class MainWindowController implements Initializable {
                 asteroid.removeImage();
                 asteroid.despawnAsteroid();
 
-            }//end of for
+            }
 
             //unalive all the bullets
             player.setBullets(new Stack<>());
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
 
             Laser.getInstance().resetLaser();
             buttonBackToMenu.setVisible(true);
@@ -300,12 +298,10 @@ public class MainWindowController implements Initializable {
             defeatLabel.setVisible(true);
             labelAutofire.setVisible(false);
 
+        }
 
-        }//end of if
+    }
 
-    }//end of lost
-
-    //main method/loop/u know
     private void Main(){
 
         gc = canvas.getGraphicsContext2D();
@@ -378,12 +374,16 @@ public class MainWindowController implements Initializable {
             if(elapsedTime >= spawnInterval ){
 
                 Asteroid.spawnAsteroid();
-                mainAnchorPane.getChildren().add(Asteroid.getAsteroids().getFirst().getAsteroidImage());
+                Asteroid firstAsteroid = Asteroid.getAsteroids().getFirst();
+                if(!mainAnchorPane.getChildren().contains(firstAsteroid.getAsteroidImage())) {
+                    mainAnchorPane.getChildren().add(firstAsteroid.getAsteroidImage());
+                }
 
-
-                if(elapsedTime >= spawnInterval * 2 ){
-                    mainAnchorPane.getChildren().remove(Asteroid.getAsteroids().getLast().getAsteroidImage());
-                    Asteroid.getAsteroids().removeLast();
+                if(firstAsteroid instanceof DualityCores){
+                    DualityCores dualityCores = (DualityCores) firstAsteroid;
+                    if(!mainAnchorPane.getChildren().contains(dualityCores.getSecondaryCore().getAsteroidImage())) {
+                        mainAnchorPane.getChildren().add(dualityCores.getSecondaryCore().getAsteroidImage());
+                    }
                 }
 
                 elapsedTime = 0;
@@ -393,7 +393,15 @@ public class MainWindowController implements Initializable {
                 bullet.moveBullet();
             }
 
-
+            for(Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())){
+                if(asteroid instanceof DualityCores && ((DualityCores) asteroid).isMainCore()){
+                    DualityCores dualityCore = (DualityCores) asteroid;
+                    if(dualityCore.getSecondaryCore() != null) {
+                        double[] tetherCoords = dualityCore.getTetherCoords();
+                        drawDualityCoresTether(tetherCoords[0], tetherCoords[1], tetherCoords[2], tetherCoords[3]);
+                    }
+                }
+            }
 
             //draw the bullets using the javafx canvas
             for (Bullet bullet : new ArrayList<>(player.getBullets())) {
@@ -408,7 +416,6 @@ public class MainWindowController implements Initializable {
             drawHealthBar();
 
             Asteroid.moveAsteroid();
-
 
             if(elapsedTimeLaser >= Laser.getInstance().getShootableInterval()){
                 if(Laser.getInstance().isShootable()) {
@@ -450,24 +457,83 @@ public class MainWindowController implements Initializable {
             }
 
 
-            if(player.getCoordX() < 0){player.setCoordX(0);player.getImageView().setX(0);}
-            if(player.getCoordY() < 0){player.setCoordY(0);player.getImageView().setY(0);}
-            if(player.getCoordX()  > 1450){player.setCoordX(1450);player.getImageView().setX(1450);}
-            if(player.getCoordY()  > 750){player.setCoordY(750);player.getImageView().setY(750);}
-
-
-
-
-
+            if(player.getCoordX()<0){
+                player.setCoordX(0);
+                player.getImageView().setX(0);
+            }
+            if(player.getCoordY()<0){
+                player.setCoordY(0);
+                player.getImageView().setY(0);
+            }
+            if(player.getCoordX()>1450){
+                player.setCoordX(1450);
+                player.getImageView().setX(1450);
+            }
+            if(player.getCoordY()>750){
+                player.setCoordY(750);
+                player.getImageView().setY(750);
+            }
 
 
         }));
 
         gameloop.setCycleCount(Timeline.INDEFINITE);
-        //gameloop.setAutoReverse(true);
         gameloop.play();
 
-    }//end of Main
+    }
+
+    private void drawDualityCoresTether(double mainCoreX, double mainCoreY,
+                                        double secondCoreX, double secondCoreY){
+
+        // Center the tether on the cores (assuming cores are small)
+        double startX = mainCoreX + 25; // Adjust based on your core size
+        double startY = mainCoreY + 25;
+        double endX = secondCoreX + 25;
+        double endY = secondCoreY + 25;
+
+        // Create energy effect colors
+        Color coreBlue = Color.CYAN;
+        Color glowBlue = Color.DODGERBLUE.deriveColor(0, 1, 1.2, 0.6);
+        Color outerGlow = Color.LIGHTBLUE.deriveColor(0, 1, 0.8, 0.3);
+
+        // Time-based effects for energy appearance
+        double time = System.nanoTime() / 1_000_000_000.0; // Convert to seconds
+        double pulse = 0.7 + 0.3 * Math.sin(time * 4); // Pulsing effect
+        double flicker = 0.8 + Math.random() * 0.4; // Random flicker
+
+        // Draw outer glow (widest, most transparent)
+        gc.setStroke(outerGlow);
+        gc.setLineWidth(8 * pulse);
+        gc.strokeLine(startX, startY, endX, endY);
+
+        // Draw main glow
+        gc.setStroke(glowBlue);
+        gc.setLineWidth(5 * pulse * flicker);
+        gc.strokeLine(startX, startY, endX, endY);
+
+        // Create gradient for core beam
+        Stop[] stops = new Stop[]{
+                new Stop(0, coreBlue.brighter()),
+                new Stop(0.5, coreBlue),
+                new Stop(1, coreBlue.darker())
+        };
+        LinearGradient gradient = new LinearGradient(
+                startX, startY, endX, endY,
+                false, CycleMethod.NO_CYCLE, stops
+        );
+
+        // Draw core beam with gradient
+        gc.setStroke(gradient);
+        gc.setLineWidth(3 * pulse);
+        gc.strokeLine(startX, startY, endX, endY);
+
+        // Add sharp inner core line
+        gc.setStroke(Color.WHITE.deriveColor(0, 1, 1, 0.9));
+        gc.setLineWidth(1 * flicker);
+        gc.strokeLine(startX, startY, endX, endY);
+
+
+    }
 
 
     private void drawLaser() {
@@ -518,10 +584,6 @@ public class MainWindowController implements Initializable {
         gc.setLineWidth(baseWidth * 0.4 * flicker);
         gc.strokeLine(startX, startY, endX, endY);
     }
-
-
-
-
 
     private void drawHealthBar() {
         gc = canvas.getGraphicsContext2D();
@@ -649,16 +711,10 @@ public class MainWindowController implements Initializable {
 
         mainAnchorPane.setFocusTraversable(false);
 
-
         gameloop.pause();
-
-
 
     }
 
-
-
-    //init
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -668,11 +724,7 @@ public class MainWindowController implements Initializable {
 
         playerHealthbar = new Healthbar();
 
-
-
         Laser.getInstance().attachPlayer(player);
-
-
 
         //insert the GUI elements in the corresponding arrays
         startScreenElements[0] = buttonStartGame;
@@ -690,6 +742,6 @@ public class MainWindowController implements Initializable {
         lobbyMusicPlayer.setRepeat();
         lobbyMusicPlayer.playSound();
 
-    }//end of initialize
+    }
 
-}//end of GUI
+}

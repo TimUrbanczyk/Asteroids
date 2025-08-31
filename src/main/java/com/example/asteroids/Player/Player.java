@@ -1,6 +1,7 @@
 package com.example.asteroids.Player;
 
 import com.example.asteroids.Asteroids.Asteroid;
+import com.example.asteroids.Asteroids.DualityCores;
 import com.example.asteroids.Asteroids.HealingAsteroid;
 import com.example.asteroids.Items.ItemInterface;
 import com.example.asteroids.Journal.DiscoveredEntities;
@@ -11,6 +12,9 @@ import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.awt.*;
+import java.awt.geom.Line2D;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -49,6 +53,8 @@ public class Player {
     }
 
     public boolean checkCollision(ImageView targetImageView, Asteroid target) throws IOException {
+
+
         Bounds asteroidBounds = new BoundingBox(
                     targetImageView.getBoundsInParent().getMinX(),
                     targetImageView.getBoundsInParent().getMinY(),
@@ -63,17 +69,53 @@ public class Player {
 
             );
 
+        if(target instanceof DualityCores && ((DualityCores) target).isMainCore()) {
+            if(checkCollisionWithDualityCoresTether(playerBounds, (DualityCores) target )) {
+                handleCollision(target);
+                return true;
+            }
+        }
+
+
+
         if(playerBounds.intersects(asteroidBounds)) {
                 if(!(target instanceof ItemInterface) && !(target instanceof HealingAsteroid)) {
                     this.imageView.setImage(damageImage);
                     this.isInDamageState = true;
                 }
                 calculateNewHealthPoints(target);
-                handleCollision(target);
+                if(!(target instanceof DualityCores)){
+                    handleCollision(target);
+                }
                 return true;
             }
         return false;
 
+    }
+
+    private boolean checkCollisionWithDualityCoresTether(Bounds playerBounds, DualityCores dualityCores){
+        int width = (int) (playerBounds.getMaxX() - playerBounds.getMinX());
+        int height = (int) (playerBounds.getMaxY() - playerBounds.getMinY());
+
+        double shrinkFactor = 0.2;
+        int newWidth = (int) (width * (1 - shrinkFactor));
+        int newHeight = (int) (height * (1 - shrinkFactor));
+
+        int deltaX = (width - newWidth) / 2;
+        int deltaY = (height - newHeight) / 2;
+
+        int newX = (int) playerBounds.getMinX() + deltaX;
+        int newY = (int) playerBounds.getMinY() + deltaY;
+
+        Rectangle playerBoundsAsRectangle = new Rectangle(newX, newY, newWidth, newHeight);
+
+        double[] dualityCoresTetherCoordinates = dualityCores.getTetherCoords();
+        Line2D dualityCoresTetherAsLine = new Line2D.Float((float) dualityCoresTetherCoordinates[0],
+                (float) dualityCoresTetherCoordinates[1],
+                (float) dualityCoresTetherCoordinates[2],
+                (float) dualityCoresTetherCoordinates[3]);
+
+        return dualityCoresTetherAsLine.intersects(playerBoundsAsRectangle);
     }
 
     public void resetDamageImage(){
