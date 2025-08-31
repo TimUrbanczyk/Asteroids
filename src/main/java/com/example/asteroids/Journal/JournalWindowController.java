@@ -1,5 +1,6 @@
 package com.example.asteroids.Journal;
 
+import com.example.asteroids.Asteroids.DualityCores;
 import com.example.asteroids.Descriptions.*;
 import com.example.asteroids.Items.BoostItem;
 import com.example.asteroids.Items.LaserItem;
@@ -91,6 +92,10 @@ public class JournalWindowController implements Initializable {
             case "BoostUpgread":
                 journalText.setText(DescriptionBoost.getDescription());
                 journalImageview.setImage(new BoostItem().getAsteroidImage().getImage());
+                break;
+            case "DualityCores":
+                journalText.setText(DescriptionDualityCores.getDescription());
+                journalImageview.setImage(new Image(Objects.requireNonNull(getClass().getResource("/imgs/DualityMainCore.png")).toExternalForm()));
                 break;
             default:
                 break;
