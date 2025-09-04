@@ -1,4 +1,4 @@
-# Asteroids Game
+# Asteroids-like Game called Orbitbreaker
 
 ## Requirements to Run the Game
 
@@ -34,11 +34,16 @@ A modern take on the classic Asteroids game, built with JavaFX. This is not a di
   - Points system for destroying asteroids
   - Multiple active bullets with despawn timer
   - Collision detection system
+  - Multiple upgreads can be earned to empower your ship
 
 - **Visual Effects**
   - Modern UI with animated title
   - Particle effects for projectiles
   - Death animation with explosion effect
+
+- **Sound Effects**
+  - Lobby Music
+  - Sound effects on hitmarker, shoot etc...
 
 ## Screenshots
 
@@ -72,8 +77,6 @@ A modern take on the classic Asteroids game, built with JavaFX. This is not a di
 - Object-oriented design with inheritance for different asteroid types
 - Efficient collision detection system
 - Dynamic difficulty scaling
-- Particle system for visual effects
-
 ## Development
 
 This is a personal project created for learning and entertainment purposes. The game features custom mechanics while maintaining the spirit of the classic Asteroids game.
