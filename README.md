@@ -43,7 +43,7 @@ A modern take on the classic Asteroids game, built with JavaFX. This is not a di
 
 - **Sound Effects**
   - Lobby Music
-  - Sound effects on hitmarker, shoot etc...
+  - Sound effects on hitmarker, shoot, etc...
 
 ## Screenshots
 
