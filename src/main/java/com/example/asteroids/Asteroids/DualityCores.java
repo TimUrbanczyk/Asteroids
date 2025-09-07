@@ -6,8 +6,7 @@ import java.util.Random;
 
 public class DualityCores extends Asteroid{
 
-    private static final double speedX =2.7 ;
-    private static final double speedY = 2.7;
+    private static final double speed =2.7 ;
     private static final int damagePoints = 100;
     private static final String imgPathMainCore = "/imgs/DualityMainCore.png";
     private static final String imgPathSecondaryCore = "/imgs/DualitySecondaryCore.png";
@@ -17,7 +16,7 @@ public class DualityCores extends Asteroid{
     private DualityCores secondaryCore;
 
     public DualityCores(boolean isMainCore){
-        super(speedX, speedY, imgPathMainCore, damagePoints, name);
+        super(speed,imgPathMainCore, damagePoints, name);
         this.isMainCore = isMainCore;
         super.getAsteroidImage().setFitWidth(50);
         super.getAsteroidImage().setFitHeight(50);
@@ -41,8 +40,7 @@ public class DualityCores extends Asteroid{
         this.secondaryCore.setcoordY(this.getCoordY() + offsetY);
         this.secondaryCore.getAsteroidImage().setX(this.getCoordX() + offsetX);
         this.secondaryCore.getAsteroidImage().setY(this.getCoordY() + offsetY);
-        this.secondaryCore.setSpeedX(this.getSpeedX());
-        this.secondaryCore.setSpeedY(this.getSpeedY());
+        this.secondaryCore.setSpeed(this.getSpeed());
         addAsteroid(this.secondaryCore);
     }
 
