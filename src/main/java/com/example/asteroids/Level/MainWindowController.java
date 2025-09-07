@@ -752,6 +752,7 @@ public class MainWindowController implements Initializable {
         //Create Player
         player = new Player(0,playerShip);
         player.attachHealthBar(playerHealthbar);
+        Disruptor.attachPlayer(player);
 
         playerHealthbar = new Healthbar();
 
@@ -772,6 +773,8 @@ public class MainWindowController implements Initializable {
         lobbyMusicPlayer.setVolume(0.3);
         lobbyMusicPlayer.setRepeat();
         lobbyMusicPlayer.playSound();
+
+
 
     }
 

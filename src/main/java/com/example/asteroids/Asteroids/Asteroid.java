@@ -13,8 +13,7 @@ public class Asteroid {
     private static final String[] spawnPoints = {"NORTH","EAST","SOUTH","WEST"};
     private static ArrayList<Asteroid> asteroids = new ArrayList<>();
     private static boolean spawnable = true;
-    private double speedX;
-    private double speedY;
+    private double speed;;
     private double coordX;
     private double coordY;
     private final double[] spawnPoint;
@@ -26,7 +25,7 @@ public class Asteroid {
 
 
 
-    public Asteroid(double speedX, double speedY, String imgPath, int damagePoints, String name) {
+    public Asteroid(double speed, String imgPath, int damagePoints, String name) {
 
         this.name = name;
 
@@ -39,19 +38,15 @@ public class Asteroid {
 
         Random rand = new Random();
         int randomX = rand.nextInt(2);
-        int randomY = rand.nextInt(2);
+
 
         if(randomX == 0) {
-            this.speedX = -speedX;
+            this.speed = -speed;
         }else {
-            this.speedX = speedX;
+            this.speed = speed;
         }
 
-        if(randomY == 0) {
-            this.speedY = -speedY;
-        }else {
-            this.speedY = speedY;
-        }
+
 
         Image img = new Image(Objects.requireNonNull(getClass().getResource(imgPath)).toExternalForm());
         this.asteroidImage = new ImageView(img);
@@ -88,8 +83,8 @@ public class Asteroid {
     }
 
     public void move(){
-        this.setcoordX(this.getCoordX() + this.getSpeedX());
-        this.setcoordY(this.getCoordY() + this.getSpeedY());
+        this.setcoordX(this.getCoordX() + this.getSpeed());
+        this.setcoordY(this.getCoordY() + this.getSpeed());
         this.getAsteroidImage().setX(this.getCoordX());
         this.getAsteroidImage().setY(this.getCoordY());
 
@@ -174,13 +169,10 @@ public class Asteroid {
         return this.damagePoints;
     }
 
-    public double getSpeedX() {
-        return this.speedX;
+    public double getSpeed() {
+        return this.speed;
     }
 
-    public double getSpeedY() {
-        return this.speedY;
-    }
 
     public static ArrayList<Asteroid> getAsteroids() {
         return asteroids;
@@ -214,13 +206,10 @@ public class Asteroid {
         asteroids = a;
     }
 
-    public void setSpeedX(double speedX){
-        this.speedX = speedX;
+    public void setSpeed(double speedX){
+        this.speed = speed;
     }
 
-    public void setSpeedY(double speedY){
-        this.speedY = speedY;
-    }
 
 }
 
