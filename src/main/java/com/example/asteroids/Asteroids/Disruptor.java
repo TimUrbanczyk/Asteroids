@@ -12,7 +12,7 @@ public class Disruptor extends Asteroid{
 
 
     public Disruptor(){
-        super(speed,speed,imgPath,damagePoints,name);
+        super(speed,imgPath,damagePoints,name);
         super.getAsteroidImage().setFitWidth(60);
         super.getAsteroidImage().setFitHeight(60);
     }
