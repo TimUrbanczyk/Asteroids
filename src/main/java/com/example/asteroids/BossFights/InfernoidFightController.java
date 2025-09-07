@@ -118,9 +118,9 @@ public class InfernoidFightController implements Initializable {
 
             elapsedTimeShotable += 7;
 
-            double[] infernoidCoords = infernoid.move();
-            infernoidImageView.setX(infernoidCoords[0]);
-            infernoidImageView.setY(infernoidCoords[1]);
+            infernoid.move();
+            infernoidImageView.setX(infernoid.getCoordX());
+            infernoidImageView.setY(infernoid.getCoordY());
 
             if(playerAttached){
                player.setImageView(playerShip);

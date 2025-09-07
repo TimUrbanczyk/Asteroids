@@ -42,14 +42,15 @@ public class Infernoid extends Asteroid {
         this.currentState = newState;
     }
 
-    public double[] move(){
+    @Override
+    public void  move(){
         switch (currentState){
-            case WANDER -> {return moveWander();}
+            case WANDER -> {moveWander();}
             case SUMMOM -> {moveSummon();}
             case SPLIT -> {moveSplit();}
             case DIE -> {moveDie();}
         }
-        return null;
+
     }
 
 
