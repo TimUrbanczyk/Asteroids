@@ -29,7 +29,7 @@ public class Player {
     private double coordY;
     private final double width;
     private final double height;
-    private final double speed = 6.5;
+    private final double speed = 8.5;
     private final double rotationSpeed = 4.5;
     private Stack<Bullet> bullets = new Stack<>();
     private Healthbar healthBar ;
@@ -47,6 +47,8 @@ public class Player {
         this.imageView = imageView;
         this.coordX = imageView.getX();
         this.coordY = imageView.getY();
+        this.imageView.setScaleX(0.6);
+        this.imageView.setScaleY(0.6);
         this.width = imageView.getBoundsInParent().getWidth()-20;
         this.height = imageView.getBoundsInParent().getHeight()-10;
 

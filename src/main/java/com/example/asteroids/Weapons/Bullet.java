@@ -16,7 +16,7 @@ public class Bullet {
     private double coordX;
     private double coordY;
     private final double speed = 60;
-    private final double radius = 20;
+    private final double radius = 10;
     private final double angle;
     private final boolean isActive = true;
     private final double angleInRadians;

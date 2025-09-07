@@ -13,8 +13,8 @@ public class HealingAsteroid extends Asteroid {
 
     public HealingAsteroid() {
         super(speedX,speedY,imgPath,damagePoints,name);
-        super.getAsteroidImage().setScaleX(0.15);
-        super.getAsteroidImage().setScaleY(0.15);
+        super.getAsteroidImage().setScaleX(0.1);
+        super.getAsteroidImage().setScaleY(0.1);
     }
 
 

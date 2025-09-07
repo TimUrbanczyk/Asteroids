@@ -12,8 +12,8 @@ public class SmallAsteroid extends Asteroid {
 
     public SmallAsteroid() {
         super(speedX,speedY,imPath,damagePoints,name);
-        super.getAsteroidImage().setScaleX(0.8);
-        super.getAsteroidImage().setScaleY(0.8);
+        super.getAsteroidImage().setScaleX(0.6);
+        super.getAsteroidImage().setScaleY(0.6);
 
         Random random = new Random();
         speedX = random.nextDouble(3.5)+1;

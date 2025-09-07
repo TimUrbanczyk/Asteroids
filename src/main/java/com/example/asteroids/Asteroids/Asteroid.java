@@ -68,8 +68,10 @@ public class Asteroid {
         Random random = new Random();
         double numberRandom = random.nextDouble();
 
-        if(numberRandom < 0.65){
-           asteroids.addFirst(new SmallAsteroid());
+        if(numberRandom < 0.5){
+            asteroids.addFirst(new SmallAsteroid());
+        }else if(numberRandom < 0.52){
+           asteroids.addFirst(new Disruptor());
         }else if(numberRandom < 0.7){
             asteroids.addFirst(new BigAsteroid());
         }else if(numberRandom < 0.75){

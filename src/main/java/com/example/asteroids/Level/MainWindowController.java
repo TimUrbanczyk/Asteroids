@@ -48,7 +48,7 @@ public class MainWindowController implements Initializable {
     private long elapsedTime = 0;
     private long elapsedTimeShotable = 0;
     private long elapsedTimeLaser = 0;
-    private final long spawnInterval = 50;
+    private final long spawnInterval = 30;
     private Player player;
     private Timeline gameloop;
     private Healthbar playerHealthbar;
@@ -537,8 +537,8 @@ public class MainWindowController implements Initializable {
 
 
     private void drawLaser() {
-        double startX = player.getCoordX() + player.getWidth() / 2;
-        double startY = player.getCoordY() + player.getHeight() / 2;
+        double startX = player.getCoordX() + (player.getWidth() / 2) + 40;
+        double startY = player.getCoordY() + (player.getHeight() / 2) + 40;
         double length = Laser.getInstance().getLength();
         double baseWidth = Laser.getInstance().getWidth();
         double angle = Laser.getInstance().getAngle();
