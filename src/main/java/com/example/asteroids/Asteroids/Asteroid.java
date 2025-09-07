@@ -68,17 +68,17 @@ public class Asteroid {
         Random random = new Random();
         double numberRandom = random.nextDouble();
 
-        if(numberRandom < 0.8){
+        if(numberRandom < 0.65){
            asteroids.addFirst(new SmallAsteroid());
-        }else if(numberRandom < 0.85){
+        }else if(numberRandom < 0.7){
             asteroids.addFirst(new BigAsteroid());
-        }else if(numberRandom < 0.9){
+        }else if(numberRandom < 0.75){
             asteroids.addFirst(new HealingAsteroid());
-        }else if(numberRandom< 0.95){
+        }else if(numberRandom< 0.8){
             asteroids.addFirst(new LaserItem());
-        }else if(numberRandom < 0.98){
+        }else if(numberRandom < 0.83){
             asteroids.addFirst(new BoostItem());
-        }else if(numberRandom < 0.99){
+        }else if(numberRandom < 0.84){
             DualityCores newDualityCore = new DualityCores(true);
             newDualityCore.linkToSecondaryCore();
             asteroids.addFirst(newDualityCore);
