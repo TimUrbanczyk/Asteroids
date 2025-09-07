@@ -4,6 +4,8 @@ import com.example.asteroids.Player.Player;
 
 public class Disruptor extends Asteroid{
 
+    private static double speedX =2.7;
+    private static double speedY =2.7;
     private static final double speed = 4;
     private static final int damagePoints = 30;
     private static final String imgPath = "/imgs/Disruptor.png";
@@ -12,7 +14,7 @@ public class Disruptor extends Asteroid{
 
 
     public Disruptor(){
-        super(speed,imgPath,damagePoints,name);
+        super(speedX,speedY,imgPath,damagePoints,name);
         super.getAsteroidImage().setFitWidth(60);
         super.getAsteroidImage().setFitHeight(60);
     }

@@ -161,7 +161,7 @@ public class MainWindowController implements Initializable {
 
 
         //reset player
-        player.setHealthPoints(100);
+        player.setHealthPoints(10000);
 
 
         currencyLabel.setVisible(true);
@@ -404,7 +404,6 @@ public class MainWindowController implements Initializable {
                 }
             }
 
-            //draw the bullets using the javafx canvas
             for (Bullet bullet : new ArrayList<>(player.getBullets())) {
                 drawBullet(bullet);
                 try {

@@ -10,7 +10,8 @@ import java.util.Random;
 public class Infernoid extends Asteroid {
 
     private static Infernoid infernoid;
-    private static final double speed = 6;
+    private static final double speedX = 6;
+    private static final double speedY = 6;
     private static final int damagePoints = 100;
     private static final String name = "Infernoid";
     private BossState currentState;
@@ -23,7 +24,7 @@ public class Infernoid extends Asteroid {
 
 
     private Infernoid(){
-        super(speed,"",damagePoints,name);
+        super(speedX,speedY,"",damagePoints,name);
         this.currentState = BossState.WANDER;
         this.setcoordX(495);
         this.setcoordY(32);
@@ -87,8 +88,8 @@ public class Infernoid extends Asteroid {
 
         wanderAngle = (wanderAngle + 2 * Math.PI) % (2 * Math.PI);
 
-        double dx = Math.cos(wanderAngle) * this.getSpeed() * deltaTime;
-        double dy = Math.sin(wanderAngle) * this.getSpeed() * deltaTime;
+        double dx = Math.cos(wanderAngle) * this.getSpeedX() * deltaTime;
+        double dy = Math.sin(wanderAngle) * this.getSpeedY() * deltaTime;
 
         double newcoordX = currentCoordX + dx;
         double newcoordY = currentCoordY + dy;

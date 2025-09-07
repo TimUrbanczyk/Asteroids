@@ -13,7 +13,8 @@ public class Asteroid {
     private static final String[] spawnPoints = {"NORTH","EAST","SOUTH","WEST"};
     private static ArrayList<Asteroid> asteroids = new ArrayList<>();
     private static boolean spawnable = true;
-    private double speed;;
+    private double speedX;
+    private double speedY;
     private double coordX;
     private double coordY;
     private final double[] spawnPoint;
@@ -25,7 +26,7 @@ public class Asteroid {
 
 
 
-    public Asteroid(double speed, String imgPath, int damagePoints, String name) {
+    public Asteroid(double speedX, double speedY, String imgPath, int damagePoints, String name) {
 
         this.name = name;
 
@@ -38,12 +39,18 @@ public class Asteroid {
 
         Random rand = new Random();
         int randomX = rand.nextInt(2);
-
+        int randomY = rand.nextInt(2);
 
         if(randomX == 0) {
-            this.speed = -speed;
+            this.speedX = -speedX;
         }else {
-            this.speed = speed;
+            this.speedX = speedX;
+        }
+
+        if(randomY == 0) {
+            this.speedY = -speedY;
+        }else {
+            this.speedY = speedY;
         }
 
 
@@ -83,8 +90,8 @@ public class Asteroid {
     }
 
     public void move(){
-        this.setcoordX(this.getCoordX() + this.getSpeed());
-        this.setcoordY(this.getCoordY() + this.getSpeed());
+        this.setcoordX(this.getCoordX() + this.getSpeedX());
+        this.setcoordY(this.getCoordY() + this.getSpeedY());
         this.getAsteroidImage().setX(this.getCoordX());
         this.getAsteroidImage().setY(this.getCoordY());
 
@@ -169,8 +176,12 @@ public class Asteroid {
         return this.damagePoints;
     }
 
-    public double getSpeed() {
-        return this.speed;
+    public double getSpeedX() {
+        return this.speedX;
+    }
+
+    public double getSpeedY() {
+        return this.speedY;
     }
 
 
@@ -206,8 +217,11 @@ public class Asteroid {
         asteroids = a;
     }
 
-    public void setSpeed(double speedX){
-        this.speed = speed;
+    public void setSpeedX(double speedX){
+        this.speedX = speedX;
+    }
+    public void setSpeedY(double speedY){
+        this.speedY = speedY;
     }
 
 

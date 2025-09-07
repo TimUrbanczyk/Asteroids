@@ -6,7 +6,8 @@ import java.util.Random;
 
 public class DualityCores extends Asteroid{
 
-    private static final double speed =2.7 ;
+    private static final double speedX =2.7 ;
+    private static final double speedY =2.7 ;
     private static final int damagePoints = 100;
     private static final String imgPathMainCore = "/imgs/DualityMainCore.png";
     private static final String imgPathSecondaryCore = "/imgs/DualitySecondaryCore.png";
@@ -16,7 +17,7 @@ public class DualityCores extends Asteroid{
     private DualityCores secondaryCore;
 
     public DualityCores(boolean isMainCore){
-        super(speed,imgPathMainCore, damagePoints, name);
+        super(speedX,speedY,imgPathMainCore, damagePoints, name);
         this.isMainCore = isMainCore;
         super.getAsteroidImage().setFitWidth(50);
         super.getAsteroidImage().setFitHeight(50);
@@ -33,14 +34,15 @@ public class DualityCores extends Asteroid{
             throw new RuntimeException("Only Main Cores can be linked to others!");
         }
         Random rand = new Random();
-        double offsetX = rand.nextDouble(120)+150;
-        double offsetY = rand.nextDouble(120)+150;
+        double offsetX = rand.nextDouble(100)+150;
+        double offsetY = rand.nextDouble(100)+150;
         this.secondaryCore = new DualityCores(false);
         this.secondaryCore.setcoordX(this.getCoordX() + offsetX);
         this.secondaryCore.setcoordY(this.getCoordY() + offsetY);
         this.secondaryCore.getAsteroidImage().setX(this.getCoordX() + offsetX);
         this.secondaryCore.getAsteroidImage().setY(this.getCoordY() + offsetY);
-        this.secondaryCore.setSpeed(this.getSpeed());
+        this.secondaryCore.setSpeedY(this.getSpeedY());
+        this.secondaryCore.setSpeedX(this.getSpeedX());
         addAsteroid(this.secondaryCore);
     }
 

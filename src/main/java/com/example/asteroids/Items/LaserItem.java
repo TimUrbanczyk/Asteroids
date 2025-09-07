@@ -6,14 +6,15 @@ import com.example.asteroids.Weapons.Laser;
 public class LaserItem extends Asteroid implements ItemInterface{
 
 
-    private static final double speed = 2.3 ;
+    private static double speedX =2.3;
+    private static double speedY =2.3;
     private static final int damagePoints = 0;
     private static final String imgPath = "/imgs/LaserItem.png";
     private static final String name = "LaserUpgread";
 
 
     public LaserItem(){
-        super(speed,imgPath,damagePoints,name);
+        super(speedX,speedY,imgPath,damagePoints,name);
         super.getAsteroidImage().setScaleX(0.15);
         super.getAsteroidImage().setScaleY(0.15);
     }

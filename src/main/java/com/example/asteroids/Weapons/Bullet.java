@@ -5,17 +5,17 @@ import com.example.asteroids.Asteroids.DualityCores;
 import com.example.asteroids.Player.Player;
 import com.example.asteroids.SoundHandling.MusicPlayer;
 import com.example.asteroids.Transaction.PlayerCurrencyHandler;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Bullet {
 
     private double coordX;
     private double coordY;
-    private final double speed = 60;
+    private final double speed = 50;
     private final double radius = 10;
     private final double angle;
     private final boolean isActive = true;
@@ -35,12 +35,6 @@ public class Bullet {
         this.coordX = coordX;
         this.coordY = coordY;
         this.angle = angle;
-        this.bounds = new BoundingBox(
-            this.coordX,
-            this.coordY,
-            this.radius,
-            this.radius
-        );
 
         this.shootSoundPlayer.setVolume(0.3);
         this.hitmarkerPlayer.setVolume(0.5);
@@ -66,38 +60,29 @@ public class Bullet {
     }
 
     public boolean checkCollision() throws IOException {
+        for (Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())) {
 
-        for(Asteroid asteroid : Asteroid.getAsteroids()) {
 
-            if(asteroid instanceof DualityCores){
+            if (asteroid instanceof DualityCores) {
                 break;
             }
 
-            Bounds asteroidBounds = new BoundingBox(
-                    asteroid.getAsteroidImage().getBoundsInParent().getMinX(),
-                    asteroid.getAsteroidImage().getBoundsInParent().getMinY(),
-                    asteroid.getAsteroidImage().getBoundsInParent().getWidth(),
-                    asteroid.getAsteroidImage().getBoundsInParent().getHeight()
-            );
+            Bounds asteroidBounds = asteroid.getAsteroidImage().getBoundsInParent();
 
-
-            if(this.bounds.intersects(asteroidBounds)){
-
+            if (this.bounds.intersects(asteroidBounds)) {
                 Player.addAsteroidToDiscoveredEntities(asteroid);
-
                 hitmarkerPlayer.disableRepeat();
                 hitmarkerPlayer.playSound();
-
                 asteroid.removeImage();
                 asteroid.despawnAsteroid();
                 player.getBullets().remove(this);
                 PlayerCurrencyHandler.increasePlayerSpaceCoins(1);
-
                 return true;
             }
         }
         return false;
     }
+
     public static void attachPlayer(Player p){
         player = p;
     }
