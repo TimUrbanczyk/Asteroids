@@ -1,12 +1,9 @@
 package com.example.asteroids.Journal;
 
-import com.example.asteroids.Asteroids.DualityCores;
+import com.example.asteroids.Asteroids.*;
 import com.example.asteroids.Descriptions.*;
 import com.example.asteroids.Items.BoostItem;
 import com.example.asteroids.Items.LaserItem;
-import com.example.asteroids.Asteroids.BigAsteroid;
-import com.example.asteroids.Asteroids.HealingAsteroid;
-import com.example.asteroids.Asteroids.SmallAsteroid;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -96,6 +93,10 @@ public class JournalWindowController implements Initializable {
             case "DualityCores":
                 journalText.setText(DescriptionDualityCores.getDescription());
                 journalImageview.setImage(new Image(Objects.requireNonNull(getClass().getResource("/imgs/DualityMainCore.png")).toExternalForm()));
+                break;
+            case "Disruptor":
+                journalText.setText(DescriptionDisruptor.getDescription());
+                journalImageview.setImage(new Disruptor().getAsteroidImage().getImage());
                 break;
             default:
                 break;
