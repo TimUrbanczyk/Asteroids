@@ -279,24 +279,20 @@ public class MainWindowController implements Initializable {
             //swap the spaceship with an explosion
             player.getImageView().setImage(new Image(getClass().getResource("/imgs/Explosion.png").toExternalForm()));
 
-
             //unalive all the asteroids existing
             for(Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())){
-
                 asteroid.removeImage();
                 asteroid.despawnAsteroid();
-
             }
 
             //unalive all the bullets
             player.setBullets(new Stack<>());
-            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
             Laser.getInstance().resetLaser();
             buttonBackToMenu.setVisible(true);
             exitButton.setVisible(true);
             defeatLabel.setVisible(true);
             labelAutofire.setVisible(false);
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         }
 
@@ -315,8 +311,7 @@ public class MainWindowController implements Initializable {
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
             currencyLabel.setText("SpaceCoins : "+ PlayerCurrencyHandler.getPlayerSpaceCoins());
-
-
+            
             // Trigger Infernoid fight when player reaches 1000 points (only once)
             if(PlayerCurrencyHandler.getPlayerSpaceCoins() >= thresholdInfernoidFight && !infernoidFightStarted){
 
@@ -327,6 +322,10 @@ public class MainWindowController implements Initializable {
                     throw new RuntimeException(e);
                 }
             }
+
+            drawHealthBar();
+
+            Asteroid.moveAsteroid();
 
             //check for all the bullets to be despawned by time
             Bullet.despawnBulletByTime();
@@ -413,9 +412,7 @@ public class MainWindowController implements Initializable {
                 }
             }
 
-            drawHealthBar();
 
-            Asteroid.moveAsteroid();
 
             if(elapsedTimeLaser >= Laser.getInstance().getShootableInterval()){
                 if(Laser.getInstance().isShootable()) {
