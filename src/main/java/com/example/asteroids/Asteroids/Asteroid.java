@@ -70,7 +70,7 @@ public class Asteroid {
 
         if(numberRandom < 0.5){
             asteroids.addFirst(new SmallAsteroid());
-        }else if(numberRandom < 0.52){
+        }else if(numberRandom < 0.51){
            asteroids.addFirst(new Disruptor());
         }else if(numberRandom < 0.7){
             asteroids.addFirst(new BigAsteroid());

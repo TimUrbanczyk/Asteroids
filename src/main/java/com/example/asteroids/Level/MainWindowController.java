@@ -752,7 +752,7 @@ public class MainWindowController implements Initializable {
         //Create Player
         player = new Player(0,playerShip);
         player.attachHealthBar(playerHealthbar);
-
+        Disruptor.attachPlayer(player);
         playerHealthbar = new Healthbar();
 
         Laser.getInstance().attachPlayer(player);
