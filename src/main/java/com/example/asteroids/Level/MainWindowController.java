@@ -1,6 +1,7 @@
 package com.example.asteroids.Level;
 
 import com.example.asteroids.Asteroids.Asteroid;
+import com.example.asteroids.Asteroids.Disruptor;
 import com.example.asteroids.Asteroids.DualityCores;
 import com.example.asteroids.BossFights.InfernoidFightController;
 import com.example.asteroids.Player.Healthbar;
@@ -25,10 +26,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
+import javafx.scene.paint.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -311,7 +309,7 @@ public class MainWindowController implements Initializable {
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
             currencyLabel.setText("SpaceCoins : "+ PlayerCurrencyHandler.getPlayerSpaceCoins());
-            
+
             // Trigger Infernoid fight when player reaches 1000 points (only once)
             if(PlayerCurrencyHandler.getPlayerSpaceCoins() >= thresholdInfernoidFight && !infernoidFightStarted){
 
@@ -325,7 +323,9 @@ public class MainWindowController implements Initializable {
 
             drawHealthBar();
 
-            Asteroid.moveAsteroid();
+            for(Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())){
+                asteroid.move();
+            }
 
             //check for all the bullets to be despawned by time
             Bullet.despawnBulletByTime();
@@ -399,6 +399,8 @@ public class MainWindowController implements Initializable {
                         double[] tetherCoords = dualityCore.getTetherCoords();
                         drawDualityCoresTether(tetherCoords[0], tetherCoords[1], tetherCoords[2], tetherCoords[3]);
                     }
+                }else if(asteroid instanceof Disruptor){
+                    drawEMP((Disruptor) asteroid);
                 }
             }
 
@@ -477,6 +479,38 @@ public class MainWindowController implements Initializable {
         gameloop.setCycleCount(Timeline.INDEFINITE);
         gameloop.play();
 
+    }
+
+
+    private void drawEMP(Disruptor disruptor) {
+        GraphicsContext g = canvas.getGraphicsContext2D();
+
+        // Mittelpunkt = Position des Disruptors
+        double cx = disruptor.getAsteroidImage().getX() + 30;
+        double cy = disruptor.getAsteroidImage().getY() + 30;
+
+        // Zeit (für Animation)
+        double time = (System.nanoTime() / 1e9) % 1000;
+
+        // EMP-Wellen-Effekt
+        double maxR = 120;                     // Reichweite des EMP
+        double speed = 1.5;                    // Wellen pro Sekunde
+        double phase = (time * speed) % 1.0;   // 0..1
+        double r = maxR * phase;               // aktueller Radius
+
+        // Transparenz nimmt mit Phase ab
+        double alpha = 1.0 - phase;
+
+        // Farbverlauf für die Schockwelle
+        RadialGradient pulse = new RadialGradient(
+                0, 0, cx, cy, r, false, CycleMethod.NO_CYCLE,
+                new Stop(0.0, Color.web("#66d3ff", alpha)),
+                new Stop(0.5, Color.web("#33bbff", alpha * 0.6)),
+                new Stop(1.0, Color.TRANSPARENT)
+        );
+
+        g.setFill(pulse);
+        g.fillOval(cx - r, cy - r, r * 2, r * 2);
     }
 
     private void drawDualityCoresTether(double mainCoreX, double mainCoreY,

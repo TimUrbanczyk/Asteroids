@@ -87,13 +87,12 @@ public class Asteroid {
         }
     }
 
-    public static void moveAsteroid(){
-        for(Asteroid asteroid : asteroids){
-            asteroid.setcoordX(asteroid.getCoordX()+asteroid.getSpeedX());
-            asteroid.setcoordY(asteroid.getCoordY()+asteroid.getSpeedY());
-            asteroid.getAsteroidImage().setX(asteroid.getCoordX());
-            asteroid.getAsteroidImage().setY(asteroid.getCoordY());
-        }
+    public void move(){
+        this.setcoordX(this.getCoordX() + this.getSpeedX());
+        this.setcoordY(this.getCoordY() + this.getSpeedY());
+        this.getAsteroidImage().setX(this.getCoordX());
+        this.getAsteroidImage().setY(this.getCoordY());
+
     }
 
     public static double[] generateSpawnPoint(){
