@@ -40,7 +40,6 @@ import java.util.Stack;
 
 public class MainWindowController implements Initializable {
 
-    //Fields
     private final Parent[] startScreenElements = new Parent[5];
     private GraphicsContext gc;
     private long elapsedTime = 0;
@@ -51,13 +50,13 @@ public class MainWindowController implements Initializable {
     private Timeline gameloop;
     private Healthbar playerHealthbar;
     private final int thresholdInfernoidFight = 1090;
-    // Improved damage image reset logic
     private long damageImageStartTime = 0;
     private final long damageImageDuration = 100;
-    private final MusicPlayer lobbyMusicPlayer = new MusicPlayer("src/main/resources/Sounds/Audios/LobbyBackgroundSound.mp3");
-    //static fields
+    private final String LOBBY_BACKGROUND_SOUND = "src/main/resources/Sounds/Audios/LobbyBackgroundSound.mp3";
+    private final MusicPlayer lobbyMusicPlayer = new MusicPlayer(LOBBY_BACKGROUND_SOUND);
     private static boolean gameRunning = false;
     private boolean infernoidFightStarted = false;
+    private boolean isInHitBoxMode = false;
 
     // Flags to track key states
     private boolean movingUp = false;
@@ -120,14 +119,10 @@ public class MainWindowController implements Initializable {
             journalStage.setScene(journalScene);
             journalStage.setX(mainStage.getX() + (mainStage.getWidth() - journalStage.getWidth())/2);
             journalStage.setY(mainStage.getY() + (mainStage.getHeight() - journalStage.getHeight())/2);
-
-
             journalStage.initOwner(mainStage);
             journalStage.initModality(Modality.WINDOW_MODAL);
             journalStage.initStyle(StageStyle.UNDECORATED);
             journalStage.initStyle(StageStyle.TRANSPARENT);
-
-
             journalStage.setResizable(false);
             journalStage.show();
 
@@ -136,7 +131,6 @@ public class MainWindowController implements Initializable {
 
         }
     }
-
 
     @FXML
     private void onExitButton(){System.exit(0);}
@@ -154,15 +148,12 @@ public class MainWindowController implements Initializable {
         //stop lobby sound
         lobbyMusicPlayer.stopSound();
 
-
         //attach the playerObject to the bullets
         player.attachHealthBar(playerHealthbar);
         Bullet.attachPlayer(player);
 
-
         //reset player
         player.setHealthPoints(10000);
-
 
         currencyLabel.setVisible(true);
         labelAutofire.setVisible(true);
@@ -171,7 +162,7 @@ public class MainWindowController implements Initializable {
         gameRunning = true;
         Main();
 
-    }//end of onButtonStartGame
+    }
     @FXML
     private void onButtonBackToMenu(){
 
@@ -189,8 +180,6 @@ public class MainWindowController implements Initializable {
         player.getImageView().setRotate(0);
         Image image = new Image(getClass().getResource( "/imgs/SpaceshipPlayer.png").toExternalForm());
         player.getImageView().setImage(image);
-
-
         lobbyMusicPlayer.playSound();
 
         //show the startscreen
@@ -198,11 +187,9 @@ public class MainWindowController implements Initializable {
             element.setVisible(true);
         }
 
-
         pressToPlay1.setVisible(true);
         pressToPlay2.setVisible(true);
         pressToPlay3.setVisible(true);
-
 
     }
     @FXML
@@ -229,6 +216,10 @@ public class MainWindowController implements Initializable {
                 break;
             case SPACE:
                 shoot = true;
+                break;
+            case F3:
+                isInHitBoxMode = !isInHitBoxMode;
+                break;
             default:
                 break;
         }
@@ -305,7 +296,6 @@ public class MainWindowController implements Initializable {
 
         gameloop = new Timeline(new KeyFrame(Duration.millis(16), event -> {
 
-
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
             currencyLabel.setText("SpaceCoins : "+ PlayerCurrencyHandler.getPlayerSpaceCoins());
@@ -330,6 +320,14 @@ public class MainWindowController implements Initializable {
             //check for all the bullets to be despawned by time
             Bullet.despawnBulletByTime();
 
+            if(isInHitBoxMode){
+                gc.setStroke(Color.BLUE);
+                gc.strokeRect(player.getImageView().getBoundsInParent().getMinX(),
+                        player.getImageView().getBoundsInParent().getMinY(),
+                        player.getImageView().getBoundsInParent().getWidth(),
+                        player.getImageView().getBoundsInParent().getHeight());
+            }
+
             // Improved damage image reset logic
             if(player.getDamageState()){
                 // If damage just started, record the start time
@@ -340,15 +338,33 @@ public class MainWindowController implements Initializable {
                 // Check if enough time has passed to reset the image
                 if(System.currentTimeMillis() - damageImageStartTime >= damageImageDuration) {
                     player.resetDamageImage();
-                    damageImageStartTime = 0; // Reset the timer
+                    damageImageStartTime = 0;
                 }
             } else {
                 // Reset timer if player is not in damage state
                 damageImageStartTime = 0;
             }
 
-
             for (Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())) {
+                if(isInHitBoxMode) {
+                    if(asteroid instanceof Disruptor) {
+                        gc.setStroke(Color.GREEN);
+                        gc.strokeRect(asteroid.getAsteroidImage().getBoundsInParent().getMinX() - 15,
+                                asteroid.getAsteroidImage().getBoundsInParent().getMinY() - 15,
+                                asteroid.getAsteroidImage().getFitWidth() + 30,
+                                asteroid.getAsteroidImage().getFitHeight() + 30);
+                        gc.setStroke(Color.YELLOW);
+                        gc.strokeRect(asteroid.getAsteroidImage().getBoundsInParent().getMinX(),
+                                asteroid.getAsteroidImage().getBoundsInParent().getMinY(),
+                                asteroid.getAsteroidImage().getFitWidth(),
+                                asteroid.getAsteroidImage().getFitHeight());
+                    }else{
+                        gc.strokeRect(asteroid.getAsteroidImage().getBoundsInParent().getMinX(),
+                                asteroid.getAsteroidImage().getBoundsInParent().getMinY(),
+                                asteroid.getAsteroidImage().getFitWidth(),
+                                asteroid.getAsteroidImage().getFitHeight());
+                    }
+                }
                 if (asteroid.checkDespawn()) {
                     mainAnchorPane.getChildren().remove(asteroid.getAsteroidImage());
                 }
@@ -369,7 +385,6 @@ public class MainWindowController implements Initializable {
             elapsedTimeShotable += 7;
             elapsedTimeLaser += 7;
 
-
             if(elapsedTime >= spawnInterval ){
 
                 Asteroid.spawnAsteroid();
@@ -389,6 +404,10 @@ public class MainWindowController implements Initializable {
             }
 
             for(Bullet bullet : player.getBullets()){
+                if(isInHitBoxMode) {
+                    gc.setStroke(Color.RED);
+                    gc.strokeRect(bullet.getCoordX(), bullet.getCoordY(), bullet.getRadius(), bullet.getRadius());
+                }
                 bullet.moveBullet();
             }
 
@@ -412,8 +431,6 @@ public class MainWindowController implements Initializable {
                     throw new RuntimeException(e);
                 }
             }
-
-
 
             if(elapsedTimeLaser >= Laser.getInstance().getShootableInterval()){
                 if(Laser.getInstance().isShootable()) {
@@ -454,7 +471,6 @@ public class MainWindowController implements Initializable {
                 playerShip.setRotate(playerShip.getRotate() + player.getRotationSpeed());
             }
 
-
             if(player.getCoordX()<0){
                 player.setCoordX(0);
                 player.getImageView().setX(0);
@@ -472,14 +488,12 @@ public class MainWindowController implements Initializable {
                 player.getImageView().setY(750);
             }
 
-
         }));
 
         gameloop.setCycleCount(Timeline.INDEFINITE);
         gameloop.play();
 
     }
-
 
     private void drawEMP(Disruptor disruptor) {
         GraphicsContext g = canvas.getGraphicsContext2D();
@@ -676,13 +690,12 @@ public class MainWindowController implements Initializable {
             if(currentScaleX <= 1.5 && currentScaleY <= 1.5) {labelOrbitbreaker.setScaleX(currentScaleX + 0.01); labelOrbitbreaker.setScaleY(currentScaleY + 0.01);}
             else{labelOrbitbreaker.setScaleX(1); labelOrbitbreaker.setScaleY(1);}
 
-        });//end of Keyframe
+        });
 
         timelineAsteroidsLabel.getKeyFrames().add(keyFrameTimelineAsteroidsLabel);
         timelineAsteroidsLabel.play();
 
-    }//end of StartAnimationAsteroidsLabel
-
+    }
 
     private void startInfernoidFight() throws IOException {
 
@@ -762,7 +775,6 @@ public class MainWindowController implements Initializable {
         startScreenElements[2] = exitButton;
         startScreenElements[3] = pressToPlayLabel;
         startScreenElements[4] = journalButton;
-
 
         //play initial label animation the call also starts the spawning etc....
         StartAnimationAsteroidsLabel();

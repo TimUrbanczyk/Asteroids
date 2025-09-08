@@ -1,6 +1,7 @@
 package com.example.asteroids.Player;
 
 import com.example.asteroids.Asteroids.Asteroid;
+import com.example.asteroids.Asteroids.Disruptor;
 import com.example.asteroids.Asteroids.DualityCores;
 import com.example.asteroids.Asteroids.HealingAsteroid;
 import com.example.asteroids.Items.ItemInterface;
@@ -29,8 +30,8 @@ public class Player {
     private double coordY;
     private final double width;
     private final double height;
-    private final double speed = 8.5;
-    private final double rotationSpeed = 4.5;
+    private final double speed = 11;
+    private final double rotationSpeed = 6;
     private Stack<Bullet> bullets = new Stack<>();
     private Healthbar healthBar ;
     private static final String name = "Spaceship";
@@ -63,6 +64,15 @@ public class Player {
                     targetImageView.getBoundsInParent().getWidth(),
                     targetImageView.getBoundsInParent().getHeight()
             );
+
+        if(target instanceof Disruptor){
+            asteroidBounds = new BoundingBox(
+                    targetImageView.getBoundsInParent().getMinX() - 15,
+                    targetImageView.getBoundsInParent().getMinY() - 15,
+                    targetImageView.getBoundsInParent().getWidth() + 30,
+                    targetImageView.getBoundsInParent().getHeight() + 30
+            );
+        }
         Bounds playerBounds = new BoundingBox(
                     this.getImageView().getBoundsInParent().getMinX(),
                     this.getImageView().getBoundsInParent().getMinY(),

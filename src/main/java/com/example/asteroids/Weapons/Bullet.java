@@ -15,18 +15,17 @@ public class Bullet {
 
     private double coordX;
     private double coordY;
-    private final double speed = 50;
+    private final double speed = 30;
     private final double radius = 10;
-    private final double angle;
-    private final boolean isActive = true;
     private final double angleInRadians;
     private static Player player;
     private Bounds bounds ;
-    private static final boolean shootableFlag = true;
     private static long shootableInterval = 150;
     private final long spawnTime = System.currentTimeMillis();
-    private final MusicPlayer shootSoundPlayer = new MusicPlayer("src/main/resources/Sounds/Sounds/BulletSound.mp3");
-    private final MusicPlayer hitmarkerPlayer = new MusicPlayer("src/main/resources/Sounds/Sounds/Hitmarker.mp3");
+    private final String BULLET_SOUND_PATH = "src/main/resources/Sounds/Sounds/BulletSound.mp3";
+    private final String HITMARKER_SOUND_PATH = "src/main/resources/Sounds/Sounds/Hitmarker.mp3";
+    private final MusicPlayer shootSoundPlayer = new MusicPlayer(BULLET_SOUND_PATH);
+    private final MusicPlayer hitmarkerPlayer = new MusicPlayer(HITMARKER_SOUND_PATH);
 
 
     public Bullet(double coordX, double coordY, double angle){
@@ -34,7 +33,6 @@ public class Bullet {
         angleInRadians = Math.toRadians(player.getImageView().getRotate()) - (Math.PI / 2);
         this.coordX = coordX;
         this.coordY = coordY;
-        this.angle = angle;
 
         this.shootSoundPlayer.setVolume(0.3);
         this.hitmarkerPlayer.setVolume(0.5);
@@ -61,7 +59,6 @@ public class Bullet {
 
     public boolean checkCollision() throws IOException {
         for (Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())) {
-
 
             if (asteroid instanceof DualityCores) {
                 break;
