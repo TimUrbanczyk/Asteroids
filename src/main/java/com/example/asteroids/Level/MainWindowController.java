@@ -53,10 +53,13 @@ public class MainWindowController implements Initializable {
     private long damageImageStartTime = 0;
     private final long damageImageDuration = 100;
     private final String LOBBY_BACKGROUND_SOUND = "src/main/resources/Sounds/Audios/LobbyBackgroundSound.mp3";
+    private final String OVERWOWRLD_BACKGROUND_SOUND = "src/main/resources/Sounds/Audios/OverworldMusic.mp3";
     private final MusicPlayer lobbyMusicPlayer = new MusicPlayer(LOBBY_BACKGROUND_SOUND);
+    private final MusicPlayer overworldMusicPlayer = new MusicPlayer(OVERWOWRLD_BACKGROUND_SOUND);
     private static boolean gameRunning = false;
     private boolean infernoidFightStarted = false;
     private boolean isInHitBoxMode = false;
+    private boolean settingsVisible = false;
 
     // Flags to track key states
     private boolean movingUp = false;
@@ -98,6 +101,11 @@ public class MainWindowController implements Initializable {
     private Label currencyLabel;
     @FXML
     private Label labelAutofire;
+    @FXML
+    private AnchorPane settingsOverlay;
+    @FXML
+    private Button settingsButton;
+
 
     //---------------------------------------------------------------------------------------------------------------------------------
 
@@ -147,6 +155,8 @@ public class MainWindowController implements Initializable {
 
         //stop lobby sound
         lobbyMusicPlayer.stopSound();
+        overworldMusicPlayer.playSound();
+
 
         //attach the playerObject to the bullets
         player.attachHealthBar(playerHealthbar);
@@ -220,6 +230,11 @@ public class MainWindowController implements Initializable {
             case F3:
                 isInHitBoxMode = !isInHitBoxMode;
                 break;
+            case ESCAPE:
+                if (gameRunning) {
+                    onSettingsToggle();
+                }
+                break;
             default:
                 break;
         }
@@ -264,6 +279,7 @@ public class MainWindowController implements Initializable {
         if(!gameRunning){
 
             gameloop.stop();
+            overworldMusicPlayer.stopSound();
 
             //swap the spaceship with an explosion
             player.getImageView().setImage(new Image(getClass().getResource("/imgs/Explosion.png").toExternalForm()));
@@ -758,6 +774,187 @@ public class MainWindowController implements Initializable {
 
     }
 
+    @FXML
+    private void onSettingsToggle() {
+        if (settingsVisible) {
+            overworldMusicPlayer.unpauseSound();
+            hideSettingsOverlay();
+        } else {
+            overworldMusicPlayer.pauseSound();
+            showSettingsOverlay();
+        }
+    }
+
+    private void showSettingsOverlay() {
+        // Create settings overlay if it doesn't exist
+        if (settingsOverlay == null) {
+            createSettingsOverlay();
+        }
+
+        // Add overlay to main pane if not already added
+        if (!mainAnchorPane.getChildren().contains(settingsOverlay)) {
+            mainAnchorPane.getChildren().add(settingsOverlay);
+        }
+
+        // Position overlay off-screen (right side)
+        settingsOverlay.setLayoutX(mainAnchorPane.getWidth());
+        settingsOverlay.setVisible(true);
+
+        // Create slide-in animation
+        Timeline slideIn = new Timeline(
+                new KeyFrame(Duration.millis(300),
+                        new javafx.animation.KeyValue(settingsOverlay.layoutXProperty(),
+                                mainAnchorPane.getWidth() - 400) // 400px wide panel
+                )
+        );
+
+        // Pause game if running
+        if (gameRunning && gameloop != null) {
+            gameloop.pause();
+        }
+
+        slideIn.play();
+        settingsVisible = true;
+    }
+
+    private void hideSettingsOverlay() {
+        // Create slide-out animation
+        Timeline slideOut = new Timeline(
+                new KeyFrame(Duration.millis(300),
+                        new javafx.animation.KeyValue(settingsOverlay.layoutXProperty(),
+                                mainAnchorPane.getWidth())
+                )
+        );
+
+
+        slideOut.setOnFinished(e -> {
+            settingsOverlay.setVisible(false);
+            // Resume game if it was running
+            if (gameRunning && gameloop != null) {
+                gameloop.play();
+                mainAnchorPane.requestFocus(); // Return focus to game
+            }
+        });
+
+        slideOut.play();
+        settingsVisible = false;
+        overworldMusicPlayer.unpauseSound();
+    }
+
+    private void createSettingsOverlay() {
+        settingsOverlay = new AnchorPane();
+        settingsOverlay.setPrefWidth(400);
+        settingsOverlay.setPrefHeight(mainAnchorPane.getHeight());
+
+        // Semi-transparent dark background
+        settingsOverlay.setStyle(
+                "-fx-background-color: rgba(0, 20, 40, 0.95); " +
+                        "-fx-border-color: #00FFFF; " +
+                        "-fx-border-width: 2px; " +
+                        "-fx-background-radius: 10px; " +
+                        "-fx-border-radius: 10px;"
+        );
+
+        // Settings title
+        Label titleLabel = new Label("SETTINGS");
+        titleLabel.setStyle(
+                "-fx-text-fill: #00FFFF; " +
+                        "-fx-font-size: 24px; " +
+                        "-fx-font-weight: bold;"
+        );
+        titleLabel.setLayoutX(150);
+        titleLabel.setLayoutY(30);
+
+        // Close button (X)
+        Button closeButton = new Button("×");
+        closeButton.setStyle(
+                "-fx-background-color: transparent; " +
+                        "-fx-text-fill: #FF4444; " +
+                        "-fx-font-size: 20px; " +
+                        "-fx-font-weight: bold;"
+        );
+        closeButton.setLayoutX(360);
+        closeButton.setLayoutY(20);
+        closeButton.setOnAction(e -> hideSettingsOverlay());
+
+        // Sample settings controls
+        createSettingsControls(settingsOverlay);
+
+        settingsOverlay.getChildren().addAll(titleLabel, closeButton);
+    }
+
+    private void createSettingsControls(AnchorPane overlay) {
+        double yOffset = 80;
+        double spacing = 50;
+
+        // Volume Control
+        Label volumeLabel = new Label("Master Volume:");
+        volumeLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+        volumeLabel.setLayoutX(30);
+        volumeLabel.setLayoutY(yOffset);
+
+        javafx.scene.control.Slider volumeSlider = new javafx.scene.control.Slider(0, 1, 0.5);
+        volumeSlider.setLayoutX(30);
+        volumeSlider.setLayoutY(yOffset + 25);
+        volumeSlider.setPrefWidth(200);
+        volumeSlider.setStyle("-fx-control-inner-background: #00FFFF;");
+
+
+
+
+        // Controls section
+        yOffset += spacing;
+        Label controlsLabel = new Label("Controls:");
+        controlsLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+        controlsLabel.setLayoutX(30);
+        controlsLabel.setLayoutY(yOffset);
+
+        // Show current key bindings
+        String[] controls = {"Move Up: W", "Move Down: S", "Move Left: A",
+                "Move Right: D", "Shoot: SPACE", "Auto-fire: R"};
+
+        for (int i = 0; i < controls.length; i++) {
+            Label controlLabel = new Label(controls[i]);
+            controlLabel.setStyle("-fx-text-fill: #CCCCCC; -fx-font-size: 12px;");
+            controlLabel.setLayoutX(50);
+            controlLabel.setLayoutY(yOffset + 30 + (i * 20));
+            overlay.getChildren().add(controlLabel);
+        }
+
+        // Gameplay settings
+        yOffset += spacing + 140;
+        javafx.scene.control.CheckBox hitboxToggle = new javafx.scene.control.CheckBox("Show Hitboxes (F3)");
+        hitboxToggle.setStyle("-fx-text-fill: white;");
+        hitboxToggle.setLayoutX(30);
+        hitboxToggle.setLayoutY(yOffset);
+        hitboxToggle.setSelected(isInHitBoxMode);
+        hitboxToggle.setOnAction(e -> isInHitBoxMode = hitboxToggle.isSelected());
+
+        // Apply button
+        yOffset += spacing;
+        Button applyButton = new Button("APPLY SETTINGS");
+        applyButton.setStyle(
+                "-fx-background-color: #00FFFF; " +
+                        "-fx-text-fill: black; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-background-radius: 5px;"
+        );
+        applyButton.setLayoutX(30);
+        applyButton.setLayoutY(yOffset);
+        applyButton.setPrefWidth(150);
+        applyButton.setOnAction(e -> {
+            // Apply settings logic here
+            MusicPlayer.setVolume(volumeSlider.getValue());
+            hideSettingsOverlay();
+        });
+
+        overlay.getChildren().addAll(
+                volumeLabel, volumeSlider,
+                controlsLabel, hitboxToggle,
+                applyButton
+        );
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -783,6 +980,8 @@ public class MainWindowController implements Initializable {
         lobbyMusicPlayer.setVolume(0.3);
         lobbyMusicPlayer.setRepeat();
         lobbyMusicPlayer.playSound();
+
+        overworldMusicPlayer.setRepeat();
 
     }
 
