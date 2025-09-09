@@ -82,7 +82,7 @@ public class MainWindowController implements Initializable {
     @FXML
     private Button exitButton;
     @FXML
-    private Button buttonBackToMenu;
+    private Button backToMenuButton;
     @FXML
     private Button journalButton;
     @FXML
@@ -103,8 +103,7 @@ public class MainWindowController implements Initializable {
     private Label labelAutofire;
     @FXML
     private AnchorPane settingsOverlay;
-    @FXML
-    private Button settingsButton;
+
 
 
     //---------------------------------------------------------------------------------------------------------------------------------
@@ -163,7 +162,7 @@ public class MainWindowController implements Initializable {
         Bullet.attachPlayer(player);
 
         //reset player
-        player.setHealthPoints(10000);
+        player.setHealthPoints(100);
 
         currencyLabel.setVisible(true);
         labelAutofire.setVisible(true);
@@ -177,7 +176,7 @@ public class MainWindowController implements Initializable {
     private void onButtonBackToMenu(){
 
         //stop the game
-        buttonBackToMenu.setVisible(false);
+        backToMenuButton.setVisible(false);
         defeatLabel.setVisible(false);
         currencyLabel.setVisible(false);
         gameRunning = false;
@@ -293,7 +292,7 @@ public class MainWindowController implements Initializable {
             //unalive all the bullets
             player.setBullets(new Stack<>());
             Laser.getInstance().resetLaser();
-            buttonBackToMenu.setVisible(true);
+            backToMenuButton.setVisible(true);
             exitButton.setVisible(true);
             defeatLabel.setVisible(true);
             labelAutofire.setVisible(false);
@@ -877,6 +876,8 @@ public class MainWindowController implements Initializable {
         closeButton.setLayoutY(20);
         closeButton.setOnAction(e -> hideSettingsOverlay());
 
+
+
         // Sample settings controls
         createSettingsControls(settingsOverlay);
 
@@ -898,8 +899,6 @@ public class MainWindowController implements Initializable {
         volumeSlider.setLayoutY(yOffset + 25);
         volumeSlider.setPrefWidth(200);
         volumeSlider.setStyle("-fx-control-inner-background: #00FFFF;");
-
-
 
 
         // Controls section
@@ -948,10 +947,40 @@ public class MainWindowController implements Initializable {
             hideSettingsOverlay();
         });
 
+        Button backToMenuButton = new Button("BACK TO MENU");
+        backToMenuButton.setStyle(
+                "-fx-background-color: #00FFFF; " +
+                        "-fx-text-fill: black; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-background-radius: 5px;"
+        );
+        backToMenuButton.setLayoutX(30);
+        backToMenuButton.setLayoutY(yOffset + 40);
+        backToMenuButton.setPrefWidth(150);
+        backToMenuButton.setOnAction(e -> {
+
+            gameloop.stop();
+            overworldMusicPlayer.stopSound();
+
+            for(Asteroid asteroid : new ArrayList<>(Asteroid.getAsteroids())){
+                asteroid.removeImage();
+                asteroid.despawnAsteroid();
+            }
+
+            //unalive all the bullets
+            player.setBullets(new Stack<>());
+            Laser.getInstance().resetLaser();
+            labelAutofire.setVisible(false);
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            hideSettingsOverlay();
+            onButtonBackToMenu();
+            overworldMusicPlayer.stopSound();
+        });
+
         overlay.getChildren().addAll(
                 volumeLabel, volumeSlider,
                 controlsLabel, hitboxToggle,
-                applyButton
+                applyButton, backToMenuButton
         );
     }
 

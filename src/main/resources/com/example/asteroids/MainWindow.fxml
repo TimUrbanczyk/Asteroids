@@ -47,7 +47,7 @@
             <Image url="@../../../imgs/PresstoPlay3.png" />
          </image>
       </ImageView>
-      <Button fx:id="buttonBackToMenu" layoutX="675.0" layoutY="573.0" mnemonicParsing="false" onAction="#onButtonBackToMenu" styleClass="Button" text="BACK TO MENU" visible="false" />
+      <Button fx:id="backToMenuButton" layoutX="675.0" layoutY="573.0" mnemonicParsing="false" onAction="#onButtonBackToMenu" styleClass="Button" text="BACK TO MENU" visible="false" />
       <Label fx:id="defeatLabel" layoutX="613.0" layoutY="138.0" styleClass="Label" text="DEFEAT" textFill="RED" visible="false">
          <font>
             <Font size="96.0" />
