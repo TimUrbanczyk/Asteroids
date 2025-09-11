@@ -1,9 +1,4 @@
-package com.example.asteroids.BossFights.Bosses;
-
-import com.example.asteroids.Asteroids.Asteroid;
-import com.example.asteroids.Player.Player;
-import javafx.geometry.Bounds;
-import javafx.scene.image.ImageView;
+package com.example.asteroids.Asteroids;
 
 import java.util.Random;
 

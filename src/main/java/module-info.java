@@ -22,6 +22,4 @@ module com.example.asteroids {
     opens com.example.asteroids.Descriptions to javafx.fxml;
     exports com.example.asteroids.Journal;
     opens com.example.asteroids.Journal to javafx.fxml;
-    exports com.example.asteroids.BossFights;
-    opens com.example.asteroids.BossFights to javafx.fxml;
 }

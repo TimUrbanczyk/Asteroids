@@ -3,14 +3,12 @@ package com.example.asteroids.Level;
 import com.example.asteroids.Asteroids.Asteroid;
 import com.example.asteroids.Asteroids.Disruptor;
 import com.example.asteroids.Asteroids.DualityCores;
-import com.example.asteroids.BossFights.InfernoidFightController;
 import com.example.asteroids.Player.Healthbar;
 import com.example.asteroids.SoundHandling.MusicPlayer;
 import com.example.asteroids.Transaction.PlayerCurrencyHandler;
 import com.example.asteroids.Weapons.Bullet;
 import com.example.asteroids.Player.Player;
 import com.example.asteroids.Weapons.Laser;
-import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -45,11 +43,10 @@ public class MainWindowController implements Initializable {
     private long elapsedTime = 0;
     private long elapsedTimeShotable = 0;
     private long elapsedTimeLaser = 0;
-    private final long spawnInterval = 30;
+    private final long spawnInterval = 25;
     private Player player;
     private Timeline gameloop;
     private Healthbar playerHealthbar;
-    private final int thresholdInfernoidFight = 1090;
     private long damageImageStartTime = 0;
     private final long damageImageDuration = 100;
     private final String LOBBY_BACKGROUND_SOUND = "src/main/resources/Sounds/Audios/LobbyBackgroundSound.mp3";
@@ -57,7 +54,6 @@ public class MainWindowController implements Initializable {
     private final MusicPlayer lobbyMusicPlayer = new MusicPlayer(LOBBY_BACKGROUND_SOUND);
     private final MusicPlayer overworldMusicPlayer = new MusicPlayer(OVERWOWRLD_BACKGROUND_SOUND);
     private static boolean gameRunning = false;
-    private boolean infernoidFightStarted = false;
     private boolean isInHitBoxMode = false;
     private boolean settingsVisible = false;
 
@@ -162,7 +158,7 @@ public class MainWindowController implements Initializable {
         Bullet.attachPlayer(player);
 
         //reset player
-        player.setHealthPoints(100);
+        player.setHealthPoints(100000);
 
         currencyLabel.setVisible(true);
         labelAutofire.setVisible(true);
@@ -315,16 +311,7 @@ public class MainWindowController implements Initializable {
 
             currencyLabel.setText("SpaceCoins : "+ PlayerCurrencyHandler.getPlayerSpaceCoins());
 
-            // Trigger Infernoid fight when player reaches 1000 points (only once)
-            if(PlayerCurrencyHandler.getPlayerSpaceCoins() >= thresholdInfernoidFight && !infernoidFightStarted){
 
-                try {
-                    infernoidFightStarted = true;
-                    startInfernoidFight();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
 
             drawHealthBar();
 
@@ -712,66 +699,7 @@ public class MainWindowController implements Initializable {
 
     }
 
-    private void startInfernoidFight() throws IOException {
 
-        Asteroid.setAsteroids(new ArrayList<>());
-        Stage stage = (Stage) mainAnchorPane.getScene().getWindow();
-
-        // Check if stage is null and try alternative ways to get it
-        if (stage == null) {
-            stage = (Stage) buttonStartGame.getScene().getWindow();
-        }
-        if (stage == null) {
-            stage = (Stage) canvas.getScene().getWindow();
-        }
-
-        // If still null, we can't proceed
-        if (stage == null) {
-            System.err.println("Could not get stage reference");
-            return;
-        }
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/asteroids/InfernoidFight.fxml"));
-        Parent root = loader.load();
-
-        InfernoidFightController controller = loader.getController();
-
-        Scene scene = new Scene(root, 1600, 900);
-        stage.setScene(scene);
-
-        // Create smooth fade transition for stage change
-        FadeTransition fadeOut = new FadeTransition(Duration.millis(1000), stage.getScene().getRoot());
-        fadeOut.setFromValue(1.0);
-        fadeOut.setToValue(0.7);
-
-        Stage finalStage = stage;
-        fadeOut.setOnFinished(event -> {
-            // Set the new scene after fade out
-            finalStage.setScene(scene);
-
-            controller.main(); // Start the game loop
-            controller.InfernoidAnchorPane.setFocusTraversable(true);
-            controller.InfernoidAnchorPane.requestFocus();
-
-            // Create smooth fade in transition for the new scene
-            FadeTransition fadeIn = new FadeTransition(Duration.millis(1000), scene.getRoot());
-            fadeIn.setFromValue(0.7);
-            fadeIn.setToValue(1.0);
-            fadeIn.play();
-        });
-
-        fadeOut.play();
-
-        Asteroid.disableSpawn();
-        Asteroid.despawnAll();
-
-        InfernoidFightController.attachPlayer(player);
-
-        mainAnchorPane.setFocusTraversable(false);
-
-        gameloop.pause();
-
-    }
 
     @FXML
     private void onSettingsToggle() {
@@ -976,7 +904,7 @@ public class MainWindowController implements Initializable {
             onButtonBackToMenu();
             overworldMusicPlayer.stopSound();
         });
-
+        
         overlay.getChildren().addAll(
                 volumeLabel, volumeSlider,
                 controlsLabel, hitboxToggle,
