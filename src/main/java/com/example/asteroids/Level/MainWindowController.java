@@ -43,14 +43,15 @@ public class MainWindowController implements Initializable {
     private long elapsedTime = 0;
     private long elapsedTimeShotable = 0;
     private long elapsedTimeLaser = 0;
-    private final long spawnInterval = 25;
+    private final long SPAWN_INTERVAL = 25;
     private Player player;
     private Timeline gameloop;
     private Healthbar playerHealthbar;
     private long damageImageStartTime = 0;
-    private final long damageImageDuration = 100;
+    private static long stunStartTime = 0;
+    private final long DAMAGE_IMAGE_DURATION = 100;
     private final String LOBBY_BACKGROUND_SOUND = "src/main/resources/Sounds/Audios/LobbyBackgroundSound.mp3";
-    private final String OVERWOWRLD_BACKGROUND_SOUND = "src/main/resources/Sounds/Audios/OverworldMusic.mp3";
+    private final String OVERWOWRLD_BACKGROUND_SOUND = "src/main/resources/Sounds/Audios/Ingame.mp3";
     private final MusicPlayer lobbyMusicPlayer = new MusicPlayer(LOBBY_BACKGROUND_SOUND);
     private final MusicPlayer overworldMusicPlayer = new MusicPlayer(OVERWOWRLD_BACKGROUND_SOUND);
     private static boolean gameRunning = false;
@@ -330,6 +331,11 @@ public class MainWindowController implements Initializable {
                         player.getImageView().getBoundsInParent().getHeight());
             }
 
+            if(System.currentTimeMillis() - stunStartTime >= Disruptor.getStunDuration()){
+                player.setStunned(false);
+                stunStartTime = 0;
+            }
+
             // Improved damage image reset logic
             if(player.getDamageState()){
                 // If damage just started, record the start time
@@ -338,7 +344,7 @@ public class MainWindowController implements Initializable {
                 }
 
                 // Check if enough time has passed to reset the image
-                if(System.currentTimeMillis() - damageImageStartTime >= damageImageDuration) {
+                if(System.currentTimeMillis() - damageImageStartTime >= DAMAGE_IMAGE_DURATION) {
                     player.resetDamageImage();
                     damageImageStartTime = 0;
                 }
@@ -387,7 +393,7 @@ public class MainWindowController implements Initializable {
             elapsedTimeShotable += 7;
             elapsedTimeLaser += 7;
 
-            if(elapsedTime >= spawnInterval ){
+            if(elapsedTime >= SPAWN_INTERVAL){
 
                 Asteroid.spawnAsteroid();
                 Asteroid firstAsteroid = Asteroid.getAsteroids().getFirst();
@@ -450,27 +456,29 @@ public class MainWindowController implements Initializable {
 
                 }
             }
-            if (movingUp) {
-                player.setCoordY(player.getCoordY() - player.getSpeed());
-                playerShip.setY(playerShip.getY() - player.getSpeed());
-            }
-            if (movingDown) {
-                player.setCoordY(player.getCoordY() + player.getSpeed());
-                playerShip.setY(playerShip.getY() + player.getSpeed());
-            }
-            if (movingLeft) {
-                player.setCoordX(player.getCoordX() - player.getSpeed());
-                playerShip.setX(playerShip.getX() - player.getSpeed());
-            }
-            if (movingRight) {
-                player.setCoordX(player.getCoordX() + player.getSpeed());
-                playerShip.setX(playerShip.getX() + player.getSpeed());
-            }
-            if (rotatingLeft) {
-                playerShip.setRotate(playerShip.getRotate() - player.getRotationSpeed());
-            }
-            if (rotatingRight) {
-                playerShip.setRotate(playerShip.getRotate() + player.getRotationSpeed());
+            if(!player.isStunned()) {
+                if (movingUp) {
+                    player.setCoordY(player.getCoordY() - player.getSpeed());
+                    playerShip.setY(playerShip.getY() - player.getSpeed());
+                }
+                if (movingDown) {
+                    player.setCoordY(player.getCoordY() + player.getSpeed());
+                    playerShip.setY(playerShip.getY() + player.getSpeed());
+                }
+                if (movingLeft) {
+                    player.setCoordX(player.getCoordX() - player.getSpeed());
+                    playerShip.setX(playerShip.getX() - player.getSpeed());
+                }
+                if (movingRight) {
+                    player.setCoordX(player.getCoordX() + player.getSpeed());
+                    playerShip.setX(playerShip.getX() + player.getSpeed());
+                }
+                if (rotatingLeft) {
+                    playerShip.setRotate(playerShip.getRotate() - player.getRotationSpeed());
+                }
+                if (rotatingRight) {
+                    playerShip.setRotate(playerShip.getRotate() + player.getRotationSpeed());
+                }
             }
 
             if(player.getCoordX()<0){
@@ -910,6 +918,10 @@ public class MainWindowController implements Initializable {
                 controlsLabel, hitboxToggle,
                 applyButton, backToMenuButton
         );
+    }
+
+    public static void setStunStartTime(long time){
+        stunStartTime = time;
     }
 
     @Override

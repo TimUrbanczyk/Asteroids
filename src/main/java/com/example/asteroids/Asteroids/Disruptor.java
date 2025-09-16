@@ -1,5 +1,6 @@
 package com.example.asteroids.Asteroids;
 
+import com.example.asteroids.Level.MainWindowController;
 import com.example.asteroids.Player.Player;
 
 public class Disruptor extends Asteroid{
@@ -11,6 +12,8 @@ public class Disruptor extends Asteroid{
     private static final String imgPath = "/imgs/Disruptor.png";
     private static final String name = "Disruptor";
     private static Player player;
+    private static final int PLAYER_STUN_ON_DISRUPTOR_HIT_DURATION = 1000;
+
 
 
     public Disruptor(){
@@ -23,6 +26,15 @@ public class Disruptor extends Asteroid{
         player = p;
     }
 
+
+    @Override
+    public void onCollision(){
+        if(!player.isStunned()){
+            player.setStunned(true);
+            MainWindowController.setStunStartTime(System.currentTimeMillis());
+        }
+    }
+
     @Override
     public void move(){
         double dx = player.getCoordX() - this.getCoordX();
@@ -32,5 +44,9 @@ public class Disruptor extends Asteroid{
         this.getAsteroidImage().setX(this.getCoordX());
         this.setcoordY(this.getCoordY() + (dy / distance) * speed);
         this.getAsteroidImage().setY(this.getCoordY());
+    }
+
+    public static int getStunDuration(){
+        return PLAYER_STUN_ON_DISRUPTOR_HIT_DURATION;
     }
 }

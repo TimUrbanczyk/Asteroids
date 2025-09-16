@@ -22,9 +22,7 @@ public class Asteroid {
     private final ImageView asteroidImage;
     private final int damagePoints;
     private final long spawnTime = System.currentTimeMillis();
-    private String name;
-
-
+    private final String name;
 
     public Asteroid(double speedX, double speedY, String imgPath, int damagePoints, String name) {
 
@@ -53,12 +51,14 @@ public class Asteroid {
             this.speedY = speedY;
         }
 
-
-
         Image img = new Image(Objects.requireNonNull(getClass().getResource(imgPath)).toExternalForm());
         this.asteroidImage = new ImageView(img);
         this.asteroidImage.setX(spawnPoint[0]);
         this.asteroidImage.setY(spawnPoint[1]);
+
+    }
+
+    public void onCollision(){
 
     }
 
@@ -186,7 +186,6 @@ public class Asteroid {
         return this.speedY;
     }
 
-
     public static ArrayList<Asteroid> getAsteroids() {
         return asteroids;
     }
@@ -222,6 +221,7 @@ public class Asteroid {
     public void setSpeedX(double speedX){
         this.speedX = speedX;
     }
+
     public void setSpeedY(double speedY){
         this.speedY = speedY;
     }

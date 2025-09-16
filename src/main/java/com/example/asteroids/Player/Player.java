@@ -38,6 +38,7 @@ public class Player {
     private final Image damageImage = new Image(getClass().getResource("/imgs/SpaceShipPlayerOnDamage.png").toExternalForm());
     private Image playerImage;
     private boolean isInDamageState = false;
+    private boolean stunned = false;
 
 
     public Player(int healthPoints, ImageView imageView) {
@@ -137,9 +138,7 @@ public class Player {
 
     public void handleCollision(Asteroid asteroid) throws IOException {
         addAsteroidToDiscoveredEntities(asteroid);
-        if(asteroid instanceof ItemInterface){
-            ((ItemInterface) asteroid).onCollision();
-        }
+        asteroid.onCollision();
         asteroid.despawnAsteroid();
     }
 
@@ -219,6 +218,10 @@ public class Player {
         return this.isInDamageState;
     }
 
+    public boolean isStunned(){
+        return this.stunned;
+    }
+
 
     public void setCoordX(double coordX) {
         this.coordX = coordX;
@@ -238,6 +241,10 @@ public class Player {
 
     public void setImageView(ImageView imageView){
         this.imageView = imageView;
+    }
+
+    public void setStunned(boolean stunned){
+        this.stunned = stunned;
     }
 
     public void setHealthPoints(int h) {
