@@ -3,6 +3,7 @@ package com.example.asteroids.Level;
 import com.example.asteroids.Asteroids.Asteroid;
 import com.example.asteroids.Asteroids.Disruptor;
 import com.example.asteroids.Asteroids.DualityCores;
+import com.example.asteroids.Descriptions.DescriptionCredits;
 import com.example.asteroids.Player.Healthbar;
 import com.example.asteroids.SoundHandling.MusicPlayer;
 import com.example.asteroids.Transaction.PlayerCurrencyHandler;
@@ -11,6 +12,7 @@ import com.example.asteroids.Player.Player;
 import com.example.asteroids.Weapons.Laser;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.HostServices;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,12 +33,13 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
+import javafx.application.Application;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Stack;
 
 
-public class MainWindowController implements Initializable {
+public class MainWindowController implements Initializable  {
 
     private final Parent[] startScreenElements = new Parent[5];
     private GraphicsContext gc;
@@ -57,6 +60,7 @@ public class MainWindowController implements Initializable {
     private static boolean gameRunning = false;
     private boolean isInHitBoxMode = false;
     private boolean settingsVisible = false;
+    private static HostServices hostServices;
 
     // Flags to track key states
     private boolean movingUp = false;
@@ -813,11 +817,40 @@ public class MainWindowController implements Initializable {
         closeButton.setOnAction(e -> hideSettingsOverlay());
 
 
+        Label creditsLabelFastsneak = new Label(DescriptionCredits.getDescriptionFastSneak());
+        creditsLabelFastsneak.setStyle(
+                "-fx-text-fill: #00FFFF; " +
+                        "-fx-font-size: 12px; " +
+                        "-fx-font-weight: bold;"
+        );
+
+        creditsLabelFastsneak.setOnMouseClicked(e -> {
+            hostServices.showDocument("https://barbermessedup.netlify.app");
+        });
+        creditsLabelFastsneak.setLayoutX(20);
+        creditsLabelFastsneak.setLayoutY(500);
+
+
+        Label creditsLabelTirox67 = new Label(DescriptionCredits.getDescriptionTirox67());
+        creditsLabelTirox67.setStyle(
+                "-fx-text-fill: #00FFFF; " +
+                        "-fx-font-size: 12px; " +
+                        "-fx-font-weight: bold;"
+        );
+
+        creditsLabelTirox67.setOnMouseClicked(e -> {
+            hostServices.showDocument("https://github.com/TimUrbanczyk");
+        });
+        creditsLabelTirox67.setLayoutX(20);
+        creditsLabelTirox67.setLayoutY(520);
+
+
+
 
         // Sample settings controls
         createSettingsControls(settingsOverlay);
 
-        settingsOverlay.getChildren().addAll(titleLabel, closeButton);
+        settingsOverlay.getChildren().addAll(titleLabel, closeButton, creditsLabelFastsneak, creditsLabelTirox67);
     }
 
     private void createSettingsControls(AnchorPane overlay) {
@@ -922,6 +955,10 @@ public class MainWindowController implements Initializable {
 
     public static void setStunStartTime(long time){
         stunStartTime = time;
+    }
+
+    public static void setHostServices(HostServices hostService) {
+        hostServices = hostService;
     }
 
     @Override
